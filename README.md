@@ -1,1 +1,9 @@
-# IT-Journal-App
+# Journal App
+
+## Table of Context
+
+## Preplanning
+
+## Development 
+
+## Reflection 
