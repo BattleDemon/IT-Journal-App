@@ -14,6 +14,22 @@
 
 ## Development 
 
+### Prototype 1: 
+
+#### Code as of 
+
+### Video of Functionality 
+
+### Issues and Solutions 
+
+### Prototype 2: 
+
+#### Code as of 
+
+### Video of Functionality 
+
+### Issues and Solutions 
+
 ## Reflection 
 
 ### How is the Overall Design
