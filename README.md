@@ -12,25 +12,25 @@
 
 ### If I Get More Time
 
-## Development 
+## Development
 
-### Prototype 1: 
+### Prototype 1:
 
-#### Code as of 
+#### Code as of
 
-### Video of Functionality 
+### Video of Functionality
 
-### Issues and Solutions 
+### Issues and Solutions
 
-### Prototype 2: 
+### Prototype 2:
 
-#### Code as of 
+#### Code as of
 
-### Video of Functionality 
+### Video of Functionality
 
-### Issues and Solutions 
+### Issues and Solutions
 
-## Reflection 
+## Reflection
 
 ### How is the Overall Design
 
