@@ -26,5 +26,6 @@ class JournalApp(QMainWindow):
 
 
 main = JournalApp
+print("Hello, World!")
 
 sys.exit(app.exec) 
