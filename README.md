@@ -7,13 +7,14 @@
 ### What are Diary and Journalling Apps
 
 ### Core Features
-Text entry 
+Text Editor:
+A simple text editor maybe with complex abilities such as font changing color and highlighting z
 
-Save and Load
+Save and Load:
 
+Record Information on Entries:
 
-
-### What Additional Features I Will Add
+### What Additional Features I Will Ad
 Calendar View: Able to view entries by a calendar where days with an entrie are highlighted and selectable to view.
 
 Search functionality: Able to search based on day entrie name and entry tag
