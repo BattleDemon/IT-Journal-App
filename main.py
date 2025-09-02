@@ -20,6 +20,7 @@ class JournalApp(QMainWindow):
         # Variables
         self.entries = []
 
+        loadUi("main.ui", self)
         
 
         self.show()
@@ -28,4 +29,4 @@ class JournalApp(QMainWindow):
 main = JournalApp()
 print("Hello, World!")
 
-sys.exit(app.exec) 
+sys.exit(app.exec()) 
