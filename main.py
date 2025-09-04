@@ -38,7 +38,9 @@ class JournalApp(QMainWindow):
         # Variables
         self.entries = []
 
-        self.show()
+        self.show() # Allows the user to actually see the window
+         
+        # Load Settings and Entries
         self.load_settings()
         self.load_entries()
         self.apply_theme()  
@@ -49,7 +51,7 @@ class JournalApp(QMainWindow):
         if os.path.exists("data/settings.json"):
             with open("data/settings.json", "r") as f:
                 settings = json.load(f)
-                self.theme = settings.get("theme", "dark")
+                self.theme = settings.get("theme")
         else:
             self.save_settings()
     
@@ -72,8 +74,11 @@ class JournalApp(QMainWindow):
         with open("data/entries.json", "w") as f:
             json.dump(self.entries, f, indent=4)
 
+    ''' ----- Theme Application ----- '''
     def apply_theme(self):
         pass
+
+
     
 ''' ----- Journal Entry Class ----- '''
 class JournalEntry(QWidget):
