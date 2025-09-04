@@ -12,7 +12,9 @@ A simple text editor maybe with complex abilities such as font changing color an
 
 Save and Load:
 
+
 Record Information on Entries:
+Such as time and tate created 
 
 ### What Additional Features I Will Ad
 Calendar View: Able to view entries by a calendar where days with an entrie are highlighted and selectable to view.
