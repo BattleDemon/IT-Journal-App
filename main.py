@@ -12,7 +12,7 @@ import sys
 app = QApplication(sys.argv)
 
 ''' ----- Get Screen Size ----- '''
-# Create a Tkinter root window (it won't be displayed)
+# Create a Tkinter window (it won't be displayed)
 root = tk.Tk()
 
 # Get the screen width and height in pixels
