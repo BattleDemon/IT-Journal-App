@@ -88,7 +88,8 @@ class JournalEntry(QWidget):
         self.content = content
         self.date = date
 
-main = JournalApp()
-print("Hello, World!")
+main = JournalApp() 
+
+print("Hello, World!") #Hello World for good luck
 
 sys.exit(app.exec()) 
