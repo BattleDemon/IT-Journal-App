@@ -4,19 +4,18 @@
 
 ## Preplanning
 
-### What are Diary and Journalling Apps
-
 ### Core Features
+
 Text Editor:
 A simple text editor maybe with complex abilities such as font changing color and highlighting z
 
 Save and Load:
 
-
 Record Information on Entries:
 Such as time and tate created 
 
-### What Additional Features I Will Ad
+### What Additional Features I Will Add
+
 Calendar View: Able to view entries by a calendar where days with an entrie are highlighted and selectable to view.
 
 Search functionality: Able to search based on day entrie name and entry tag
@@ -28,6 +27,7 @@ Dark / Light Mode: maybe a preset ligh and dark modes or the possibility to have
 ### Flowchart
 
 ### If I Get More Time
+
 A Cloud back up system maybe using git would be intresting.
 
 Voice to text input could also be a fun idea but might require some more complex abilities.
