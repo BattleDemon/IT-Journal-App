@@ -30,36 +30,67 @@ screen_height = 1080
 class JournalApp(QMainWindow):
     def __init__(self):
         super(JournalApp, self).__init__()
-
-        # Window Settings
-        self.window_pos_x = int((screen_width / 2) - 600)
-        self.window_pos_y = int((screen_height / 2) + 300)
-
         self.setWindowTitle("Journal App")
-        self.setGeometry(self.window_pos_x, 100, 800, 600)
+        self.setGeometry(200, 100, 1000, 600)
 
-        # Main widget and layout
+        # Main central widget
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
-        self.layout = QVBoxLayout(self.central_widget)
+        main_layout = QHBoxLayout(self.central_widget)
 
-        self.date_picker = QDateEdit()
-        self.date_picker.setCalendarPopup(True)
-        self.date_picker.setDate(self.date_picker.calendarWidget().selectedDate())
-        self.layout.addWidget(self.date_picker)
+        # ----- Sidebar -----
+        self.sidebar = QWidget()
+        sidebar_layout = QVBoxLayout(self.sidebar)
 
+        # Toggle buttons
+        self.to_calendar_btn = QPushButton("Calendar View")
+        self.to_entry_btn = QPushButton("Entry View")
+        sidebar_layout.addWidget(self.to_calendar_btn)
+        sidebar_layout.addWidget(self.to_entry_btn)
+
+        # Entry list
+        self.entry_list = QListWidget()
+        sidebar_layout.addWidget(self.entry_list)
+
+        # Add sidebar to main layout
+        main_layout.addWidget(self.sidebar, 1)  # Sidebar smaller
+        
+
+        # ----- Stacked Widget (Main Content) -----
+        self.stacked = QStackedWidget()
+        main_layout.addWidget(self.stacked, 3)  # Main content bigger
+
+        # Calendar page
+        self.calendar_page = QWidget()
+        cal_layout = QVBoxLayout(self.calendar_page)
+        self.calendar = QCalendarWidget()
+        cal_layout.addWidget(self.calendar)
+        self.stacked.addWidget(self.calendar_page)
+
+        # Entry page
+        self.entry_page = QWidget()
+        entry_layout = QVBoxLayout(self.entry_page)
+        self.text_edit = QTextEdit()
+        self.save_btn = QPushButton("Save Entry")
+        entry_layout.addWidget(self.text_edit)
+        entry_layout.addWidget(self.save_btn)
+        self.stacked.addWidget(self.entry_page)
+
+        # Signals
+        self.to_calendar_btn.clicked.connect(lambda: self.stacked.setCurrentWidget(self.calendar_page))
+        self.to_entry_btn.clicked.connect(lambda: self.stacked.setCurrentWidget(self.entry_page))
+        self.save_btn.clicked.connect(self.save_entries)
+        #self.calendar.selectionChanged.connect(self.load_entry_for_date)
+        #self.entry_list.itemClicked.connect(self.load_entry_from_list)
+
+        # Data
+        self.entries = []
         self.data_dir = os.path.join(os.path.dirname(__file__), "data")
         os.makedirs(self.data_dir, exist_ok=True)
-
-        # Variables
-        self.entries = []
-
-        self.show() # Allows the user to actually see the window
-         
-        # Load Settings and Entries
-        #self.load_settings()
         self.load_entries()
-        self.apply_theme()  
+        #self.refresh_entry_list()
+
+        self.show()
 
     ''' ----- Load and Save Functions ----- '''
 
