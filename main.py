@@ -27,6 +27,79 @@ app = QApplication(sys.argv)
 screen_width = 1920
 screen_height = 1080
 
+THEMES = {
+    "Light": {
+        "window_bg": "#ffffff",
+        "text_color": "#000000",
+        "button_bg": "#f0f0f0",
+        "button_text": "#000000",
+        "highlight": "#add8e6"
+    },
+    "Dark": {
+        "window_bg": "#2e2e2e",
+        "text_color": "#ffffff",
+        "button_bg": "#3a3a3a",
+        "button_text": "#ffffff",
+        "highlight": "#4a90e2"
+    },
+    "Dracula": {
+        "window_bg": "#282a36",
+        "text_color": "#f8f8f2",
+        "button_bg": "#44475a",
+        "button_text": "#f8f8f2",
+        "highlight": "#bd93f9"
+    },
+    "Solarized Dark": {
+        "window_bg": "#002b36",
+        "text_color": "#839496",
+        "button_bg": "#073642",
+        "button_text": "#93a1a1",
+        "highlight": "#268bd2"
+    },
+    "Monokai": {
+        "window_bg": "#272822",
+        "text_color": "#f8f8f2",
+        "button_bg": "#3e3d32",
+        "button_text": "#f8f8f2",
+        "highlight": "#f92672"
+    },
+    "Ocean": {
+        "window_bg": "#1a2b4c",
+        "text_color": "#d6eaff",
+        "button_bg": "#264d73",
+        "button_text": "#d6eaff",
+        "highlight": "#4da6ff"
+    },
+    "Forest": {
+        "window_bg": "#1b2e1b",
+        "text_color": "#e0f5e0",
+        "button_bg": "#2a442a",
+        "button_text": "#e0f5e0",
+        "highlight": "#66cc66"
+    },
+    "Cyberpunk": {
+        "window_bg": "#0f0f1c",
+        "text_color": "#ff00ff",
+        "button_bg": "#1a1a2e",
+        "button_text": "#00ffff",
+        "highlight": "#00ffff"
+    },
+    "Matrix": {
+        "window_bg": "#000000",
+        "text_color": "#00ff00",
+        "button_bg": "#0a0a0a",
+        "button_text": "#00ff00",
+        "highlight": "#007700"
+    },
+    "Paper": {
+        "window_bg": "#fafafa",
+        "text_color": "#333333",
+        "button_bg": "#e0e0e0",
+        "button_text": "#333333",
+        "highlight": "#007acc"
+    }
+}
+
 
 ''' ----- Main Class -----'''
 class JournalApp(QMainWindow):
@@ -69,14 +142,26 @@ class JournalApp(QMainWindow):
         cal_layout.addWidget(self.calendar)
         self.stacked.addWidget(self.calendar_page)
 
-        # Entry page
         self.entry_page = QWidget()
         entry_layout = QVBoxLayout(self.entry_page)
+
+        self.entry_title_label = QLabel("No entry loaded")
+        entry_layout.addWidget(self.entry_title_label)
+
         self.text_edit = QTextEdit()
-        self.save_btn = QPushButton("Save Entry")
         entry_layout.addWidget(self.text_edit)
+
+        self.save_btn = QPushButton("Save Entry")
         entry_layout.addWidget(self.save_btn)
+
+
         self.stacked.addWidget(self.entry_page)
+
+        self.theme_selector = QComboBox()
+        self.theme_selector.addItems(THEMES.keys())
+        sidebar_layout.addWidget(self.theme_selector)
+
+        self.theme_selector.currentTextChanged.connect(self.apply_theme)
 
         # Signals
         self.to_calendar_btn.clicked.connect(lambda: self.stacked.setCurrentWidget(self.calendar_page))
@@ -89,29 +174,36 @@ class JournalApp(QMainWindow):
         self.entries = []
         self.data_dir = os.path.join(os.path.dirname(__file__), "data")
         os.makedirs(self.data_dir, exist_ok=True)
+
+        self.load_settings()
+        
+        self.apply_theme(self.current_theme)
+
         self.load_entries()
+        
         self.refresh_entry_list()
 
         self.show()
 
     ''' ----- Load and Save Functions ----- '''
 
+    def save_settings(self):
+        settings_path = os.path.join(self.data_dir, "settings.json")
+        settings = {
+            "theme": self.current_theme
+        }
+        with open(settings_path, "w") as f:
+            json.dump(settings, f, indent=4)
+
     def load_settings(self):
         settings_path = os.path.join(self.data_dir, "settings.json")
         if os.path.exists(settings_path):
             with open(settings_path, "r") as f:
                 settings = json.load(f)
-                self.theme = settings.get("theme")
+                self.apply_theme(settings.get("theme"))
         else:
+            self.apply_theme("Dark")
             self.save_settings()
-    
-    def save_settings(self):
-        settings_path = os.path.join(self.data_dir, "settings.json")
-        settings = {
-            "theme": self.theme
-        }
-        with open(settings_path, "w") as f:
-            json.dump(settings, f, indent=4)  
 
     def load_entries(self):
         entries_path = os.path.join(self.data_dir, "entries.json")
@@ -129,8 +221,40 @@ class JournalApp(QMainWindow):
             json.dump(self.entries, f, indent=4)
 
     ''' ----- Theme Application ----- '''
-    def apply_theme(self):
-        pass
+    def apply_theme(self, theme_name):
+        theme = THEMES.get(theme_name, THEMES["Dark"])
+        self.current_theme = theme_name
+
+        # Apply to main window
+        self.setStyleSheet(f"""
+            QWidget {{
+                background-color: {theme['window_bg']};
+                color: {theme['text_color']};
+            }}
+            QPushButton {{
+                background-color: {theme['button_bg']};
+                color: {theme['button_text']};
+                border-radius: 5px;
+                padding: 4px;
+            }}
+            QPushButton:hover {{
+                background-color: {theme['highlight']};
+            }}
+            QTextEdit {{
+                background-color: {theme['window_bg']};
+                color: {theme['text_color']};
+                border: 1px solid {theme['highlight']};
+            }}
+            QListWidget {{
+                background-color: {theme['window_bg']};
+                color: {theme['text_color']};
+                border: 1px solid {theme['highlight']};
+            }}
+        """)
+
+        # Re-highlight calendar entries with theme color
+        self.highlight_entries()
+        self.save_settings()
 
     def save_entry(self):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
@@ -138,14 +262,20 @@ class JournalApp(QMainWindow):
 
         # Check if entry already exists
         existing = next((e for e in self.entries if e["date"] == date), None)
+
         if existing:
             existing["content"] = content
         else:
-            self.entries.append({"date": date, "content": content})
+            # Ask for a title if new entry
+            title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+            if not ok or not title.strip():
+                title = "Untitled"
+            self.entries.append({"date": date, "title": title.strip(), "content": content})
+
         self.save_entries()
         self.refresh_entry_list()
         self.highlight_entries()
-    
+        
     def refresh_entry_list(self):
         self.entry_list.clear()
         for entry in sorted(self.entries, key=lambda x: x["date"]):
@@ -162,24 +292,25 @@ class JournalApp(QMainWindow):
             self.stacked.setCurrentWidget(self.entry_page)
 
     def load_entry_for_date(self):
-        """Load entry text for the currently selected date into the editor."""
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
         entry = next((e for e in self.entries if e["date"] == date), None)
 
         if entry:
             self.text_edit.setText(entry["content"])
+            self.entry_title_label.setText(f"{entry['title']} - {date}")
         else:
             self.text_edit.clear()
+            self.entry_title_label.setText(f"New Entry - {date}")
 
     def highlight_entries(self):
-        # Reset all formatting
+        # Clear old formatting
         self.calendar.setDateTextFormat(self.calendar.minimumDate(), QTextCharFormat())
 
-        # Create format for days with entries
+        # Use theme highlight
+        theme = THEMES.get(self.current_theme, THEMES["Dark"])
         has_entry_format = QTextCharFormat()
-        has_entry_format.setBackground(QBrush(QColor("lightblue")))
+        has_entry_format.setBackground(QBrush(QColor(theme["highlight"])))
 
-        # Apply formatting to each date that has an entry
         for entry in self.entries:
             date = QDate.fromString(entry["date"], "yyyy-MM-dd")
             self.calendar.setDateTextFormat(date, has_entry_format)
