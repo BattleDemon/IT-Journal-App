@@ -2,6 +2,8 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import QUrl, Qt
 from PyQt6.uic import loadUi
+from PyQt6.QtCore import QDate
+from PyQt6.QtGui import QTextCharFormat, QBrush, QColor
 import os
 #import tkinter as tk
 import json
@@ -79,16 +81,16 @@ class JournalApp(QMainWindow):
         # Signals
         self.to_calendar_btn.clicked.connect(lambda: self.stacked.setCurrentWidget(self.calendar_page))
         self.to_entry_btn.clicked.connect(lambda: self.stacked.setCurrentWidget(self.entry_page))
-        self.save_btn.clicked.connect(self.save_entries)
-        #self.calendar.selectionChanged.connect(self.load_entry_for_date)
-        #self.entry_list.itemClicked.connect(self.load_entry_from_list)
+        self.save_btn.clicked.connect(self.save_entry)
+        self.calendar.selectionChanged.connect(self.load_entry_for_date)
+        self.entry_list.itemClicked.connect(self.load_entry_from_list)
 
         # Data
         self.entries = []
         self.data_dir = os.path.join(os.path.dirname(__file__), "data")
         os.makedirs(self.data_dir, exist_ok=True)
         self.load_entries()
-        #self.refresh_entry_list()
+        self.refresh_entry_list()
 
         self.show()
 
@@ -119,6 +121,7 @@ class JournalApp(QMainWindow):
         else:
             self.entries = []
             self.save_entries()
+        self.highlight_entries()
 
     def save_entries(self):
         entries_path = os.path.join(self.data_dir, "entries.json")
@@ -129,8 +132,58 @@ class JournalApp(QMainWindow):
     def apply_theme(self):
         pass
 
+    def save_entry(self):
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        content = self.text_edit.toPlainText()
 
+        # Check if entry already exists
+        existing = next((e for e in self.entries if e["date"] == date), None)
+        if existing:
+            existing["content"] = content
+        else:
+            self.entries.append({"date": date, "content": content})
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
     
+    def refresh_entry_list(self):
+        self.entry_list.clear()
+        for entry in sorted(self.entries, key=lambda x: x["date"]):
+            preview = entry["content"][:30].replace("\n", " ")
+            self.entry_list.addItem(f"{entry['date']} - {preview}")
+
+    def load_entry_from_list(self, item):
+        date = item.text().split(" - ")[0]
+        entry = next((e for e in self.entries if e["date"] == date), None)
+        if entry:
+            self.text_edit.setText(entry["content"])
+            # Update calendar selection too
+            self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd"))
+            self.stacked.setCurrentWidget(self.entry_page)
+
+    def load_entry_for_date(self):
+        """Load entry text for the currently selected date into the editor."""
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        entry = next((e for e in self.entries if e["date"] == date), None)
+
+        if entry:
+            self.text_edit.setText(entry["content"])
+        else:
+            self.text_edit.clear()
+
+    def highlight_entries(self):
+        # Reset all formatting
+        self.calendar.setDateTextFormat(self.calendar.minimumDate(), QTextCharFormat())
+
+        # Create format for days with entries
+        has_entry_format = QTextCharFormat()
+        has_entry_format.setBackground(QBrush(QColor("lightblue")))
+
+        # Apply formatting to each date that has an entry
+        for entry in self.entries:
+            date = QDate.fromString(entry["date"], "yyyy-MM-dd")
+            self.calendar.setDateTextFormat(date, has_entry_format)
+
 ''' ----- Journal Entry Class ----- '''
 class JournalEntry(QWidget):
     def __init__(self, title, content, date):
@@ -138,6 +191,7 @@ class JournalEntry(QWidget):
         self.title = title
         self.content = content
         self.date = date
+
 
 main = JournalApp() 
 

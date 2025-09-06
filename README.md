@@ -41,6 +41,7 @@ Voice to text input could also be a fun idea but might require some more complex
 ### Video of Functionality
 
 ### Issues and Solutions
+Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ / 
 
 ### Prototype 2:
 
