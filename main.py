@@ -315,14 +315,6 @@ class JournalApp(QMainWindow):
             date = QDate.fromString(entry["date"], "yyyy-MM-dd")
             self.calendar.setDateTextFormat(date, has_entry_format)
 
-''' ----- Journal Entry Class ----- '''
-class JournalEntry(QWidget):
-    def __init__(self, title, content, date):
-        super(JournalEntry, self).__init__()
-        self.title = title
-        self.content = content
-        self.date = date
-
 
 main = JournalApp() 
 
