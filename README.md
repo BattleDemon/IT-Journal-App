@@ -34,7 +34,7 @@ Voice to text input could also be a fun idea but might require some more complex
 
 ## Development
 
-### Prototype 1:
+### Prototype 1: MAkE A PROTOTYPE FROM COMMIT 23
 
 #### Code as of
 
