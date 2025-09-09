@@ -20,6 +20,28 @@ Theme Customisation: maybe a preset ligh and dark modes or the possibility to ha
 More Advanced Text Editor: 
 
 ### Flowchart
+BEGIN
+Make Basic Version  of the App
+Basic Text edit
+Calendar View to Select Entries
+Save and Load
+Theme Customisation and more advance text edit
+Theme Change and Save
+Font, Bold, Italic options
+Categories, Favourites, and Sort
+Allow Selection of Catogories
+Favourite / Pinned Entires
+Sort Based on Fields
+Search Functionality
+Search Field and fucntionality
+END
+If Have More Time
+Cloud Back Up
+Text To Speech Dictation
+Connect With Git or Other Free Cloud Service
+Speech Recognition
+True End
+Journal Assignment
 
 ### UI Design
 
