@@ -6,25 +6,22 @@
 
 ### Core Features
 
-Text Editor:
-A simple text editor maybe with complex abilities such as font changing color and highlighting z
-
-Save and Load:
-
-Record Information on Entries:
-Such as time and tate created 
 
 ### What Additional Features I Will Add
 
-Calendar View: Able to view entries by a calendar where days with an entrie are highlighted and selectable to view.
-
 Search functionality: Able to search based on day entrie name and entry tag
 
-Tag Entries: Able to tag key words to the entry
+Catogorise Entries: Able to tag key words to the entry
 
-Dark / Light Mode: maybe a preset ligh and dark modes or the possibility to have a customisable theme
+Favourite Entries: 
+
+Theme Customisation: maybe a preset ligh and dark modes or the possibility to have a customisable theme
+
+More Advanced Text Editor: 
 
 ### Flowchart
+
+### UI Design
 
 ### If I Get More Time
 
