@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import QUrl, Qt
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import QDate
-from PyQt6.QtGui import QTextCharFormat, QBrush, QColor
+from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
 import os
 #import tkinter as tk
 import json
@@ -129,7 +129,6 @@ class JournalApp(QMainWindow):
 
         # Add sidebar to main layout
         main_layout.addWidget(self.sidebar, 1)  # Sidebar smaller
-        
 
         # ----- Stacked Widget (Main Content) -----
         self.stacked = QStackedWidget()
@@ -142,25 +141,53 @@ class JournalApp(QMainWindow):
         cal_layout.addWidget(self.calendar)
         self.stacked.addWidget(self.calendar_page)
 
+        # Entry page
         self.entry_page = QWidget()
         entry_layout = QVBoxLayout(self.entry_page)
 
+        # Header row: Title/Date on left, formatting tools on right
+        header_layout = QHBoxLayout()
         self.entry_title_label = QLabel("No entry loaded")
-        entry_layout.addWidget(self.entry_title_label)
+        header_layout.addWidget(self.entry_title_label)
+        header_layout.addStretch()  # Push formatting buttons to the right
 
+        # Bold button
+        self.bold_btn = QPushButton("B")
+        self.bold_btn.setCheckable(True)
+        self.bold_btn.setFixedSize(24, 24)
+        self.bold_btn.clicked.connect(self.toggle_bold)
+        header_layout.addWidget(self.bold_btn)
+
+        # Italic button
+        self.italic_btn = QPushButton("I")
+        self.italic_btn.setCheckable(True)
+        self.italic_btn.setFixedSize(24, 24)
+        self.italic_btn.clicked.connect(self.toggle_italic)
+        header_layout.addWidget(self.italic_btn)
+
+        # Font size selector
+        self.font_size_box = QSpinBox()
+        self.font_size_box.setRange(8, 48)
+        self.font_size_box.setValue(12)
+        self.font_size_box.setMaximumWidth(60)
+        self.font_size_box.valueChanged.connect(self.change_font_size)
+        header_layout.addWidget(self.font_size_box)
+
+        entry_layout.addLayout(header_layout)
+
+        # Rich text edit
         self.text_edit = QTextEdit()
         entry_layout.addWidget(self.text_edit)
 
         self.save_btn = QPushButton("Save Entry")
         entry_layout.addWidget(self.save_btn)
 
-
         self.stacked.addWidget(self.entry_page)
 
+        # Theme selector
         self.theme_selector = QComboBox()
         self.theme_selector.addItems(THEMES.keys())
         sidebar_layout.addWidget(self.theme_selector)
-
         self.theme_selector.currentTextChanged.connect(self.apply_theme)
 
         # Signals
@@ -176,13 +203,9 @@ class JournalApp(QMainWindow):
         os.makedirs(self.data_dir, exist_ok=True)
 
         self.load_settings()
-        
         self.apply_theme(self.current_theme)
-
         self.load_entries()
-        
         self.refresh_entry_list()
-
         self.show()
 
     ''' ----- Load and Save Functions ----- '''
@@ -258,7 +281,7 @@ class JournalApp(QMainWindow):
 
     def save_entry(self):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
-        content = self.text_edit.toPlainText()
+        content = self.text_edit.toHtml()
 
         # Check if entry already exists
         existing = next((e for e in self.entries if e["date"] == date), None)
@@ -286,7 +309,7 @@ class JournalApp(QMainWindow):
         date = item.text().split(" - ")[0]
         entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
-            self.text_edit.setText(entry["content"])
+            self.text_edit.setHtml(entry["content"])
             # Update calendar selection too
             self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd"))
             self.stacked.setCurrentWidget(self.entry_page)
@@ -296,7 +319,7 @@ class JournalApp(QMainWindow):
         entry = next((e for e in self.entries if e["date"] == date), None)
 
         if entry:
-            self.text_edit.setText(entry["content"])
+            self.text_edit.setHtml(entry["content"])
             self.entry_title_label.setText(f"{entry['title']} - {date}")
         else:
             self.text_edit.clear()
@@ -315,6 +338,20 @@ class JournalApp(QMainWindow):
             date = QDate.fromString(entry["date"], "yyyy-MM-dd")
             self.calendar.setDateTextFormat(date, has_entry_format)
 
+    def toggle_bold(self):
+        fmt = self.text_edit.currentCharFormat()
+        fmt.setFontWeight(QFont.Weight.Bold if self.bold_btn.isChecked() else QFont.Weight.Normal)
+        self.text_edit.setCurrentCharFormat(fmt)
+
+    def toggle_italic(self):
+        fmt = self.text_edit.currentCharFormat()
+        fmt.setFontItalic(self.italic_btn.isChecked())
+        self.text_edit.setCurrentCharFormat(fmt)
+
+    def change_font_size(self, size):
+        fmt = self.text_edit.currentCharFormat()
+        fmt.setFontPointSize(size)
+        self.text_edit.setCurrentCharFormat(fmt)
 
 main = JournalApp() 
 
