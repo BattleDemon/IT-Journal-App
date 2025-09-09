@@ -22,7 +22,6 @@ import os
 import sys
 
 # /* ------ Screen and Theme Defaults ------ */
-# Note: I hardcoded a common screen size for dev work
 screen_width = 1920
 screen_height = 1080
 
@@ -63,6 +62,69 @@ THEMES = {
         "button_text": "#333333",
         "highlight": "#007acc",
     },
+    "Solarized": {
+        "window_bg": "#fdf6e3",
+        "text_color": "#657b83",
+        "button_bg": "#eee8d5",
+        "button_text": "#657b83",
+        "highlight": "#268bd2",
+    },
+    "Nord": {
+        "window_bg": "#2e3440",
+        "text_color": "#d8dee9",
+        "button_bg": "#4c566a",
+        "button_text": "#d8dee9",
+        "highlight": "#88c0d0",
+    },
+    "Gruvbox": {
+        "window_bg": "#282828",
+        "text_color": "#ebdbb2",
+        "button_bg": "#3c3836",
+        "button_text": "#ebdbb2",
+        "highlight": "#fe8019",
+    },
+    "Ocean Breeze" : {
+        "window_bg" : "#e0f7fa",
+        "text_color" : "#004d40",
+        "button_bg" : "#80deea",
+        "button_text" : "#ffffff",
+        "highlight" : "#00bed4",
+    },
+    "Midnight Obsidian" : {
+        "window_bg" : "#0a0a0a",
+        "text_color" : "#e6e6e6",
+        "button_bg" : "#1a1a1a",
+        "button_text" : "#ffffff",
+        "highlight" : "#00ffff",
+    },
+    "Vampire" : {
+        "window_bg" : "#33001a",
+        "text_color" : "#f0e68c",
+        "button_bg" : "#8b0000",
+        "button_text" : "#f5f5dc",
+        "highlight" : "#dc143c",
+    },
+    "Crimson Shadow" : {
+        "window_bg" : "#3b0000",
+        "text_color" : "#ffe0e0",
+        "button_bg" : "#800000",
+        "button_text" : "#f5f5dc",
+        "highlight" : "#dc143c",
+    },
+    "Emerald Dream" : {
+        "window_bg" : "#002b00",
+        "text_color" : "#d0f0c0",
+        "button_bg" : "#004d00",
+        "button_text" : "#f0fff0",
+        "highlight" : "#00ff00",
+    },
+    "Royal Purple" : {
+        "window_bg" : "#2e003e",
+        "text_color" : "#e6ccff",
+        "button_bg" : "#5e005e",
+        "button_text" : "#f5f5dc",
+        "highlight" : "#bf40bf",
+    }
 }
 
 
@@ -190,14 +252,21 @@ class JournalApp(QMainWindow):
     def load_settings(self):
         settings_path = os.path.join(self.data_dir, "settings.json")
         if os.path.exists(settings_path):
-            with open(settings_path, "r", encoding="utf-8") as f:
+            with open(settings_path, "r") as f:
                 settings = json.load(f)
-                # If theme key missing, fall back to Dark
-                self.current_theme = settings.get("theme", "Dark")
+                theme_name = settings.get("theme", "Dark")
+                self.apply_theme(theme_name)
+                # Update combobox to match
+                index = self.theme_selector.findText(theme_name)
+                if index >= 0:
+                    self.theme_selector.setCurrentIndex(index)
         else:
-            # If no settings, default to Dark and persist
-            self.current_theme = "Dark"
+            self.apply_theme("Dark")
             self.save_settings()
+            # Default select Dark
+            index = self.theme_selector.findText("Dark")
+            if index >= 0:
+                self.theme_selector.setCurrentIndex(index)
 
     # /* ----- Entries IO ----- */
     def load_entries(self):
