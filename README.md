@@ -34,7 +34,7 @@ Voice to text input could also be a fun idea but might require some more complex
 
 ## Development
 
-### Prototype 1:
+### Prototype 1: MAkE A PROTOTYPE FROM COMMIT 23
 
 #### Code as of
 
@@ -43,7 +43,15 @@ Voice to text input could also be a fun idea but might require some more complex
 ### Issues and Solutions
 Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ / 
 
-### Prototype 2:
+### Prototype 2: After Pinning and Tagging
+
+#### Code as of
+
+### Video of Functionality
+
+### Issues and Solutions
+
+### Prototype 2: After Searching (by name tag ect) and sort by date last opened ect
 
 #### Code as of
 
