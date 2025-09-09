@@ -279,7 +279,7 @@ class JournalApp(QMainWindow):
     def refresh_entry_list(self):
         self.entry_list.clear()
         for entry in sorted(self.entries, key=lambda x: x["date"]):
-            preview = entry[""][:30].replace("\n", " ")
+            preview = entry["title"][:30].replace("\n", " ")
             self.entry_list.addItem(f"{entry['date']} - {preview}")
 
     def load_entry_from_list(self, item):
