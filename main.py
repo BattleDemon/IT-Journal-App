@@ -24,7 +24,7 @@ app = QApplication(sys.argv)
 # Destroy the root window after getting the information
 #root.destroy()
 
-screen_width = 1920
+screen_width = 1920 
 screen_height = 1080
 
 THEMES = {
@@ -279,7 +279,7 @@ class JournalApp(QMainWindow):
     def refresh_entry_list(self):
         self.entry_list.clear()
         for entry in sorted(self.entries, key=lambda x: x["date"]):
-            preview = entry["content"][:30].replace("\n", " ")
+            preview = entry["title"][:30].replace("\n", " ")
             self.entry_list.addItem(f"{entry['date']} - {preview}")
 
     def load_entry_from_list(self, item):
