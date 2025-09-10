@@ -41,7 +41,6 @@ Text To Speech Dictation
 Connect With Git or Other Free Cloud Service
 Speech Recognition
 True End
-Journal Assignment
 
 ### UI Design
 
@@ -70,7 +69,23 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ### Issues and Solutions
 
-### Prototype 2: 
+### Prototype 3: 
+
+#### Code as of
+
+### Video of Functionality
+
+### Issues and Solutions
+
+### Prototype 4: 
+
+#### Code as of
+
+### Video of Functionality
+
+### Issues and Solutions
+
+### Prototype 5: 
 
 #### Code as of
 
