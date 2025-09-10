@@ -48,53 +48,53 @@ Voice to text input
 
 ## Development
 
-#### Prototype 1: Base Systems finished - Text Edit, Save Load, Calendar Selection
+### Prototype 1: Base Systems finished - Text Edit, Save Load, Calendar Selection
 
-### Code as of commit 23
+#### Code as of commit 23
 
-### Video of Functionality
+#### Video of Functionality
 
 [![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
 
-### Issues and Solutions
+#### Issues and Solutions
 
 Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ / 
 
-#### Prototype 2: Themes and More advanced text options
+### Prototype 2: Themes and More advanced text options
 
-### Code as of commit 33
+#### Code as of commit 33
 
-### Video of Functionality
+#### Video of Functionality
 
 [![Prototype 2](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
-### Issues and Solutions
+#### Issues and Solutions
 
-#### Prototype 3: Pinning, catogoriesing and sorting
+### Prototype 3: Pinning, catogoriesing and sorting
 
-### Code as of commit XX
+#### Code as of commit XX
 
-### Video of Functionality
+#### Video of Functionality
 
 [![Prototype 3](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
-### Issues and Solutions
+#### Issues and Solutions
 
-#### Prototype 4: Search System
+### Prototype 4: Search System
 
-### Code as of commit XX 
+#### Code as of commit XX 
 
-### Video of Functionality
+#### Video of Functionality
 
 [![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
-### Issues and Solutions
+#### Issues and Solutions
 
-#### Prototype 5: IF I GET MORE TIME
+### Prototype 5: IF I GET MORE TIME
 
-### Code as of commit XX
+#### Code as of commit XX
 
-### Video of Functionality
+#### Video of Functionality
 
 [![Prototype 5](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
