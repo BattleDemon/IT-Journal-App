@@ -13,7 +13,8 @@ from PyQt6.QtWidgets import (
     QSpinBox,
     QTextEdit,
     QInputDialog,
-    QComboBox
+    QComboBox,
+    QListWidgetItem
 )
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
@@ -180,6 +181,12 @@ class JournalApp(QMainWindow):
         header_layout.addWidget(self.entry_title_label)
         header_layout.addStretch()
 
+        self.pin_btn = QPushButton("📌")
+        self.pin_btn.setCheckable(True)
+        self.pin_btn.setFixedSize(24, 24)
+        self.pin_btn.toggled.connect(self.toggle_pin)
+        header_layout.addWidget(self.pin_btn)
+
         # Simple formatting controls
         self.bold_btn = QPushButton("B")
         self.bold_btn.setCheckable(True)
@@ -345,11 +352,27 @@ class JournalApp(QMainWindow):
         self.highlight_entries()
 
     def refresh_entry_list(self):
-        # keep list sorted by date
         self.entry_list.clear()
-        for entry in sorted(self.entries, key=lambda x: x["date"]):
-            preview = entry["title"][:30].replace("\n", " ")
-            self.entry_list.addItem(f"{entry['date']} - {preview}")
+
+        # Pinned entries first
+        pinned = [e for e in self.entries if e.get("pinned")]
+        others = [e for e in self.entries if not e.get("pinned")]
+
+        # Sort both groups by date for now
+        pinned = sorted(pinned, key=lambda x: x["date"])
+        others = sorted(others, key=lambda x: x["date"])
+
+        # Add pinned with marker
+        for entry in pinned:
+            item = QListWidgetItem(f"📌 {entry['date']} - {entry['title']} ")
+            item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+            self.entry_list.addItem(item)
+
+        # Add non-pinned
+        for entry in others:
+            item = QListWidgetItem(f"{entry['date']} - {entry['title']}")
+            item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+            self.entry_list.addItem(item)
 
     def load_entry_from_list(self, item):
         date = item.text().split(" - ")[0]
@@ -399,6 +422,15 @@ class JournalApp(QMainWindow):
         fmt = self.text_edit.currentCharFormat()
         fmt.setFontPointSize(size)
         self.text_edit.setCurrentCharFormat(fmt)
+
+    def toggle_pin(self, checked):
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        entry = next((e for e in self.entries if e["date"] == date), None)
+        if entry:
+            entry["pinned"] = checked
+            self.save_entries()
+            self.refresh_entry_list()
+            self.highlight_entries()
 
 
 # /* ----- App entry point ----- */
