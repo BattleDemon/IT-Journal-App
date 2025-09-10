@@ -54,7 +54,7 @@ Voice to text input
 
 ### Video of Functionality
 
-[![Prototype 1](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
 
 ### Issues and Solutions
 
