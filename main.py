@@ -395,17 +395,24 @@ class JournalApp(QMainWindow):
             self.entry_title_label.setText(f"New Entry - {date}")
 
     def highlight_entries(self):
-        # Clear any existing formatting by resetting a known date
         self.calendar.setDateTextFormat(self.calendar.minimumDate(), QTextCharFormat())
 
-        # Prepare format using current theme highlight
         theme = THEMES.get(self.current_theme, THEMES["Dark"])
-        has_entry_format = QTextCharFormat()
-        has_entry_format.setBackground(QBrush(QColor(theme["highlight"])))
+
+        # Normal entry highlight
+        normal_format = QTextCharFormat()
+        normal_format.setBackground(QBrush(QColor(theme["highlight"])))
+
+        # Pinned entry highlight (different color)
+        pinned_format = QTextCharFormat()
+        pinned_format.setBackground(QBrush(QColor("#FFD700")))  # Gold for pinned
 
         for entry in self.entries:
             date = QDate.fromString(entry["date"], "yyyy-MM-dd")
-            self.calendar.setDateTextFormat(date, has_entry_format)
+            if entry.get("pinned"):
+                self.calendar.setDateTextFormat(date, pinned_format)
+            else:
+                self.calendar.setDateTextFormat(date, normal_format)
 
     # /* ----- Simple rich text helpers ----- */
     def toggle_bold(self):
