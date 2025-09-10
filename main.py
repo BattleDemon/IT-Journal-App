@@ -14,7 +14,8 @@ from PyQt6.QtWidgets import (
     QTextEdit,
     QInputDialog,
     QComboBox,
-    QListWidgetItem
+    QListWidgetItem,
+    QMessageBox
 )
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
@@ -153,9 +154,14 @@ class JournalApp(QMainWindow):
         sidebar_layout.addWidget(self.to_calendar_btn)
         sidebar_layout.addWidget(self.to_entry_btn)
 
-        # Entry list shown in sidebar
+        # Entry list
         self.entry_list = QListWidget()
         sidebar_layout.addWidget(self.entry_list)
+
+        # Delete button under entry list
+        self.delete_btn = QPushButton("Delete Entry")
+        self.delete_btn.clicked.connect(self.delete_entry)
+        sidebar_layout.addWidget(self.delete_btn)
 
         # Add sidebar to main layout, give it a smaller stretch
         main_layout.addWidget(self.sidebar, 1)
@@ -209,13 +215,22 @@ class JournalApp(QMainWindow):
 
         entry_layout.addLayout(header_layout)
 
-        # Rich text editor for entry bodies
+        # Rich text edit
         self.text_edit = QTextEdit()
         entry_layout.addWidget(self.text_edit)
 
-        # Save button
+        # Action buttons row (Save + Categories)
+        actions_layout = QHBoxLayout()
+
         self.save_btn = QPushButton("Save Entry")
-        entry_layout.addWidget(self.save_btn)
+        actions_layout.addWidget(self.save_btn)
+
+        self.categories_btn = QPushButton("🏷")
+        self.categories_btn.setFixedSize(24, 24)
+        self.categories_btn.clicked.connect(self.edit_categories)
+        actions_layout.addWidget(self.categories_btn)
+
+        entry_layout.addLayout(actions_layout)
 
         self.stacked.addWidget(self.entry_page)
 
@@ -354,25 +369,27 @@ class JournalApp(QMainWindow):
     def refresh_entry_list(self):
         self.entry_list.clear()
 
-        # Pinned entries first
         pinned = [e for e in self.entries if e.get("pinned")]
         others = [e for e in self.entries if not e.get("pinned")]
 
-        # Sort both groups by date for now
         pinned = sorted(pinned, key=lambda x: x["date"])
         others = sorted(others, key=lambda x: x["date"])
 
-        # Add pinned with marker
-        for entry in pinned:
-            item = QListWidgetItem(f"📌 {entry['date']} - {entry['title']} ")
+        def make_item(entry, pinned=False):
+            cats = ", ".join(entry.get("categories", []))
+            label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} "
+            if cats:
+                label += f" [{cats}]"
+            item = QListWidgetItem(label)
             item.setData(Qt.ItemDataRole.UserRole, entry["date"])
-            self.entry_list.addItem(item)
+            return item
 
-        # Add non-pinned
+        for entry in pinned:
+            self.entry_list.addItem(make_item(entry, pinned=True))
+
         for entry in others:
-            item = QListWidgetItem(f"{entry['date']} - {entry['title']}")
-            item.setData(Qt.ItemDataRole.UserRole, entry["date"])
-            self.entry_list.addItem(item)
+            self.entry_list.addItem(make_item(entry))
+
 
     def load_entry_from_list(self, item):
         date = item.text().split(" - ")[0]
@@ -395,24 +412,34 @@ class JournalApp(QMainWindow):
             self.entry_title_label.setText(f"New Entry - {date}")
 
     def highlight_entries(self):
-        self.calendar.setDateTextFormat(self.calendar.minimumDate(), QTextCharFormat())
+        # Clear only previously highlighted dates
+        if not hasattr(self, "_highlighted_dates"):
+            self._highlighted_dates = set()
 
+        default_format = QTextCharFormat()
+        for d in self._highlighted_dates:
+            self.calendar.setDateTextFormat(d, default_format)
+        self._highlighted_dates.clear()
+
+        # Use theme highlight for normal entries
         theme = THEMES.get(self.current_theme, THEMES["Dark"])
+        has_entry_format = QTextCharFormat()
+        has_entry_format.setBackground(QBrush(QColor(theme["highlight"])))
 
-        # Normal entry highlight
-        normal_format = QTextCharFormat()
-        normal_format.setBackground(QBrush(QColor(theme["highlight"])))
-
-        # Pinned entry highlight (different color)
+        # Different color for pinned entries
         pinned_format = QTextCharFormat()
-        pinned_format.setBackground(QBrush(QColor("#FFD700")))  # Gold for pinned
+        pinned_format.setBackground(QBrush(QColor("#ffcc00")))
 
+        # Reapply new highlights
         for entry in self.entries:
             date = QDate.fromString(entry["date"], "yyyy-MM-dd")
             if entry.get("pinned"):
                 self.calendar.setDateTextFormat(date, pinned_format)
             else:
-                self.calendar.setDateTextFormat(date, normal_format)
+                self.calendar.setDateTextFormat(date, has_entry_format)
+            self._highlighted_dates.add(date)
+
+
 
     # /* ----- Simple rich text helpers ----- */
     def toggle_bold(self):
@@ -438,6 +465,41 @@ class JournalApp(QMainWindow):
             self.save_entries()
             self.refresh_entry_list()
             self.highlight_entries()
+
+    def edit_categories(self):
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        entry = next((e for e in self.entries if e["date"] == date), None)
+        if entry:
+            current = ", ".join(entry.get("categories", []))
+            text, ok = QInputDialog.getText(self, "Edit Categories", "Enter categories (comma-separated):", text=current)
+            if ok:
+                cats = [c.strip() for c in text.split(",") if c.strip()]
+                entry["categories"] = cats
+                self.save_entries()
+                self.refresh_entry_list()
+
+    def delete_entry(self):
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        entry = next((e for e in self.entries if e["date"] == date), None)
+
+        if not entry:
+            QMessageBox.information(self, "No Entry", "There is no entry for this date to delete.")
+            return
+
+        reply = QMessageBox.question(
+            self,
+            "Delete Entry",
+            f"Are you sure you want to delete the entry for {date}?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+
+        if reply == QMessageBox.StandardButton.Yes:
+            self.entries = [e for e in self.entries if e["date"] != date]
+            self.save_entries()
+            self.refresh_entry_list()
+            self.highlight_entries()
+            self.text_edit.clear()
+            self.entry_title_label.setText(f"Deleted Entry - {date}")
 
 
 # /* ----- App entry point ----- */
