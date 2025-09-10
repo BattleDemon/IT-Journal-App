@@ -6,90 +6,97 @@
 
 ### Core Features
 
+Calendar Selection
+
+Text Editor
+
+Save and Load
 
 ### What Additional Features I Will Add
 
-Search functionality: Able to search based on day entrie name and entry tag
+Themes
 
-Catogorise Entries: Able to tag key words to the entry
+Advanced Text Settings
 
-Favourite Entries: 
+Favourourite / Pinned
 
-Theme Customisation: maybe a preset ligh and dark modes or the possibility to have a customisable theme
+Catogories 
 
-More Advanced Text Editor: 
+Softing entries
+
+Search Entries
 
 ### Flowchart
-BEGIN
-Make Basic Version  of the App
-Basic Text edit
-Calendar View to Select Entries
-Save and Load
-Theme Customisation and more advance text edit
-Theme Change and Save
-Font, Bold, Italic options
-Categories, Favourites, and Sort
-Allow Selection of Catogories
-Favourite / Pinned Entires
-Sort Based on Fields
-Search Functionality
-Search Field and fucntionality
-END
-If Have More Time
-Cloud Back Up
-Text To Speech Dictation
-Connect With Git or Other Free Cloud Service
-Speech Recognition
-True End
+
+![screenshot](Flowchart.png)
 
 ### UI Design
 
+#### Entrie View
+
+![screenshot](EntrieView.png)
+
+#### Calendar View
+
+![screenshot](CalendarView.png)
+
 ### If I Get More Time
 
-A Cloud back up system maybe using git would be intresting.
+A Cloud back up system 
 
-Voice to text input could also be a fun idea but might require some more complex abilities.
+Voice to text input
 
 ## Development
 
-### Prototype 1: MAkE A PROTOTYPE FROM COMMIT 23
+#### Prototype 1: Base Systems finished - Text Edit, Save Load, Calendar Selection
 
-#### Code as of
+### Code as of commit 23
 
 ### Video of Functionality
 
+[![Prototype 1](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
 ### Issues and Solutions
+
 Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ / 
 
-### Prototype 2: Commit 33
+#### Prototype 2: Themes and More advanced text options
 
-#### Code as of
+### Code as of commit 33
 
 ### Video of Functionality
+
+[![Prototype 2](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 ### Issues and Solutions
 
-### Prototype 3: 
+#### Prototype 3: Pinning, catogoriesing and sorting
 
-#### Code as of
+### Code as of commit XX
 
 ### Video of Functionality
+
+[![Prototype 3](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 ### Issues and Solutions
 
-### Prototype 4: 
+#### Prototype 4: Search System
 
-#### Code as of
+### Code as of commit XX 
 
 ### Video of Functionality
+
+[![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 ### Issues and Solutions
 
-### Prototype 5: 
+#### Prototype 5: IF I GET MORE TIME
 
-#### Code as of
+### Code as of commit XX
 
 ### Video of Functionality
+
+[![Prototype 5](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 ### Issues and Solutions
 
