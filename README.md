@@ -72,7 +72,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 3: Pinning, catogoriesing and sorting
+### Prototype 3: Pinning, catogoriesing
 
 #### Code as of commit XX
 
@@ -82,7 +82,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 4: Search System
+### Prototype 4: Sorting and Searching
 
 #### Code as of commit XX 
 
