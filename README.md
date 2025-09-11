@@ -74,7 +74,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ### Prototype 3: Pinning, catogoriesing
 
-#### Code as of commit XX
+#### Code as of commit 46
 
 #### Video of Functionality
 
@@ -84,7 +84,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ### Prototype 4: Sorting and Searching
 
-#### Code as of commit XX 
+#### Code as of commit XX
 
 #### Video of Functionality
 
