@@ -471,7 +471,7 @@ class JournalApp(QMainWindow):
         entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
             current = ", ".join(entry.get("categories", []))
-            text, ok = QInputDialog.getText(self, "Edit Categories", "Enter categories (comma-separated):", text=current)
+            text, ok = QInputDialog.getText(self, "Edit Categories", "Enter categories (seperate with comma):", text=current)
             if ok:
                 cats = [c.strip() for c in text.split(",") if c.strip()]
                 entry["categories"] = cats
