@@ -6,25 +6,25 @@
 
 ### Core Features
 
-Calendar Selection
+Calendar Selection: the ability to view a calendar page and select a date to view. Dates with entries are highlighted.
 
-Text Editor
+Text Editor: Basic area which can have text entered into.
 
-Save and Load
+Save and Load: The saving of entries and their dates.
 
 ### What Additional Features I Will Add
 
-Themes
+Themes: The abilitie to change the appearance of the app to one of many preset themes, maybe expand to fully customisable without presets.
 
-Advanced Text Settings
+Advanced Text Settings: Enable bold, italic, and text size, maybe also color other than the theme one, maybe highlights.
 
-Favourourite / Pinned
+Favourourite / Pinned: Enable the favouriting and pinning of entires which will be at the top of the side pannel even when sorting.
 
-Catogories 
+Catogories: Abilitie to enter any number of catogories in a field area, seperatored by commas.
 
-Softing entries
+Softing and filtering entries: Sort enries by date, title name, last opened and filter out specific catogories and uncatogoriesed entries.
 
-Search Entries
+Search Entries: a search field to look up entries based on their date or title. 
 
 ### Flowchart
 
@@ -32,7 +32,9 @@ Search Entries
 
 ### UI Design
 
-#### Entrie View
+Simple UI that resembles a IDE with the files / entires on a sidebar to the left, and a central field used for the input of text and the calendar selcetion. With text options above the text field, and a save button below the text field which i might also enable with a button for ctrl+s, next to which is the section for editing catogories.
+
+#### Entry View
 
 ![screenshot](EntrieView.png)
 
@@ -42,9 +44,9 @@ Search Entries
 
 ### If I Get More Time
 
-A Cloud back up system 
+A Cloud back up system: cloud back up using git to store enties.
 
-Voice to text input
+Voice to text input: button to dictate the entries.
 
 ## Development
 
