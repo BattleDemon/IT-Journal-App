@@ -20,48 +20,12 @@
         "button_text": "#f8f8f2",
         "highlight": "#bd93f9"
     },
-    
-    "Monokai": {
-        "window_bg": "#272822",
-        "text_color": "#f8f8f2",
-        "button_bg": "#3e3d32",
-        "button_text": "#f8f8f2",
-        "highlight": "#f92672"
-    },
-    "Paper": {
-        "window_bg": "#fafafa",
-        "text_color": "#333333",
-        "button_bg": "#e0e0e0",
-        "button_text": "#333333",
-        "highlight": "#007acc"
-    },
-    "Solarized": {
-        "window_bg": "#fdf6e3",
-        "text_color": "#657b83",
-        "button_bg": "#eee8d5",
-        "button_text": "#657b83",
-        "highlight": "#268bd2"
-    },
     "Nord": {
         "window_bg": "#2e3440",
         "text_color": "#d8dee9",
         "button_bg": "#4c566a",
         "button_text": "#d8dee9",
         "highlight": "#88c0d0"
-    },
-    "Gruvbox": {
-        "window_bg": "#282828",
-        "text_color": "#ebdbb2",
-        "button_bg": "#3c3836",
-        "button_text": "#ebdbb2",
-        "highlight": "#fe8019"
-    },
-    "Ocean Breeze" : {
-        "window_bg" : "#e0f7fa",
-        "text_color" : "#004d40",
-        "button_bg" : "#80deea",
-        "button_text" : "#ffffff",
-        "highlight" : "#00bed4"
     },
     "Midnight Obsidian" : {
         "window_bg" : "#0a0a0a",
@@ -84,18 +48,11 @@
         "button_text" : "#f5f5dc",
         "highlight" : "#dc143c"
     },
-    "Emerald Dream" : {
-        "window_bg" : "#002b00",
-        "text_color" : "#d0f0c0",
-        "button_bg" : "#004d00",
-        "button_text" : "#f0fff0",
-        "highlight" : "#00ff00"
-    },
-    "Royal Purple" : {
-        "window_bg" : "#2e003e",
-        "text_color" : "#e6ccff",
-        "button_bg" : "#5e005e",
-        "button_text" : "#f5f5dc",
-        "highlight" : "#bf40bf"
+    "Omni Dracula" : {
+        "window_bg": "#1E1F29",
+        "text_color": "#E243E7",
+        "button_bg": "#8A2BE2",
+        "button_text": "#FFFFFF",
+        "highlight": "#FFD700"
     }
 }
