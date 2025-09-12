@@ -84,6 +84,16 @@ Simple UI that resembles a IDE with the files / entires on a sidebar to the left
 
 ![screenshot](CalendarView.png)
 
+### Friend Suggested Systems
+
+I questioned some of my mates on what features they would like to see in a journaling app, which gave me the bellow ideas.
+
+To-Do List
+
+Events / Reminders
+
+Gym Tracking
+
 ### If I Get More Time
 
 A Cloud back up system: cloud back up using git to store enties.
@@ -134,21 +144,33 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 5: Todo list and Events
+### Prototype 5: Suggested Systems - Todo List and Reminders
 
 #### Code as of commit XX
 
 #### Video of Functionality
 
+[![Prototype 5](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
 #### Issues and Solutions
 
-### Prototype 6: IF I GET MORE TIME
+### Prototype 6: Suggested Systems - Gym Tracking
 
 #### Code as of commit XX
 
 #### Video of Functionality
 
 [![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
+#### Issues and Solutions
+
+### Prototype 7: IF I GET MORE TIME
+
+#### Code as of commit XX
+
+#### Video of Functionality
+
+[![Prototype 7](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 ### Issues and Solutions
 
