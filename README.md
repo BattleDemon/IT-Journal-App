@@ -77,7 +77,7 @@ Search Entries: a search field to look up entries based on their date or title.
 
 ### Flowchart
 
-Belows is the flowchart on what order i want to follow.
+Belows is the flowchart on what order I wish to complete the assingment. Unfortionately after the making of the below Flowchart I added a new section on Suggested systems which goes between the End section and if I Have more time.
 
 ![screenshot](Flowchart.png)
 
