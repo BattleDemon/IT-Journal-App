@@ -10,6 +10,7 @@
   - [UI Desing](#ui-design)
     - [Entry View](#entry-view)
     - [Calendar View](#calendar-view)
+  - [Suggested Systems](#suggested-systems)
   - [If I Get More Time](#if-i-get-more-time)
 - [Development](#development)
   - [Prototype 1](#prototype-1-base-systems-finished---text-edit-save-load-calendar-selection)
@@ -28,10 +29,18 @@
     - [Code as of XX](#code-as-of-commit-xx)
     - [Video Of Functionality](#video-of-functionality-3)
     - [Issues And Solutions](#issues-and-solutions-3)
-  - [Prototype 5](#prototype-5-if-i-get-more-time)
-    - [Code as of XX](#code-as-of-commit-xx-1)
-    - [Video Of Functionality](#video-of-functionality-4)
-    - [Issues And Solutions](#issues-and-solutions-4)
+  - []()
+    - []()
+    - []()
+    - []()
+  - []()
+    - []()
+    - []()
+    - []()
+  - []()
+    - []()
+    - []()
+    - []()
 - [Reflection](#reflection)
   - [How Is The Overall Design](#how-is-the-overall-design)
   - [What Changes Can I Make](#what-changes-can-i-make)
@@ -84,7 +93,7 @@ Simple UI that resembles a IDE with the files / entires on a sidebar to the left
 
 ![screenshot](CalendarView.png)
 
-### Friend Suggested Systems
+### Suggested Systems
 
 I questioned some of my mates on what features they would like to see in a journaling app, which gave me the bellow ideas.
 
