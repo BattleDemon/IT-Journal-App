@@ -155,7 +155,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ### Prototype 5: Suggested Systems - Todo List and Reminders
 
-#### Code as of commit XX
+#### Code as of commit 60
 
 #### Video of Functionality
 
