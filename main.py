@@ -15,10 +15,18 @@ from PyQt6.QtWidgets import (
     QInputDialog,
     QComboBox,
     QListWidgetItem,
-    QMessageBox
+    QMessageBox,
+    QCheckBox,
+    QTimeEdit,
+    QLineEdit,
+    QTabWidget,
+    QDateTimeEdit,
+    QDateEdit
 ) # Import PyQt6 widgets i will use
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
+from PyQt6.QtCore import QTime, QDateTime
+from datetime import datetime, timedelta 
 import json
 import os
 import sys
@@ -52,6 +60,8 @@ class JournalApp(QMainWindow):
         self.to_entry_btn = QPushButton("Entry View")
         sidebar_layout.addWidget(self.to_calendar_btn)
         sidebar_layout.addWidget(self.to_entry_btn)
+        self.to_todo_btn = QPushButton("Todo List")
+        sidebar_layout.addWidget(self.to_todo_btn)
 
         # Entry list
         self.entry_list = QListWidget()
@@ -133,6 +143,74 @@ class JournalApp(QMainWindow):
 
         self.stacked.addWidget(self.entry_page)
 
+        # Todo List page setup
+        self.todo_page = QWidget()
+        todo_layout = QVBoxLayout(self.todo_page)
+
+        # Todo list tabs
+        self.todo_tabs = QTabWidget()
+        todo_layout.addWidget(self.todo_tabs)
+
+        # All Todos tab
+        self.all_todos_tab = QWidget()
+        all_todos_layout = QVBoxLayout(self.all_todos_tab)
+        self.todo_list = QListWidget()
+        all_todos_layout.addWidget(self.todo_list)
+        self.todo_tabs.addTab(self.all_todos_tab, "All Todos")
+
+        # Today's Todos tab
+        self.today_todos_tab = QWidget()
+        today_todos_layout = QVBoxLayout(self.today_todos_tab)
+        self.today_todo_list = QListWidget()
+        today_todos_layout.addWidget(self.today_todo_list)
+        self.todo_tabs.addTab(self.today_todos_tab, "Today")
+
+        # Overdue Todos tab
+        self.overdue_todos_tab = QWidget()
+        overdue_todos_layout = QVBoxLayout(self.overdue_todos_tab)
+        self.overdue_todo_list = QListWidget()
+        overdue_todos_layout.addWidget(self.overdue_todo_list)
+        self.todo_tabs.addTab(self.overdue_todos_tab, "Overdue")
+
+        # Add todo form
+        todo_form_layout = QHBoxLayout()
+        self.todo_input = QLineEdit()
+        self.todo_input.setPlaceholderText("Enter new todo...")
+        todo_form_layout.addWidget(self.todo_input)
+
+        self.todo_date = QDateEdit()
+        self.todo_date.setDate(QDate.currentDate())
+        self.todo_date.setCalendarPopup(True)
+        todo_form_layout.addWidget(self.todo_date)
+
+        self.todo_time = QTimeEdit()
+        self.todo_time.setTime(QTime(9, 0))
+        todo_form_layout.addWidget(self.todo_time)
+
+        self.add_todo_btn = QPushButton("Add Todo")
+        self.add_todo_btn.clicked.connect(self.add_todo)
+        todo_form_layout.addWidget(self.add_todo_btn)
+
+        todo_layout.addLayout(todo_form_layout)
+
+        # Todo actions
+        todo_actions_layout = QHBoxLayout()
+        self.complete_todo_btn = QPushButton("Complete")
+        self.complete_todo_btn.clicked.connect(self.complete_todo)
+        todo_actions_layout.addWidget(self.complete_todo_btn)
+
+        self.edit_todo_btn = QPushButton("Edit")
+        self.edit_todo_btn.clicked.connect(self.edit_todo)
+        todo_actions_layout.addWidget(self.edit_todo_btn)
+
+        self.delete_todo_btn = QPushButton("Delete")
+        self.delete_todo_btn.clicked.connect(self.delete_todo)
+        todo_actions_layout.addWidget(self.delete_todo_btn)
+
+        todo_layout.addLayout(todo_actions_layout)
+
+        self.stacked.addWidget(self.todo_page)
+
         # Theme selector in sidebar
         self.theme_selector = QComboBox()
         self.theme_selector.addItems(THEMES.keys())
@@ -149,11 +227,18 @@ class JournalApp(QMainWindow):
         self.save_btn.clicked.connect(self.save_entry)
         self.calendar.selectionChanged.connect(self.load_entry_for_date)
         self.entry_list.itemClicked.connect(self.load_entry_from_list)
+        self.to_todo_btn.clicked.connect(
+            lambda: self.stacked.setCurrentWidget(self.todo_page)
+        )
 
         # Data and storage setup
         self.entries = []
         self.data_dir = os.path.join(os.path.dirname(__file__), "data")
         os.makedirs(self.data_dir, exist_ok=True)
+
+        self.todos = []
+        self.load_todos()
+        self.refresh_todo_lists()
 
         # Load last used settings and entries
         self.load_settings()
@@ -236,6 +321,27 @@ class JournalApp(QMainWindow):
                 background-color: {theme['window_bg']};
                 color: {theme['text_color']};
                 border: 1px solid {theme['highlight']};
+            }}
+            QLineEdit {{
+                background-color: {theme['window_bg']};
+                color: {theme['text_color']};
+                border: 1px solid {theme['highlight']};
+            }}
+            QDateEdit, QTimeEdit {{
+                background-color: {theme['window_bg']};
+                color: {theme['text_color']};
+                border: 1px solid {theme['highlight']};
+            }}
+            QTabWidget::pane {{
+                border: 1px solid {theme['highlight']};
+            }}
+            QTabBar::tab {{
+                background: {theme['button_bg']};
+                color: {theme['button_text']};
+                padding: 5px;
+            }}
+            QTabBar::tab:selected {{
+                background: {theme['highlight']};
             }}
         """
         )
@@ -327,7 +433,7 @@ class JournalApp(QMainWindow):
 
         # Different color for pinned entries
         pinned_format = QTextCharFormat()
-        pinned_format.setBackground(QBrush(QColor("#00ffff")))
+        pinned_format.setBackground(QBrush(QColor("#ffcc00")))
 
         # Reapply new highlights
         for entry in self.entries:
@@ -379,7 +485,7 @@ class JournalApp(QMainWindow):
 
     def delete_entry(self):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
-        entry = next((e for e in self.entries if e["date"] == date), None)
+        entry = next((e for e in self.entries if e["date"] == date), None) 
 
         if not entry:
             QMessageBox.information(self, "No Entry", "There is no entry for this date to delete.")
@@ -399,6 +505,28 @@ class JournalApp(QMainWindow):
             self.highlight_entries()
             self.text_edit.clear()
             self.entry_title_label.setText(f"Deleted Entry - {date}")
+
+    def load_todos(self):
+        pass
+
+    def save_todos(self):
+        pass
+
+    def add_todo(self):
+        pass
+
+    def refresh_todo_lists(self):
+        pass
+
+    def complete_todo(self):
+        pass    
+
+    def edit_todo(self):
+        pass
+
+    def delete_todo(self):
+        pass
+
 
 
 # /* ----- App entry point ----- */
