@@ -27,13 +27,6 @@
         "button_text": "#d8dee9",
         "highlight": "#88c0d0"
     },
-    "Midnight Obsidian" : {
-        "window_bg" : "#0a0a0a",
-        "text_color" : "#e6e6e6",
-        "button_bg" : "#1a1a1a",
-        "button_text" : "#ffffff",
-        "highlight" : "#00ffff"
-    },
     "Vampire" : {
         "window_bg" : "#33001a",
         "text_color" : "#f0e68c",
@@ -41,7 +34,7 @@
         "button_text" : "#f5f5dc",
         "highlight" : "#dc143c"
     },
-    "Crimson Shadow" : {
+    "Crimson" : {
         "window_bg" : "#3b0000",
         "text_color" : "#ffe0e0",
         "button_bg" : "#800000",
@@ -54,5 +47,19 @@
         "button_bg": "#8A2BE2",
         "button_text": "#FFFFFF",
         "highlight": "#FFD700"
+    },
+    "Cobalt": {
+        "window_bg": "#002240",
+        "text_color": "#ffffff",
+        "button_bg": "#003366",
+        "button_text": "#ffffff",
+        "highlight": "#ff9d00"
+    },
+    "Night Owl": {
+        "window_bg": "#011627",
+        "text_color": "#d6deeb",
+        "button_bg": "#1d3b53",
+        "button_text": "#c792ea",
+        "highlight": "#82aaff"
     }
 }
