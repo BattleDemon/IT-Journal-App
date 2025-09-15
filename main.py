@@ -778,7 +778,46 @@ class JournalApp(QMainWindow):
         self.exercises_table.setRowCount(0)
 
     def add_exercise(self):
-        pass
+        if not self.current_session:
+            QMessageBox.warning(self, "No Session", "Please create or load a workout session first.")
+            return
+
+        name = self.exercise_input.text().strip()
+        if not name:
+            QMessageBox.warning(self, "Input Error", "Please enter an exercise name.")
+            return
+
+        sets = self.sets_input.value()
+
+        exercise = {
+            "name": name,
+            "sets": sets,
+            "reps": "",
+            "weight": ""
+        }
+
+        self.current_session["exercises"].append(exercise)
+
+        row = self.exercises_table.rowCount()
+        self.exercises_table.insertRow(row)
+
+        self.exercises_table.setItem(row, 0, QTableWidgetItem(exercise["name"]))
+
+        sets_item = QTableWidgetItem(str(exercise["sets"]))
+        sets_item.setFlags(sets_item.flags() & ~Qt.ItemFlag.ItemIsEditable )
+        self.exercises_table.setItem(row, 1, sets_item)
+
+        reps_item = QTableWidgetItem(str(exercise.get("reps", "")))
+        self.exercises_table.setItem(row, 2, reps_item)
+
+        weight_item = QTableWidgetItem(str(exercise.get("weight", "")))
+        self.exercises_table.setItem(row, 3, weight_item)
+
+        del_btn = QPushButton("Delete")
+        del_btn.clicked.connect(lambda _, r=row: self.delete_exercise(r))
+        self.exercises_table.setCellWidget(row, 4, del_btn)
+
+        self.exercise_input.clear()
 
     def delete_exercise(self, row):
         pass
