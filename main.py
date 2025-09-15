@@ -709,7 +709,7 @@ class JournalApp(QMainWindow):
                 self.workout_sessions = json.load(f)
         else:
             self.workout_sessions = []
-            self.save_workout_sessions()
+            self.save_workout_session()
 
     def save_workout_session(self):
         workouts_path = os.path.join(self.data_dir, "workouts.json")
@@ -748,8 +748,7 @@ class JournalApp(QMainWindow):
         if self.current_session:
             self.load_session_data()
         else:
-            QMessageBox.information(self, "No Session", f"No session found for {date}. You can create a new one.")
-
+            return
 
     def load_session_date(self):
         self.clear_excercises_table()
@@ -828,10 +827,44 @@ class JournalApp(QMainWindow):
             self.exercises_table.removeRow(row)
 
     def save_workout_session(self):
-        pass
+        if not self.current_session:
+            QMessageBox.warning(self, "No Session", "No workout session to save.")
+            return
+        
+        for row in range(self.exercises_table.rowCount()):
+            if row < len(self.current_session["exercises"]):
+                exercise = self.current_session["exercises"][row]
+                exercise["reps"] = self.exercises_table.item(row, 2).text() if self.exercises_table.item(row, 2) else ""
+                exercise["weight"] = self.exercises_table.item(row, 3).text() if self.exercises_table.item(row, 3) else ""    
+
+                exisiting_index = next((i for i, s in enumerate(self.workout_sessions) if s["id"] == self.current_session["id"]), None)
+                if exisiting_index >= 0:
+                    self.workout_sessions[exisiting_index] = self.current_session
+                else:
+                    self.workout_sessions.append(self.current_session)
+
+        self.save_workout_session()
+        QMessageBox.information(self, "Saved", "Workout session saved successfully.")
 
     def delete_workout_session(self):
-        pass
+        if not self.current_session:
+            return
+        
+        reply = QMessageBox.question(
+            self,
+            "Delete Session",
+            f"Are you sure you want to delete the session for {self.current_session['date']}?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No 
+        )
+
+        if reply == QMessageBox.StandardButton.Yes:
+            self.workout_sessions = [s for s in self.workout_sessions if s["id"] != self.current_session["id"]]
+            self.save_workout_session()
+            self.current_session = None
+            self.clear_excercises_table()
+            QMessageBox.information(self, "Deleted", "Workout session deleted.")
+        else:
+            return
 
 
 
