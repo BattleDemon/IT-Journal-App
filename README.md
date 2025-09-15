@@ -25,18 +25,18 @@
     - [Code as of commit 46](#code-as-of-commit-46)
     - [Video Of Functionality](#video-of-functionality-2)
     - [Issues And Solutions](#issues-and-solutions-2)
-  - [Prototype 4](#prototype-4-sorting-and-searching)
+  - [Prototype 4](#prototype-5-suggested-systems---todo-list-and-reminders)
+    - [Code as of Commit XX](#code-as-of-commit-60)
+    - [Video Of Functionality](#video-of-functionality-4)
+    - [Issues And Solutions](#issues-and-solutions-4)
+  - [Prototype 5](#prototype-6-suggested-systems---gym-tracking)
+    - [Code as of Commit xx](#code-as-of-commit-69)
+    - [Video Of Functionality](#video-of-functionality-5)
+    - [Issues And Solutions](#issues-and-solutions-5)
+  - [Prototype 6](#prototype-4-sorting-and-searching)
     - [Code as of XX](#code-as-of-commit-xx)
     - [Video Of Functionality](#video-of-functionality-3)
     - [Issues And Solutions](#issues-and-solutions-3)
-  - [Prototype 5](#prototype-5-suggested-systems---todo-list-and-reminders)
-    - [Code as of Commit XX](#code-as-of-commit-xx-1)
-    - [Video Of Functionality](#video-of-functionality-4)
-    - [Issues And Solutions](#issues-and-solutions-4)
-  - [Prototype 6](#prototype-6-suggested-systems---gym-tracking)
-    - [Code as of Commit xx](#code-as-of-commit-xx-2)
-    - [Video Of Functionality](#video-of-functionality-5)
-    - [Issues And Solutions](#issues-and-solutions-5)
   - [Prototype 7](#prototype-7-if-i-get-more-time)
     - [Code as of Commit xx](#code-as-of-commit-xx-3)
     - [Video Of Functionality](#video-of-functionality-6)
@@ -50,6 +50,16 @@
 - [Sources](#sources)
 
 ## User Manual
+
+Calendar and Entry Page:
+
+Side bar:
+
+Themes:
+
+Todo List:
+
+Gym Tracker:
 
 ## Preplanning
 
@@ -77,7 +87,7 @@ Search Entries: a search field to look up entries based on their date or title.
 
 ### Flowchart
 
-Belows is the flowchart on what order I wish to complete the assingment. Unfortionately after the making of the below Flowchart I added a new section on Suggested systems which goes between the End section and if I Have more time.
+Belows is the flowchart on what order I wish to complete the assingment. Unfortionately after the making of the below Flowchart I added a new section on Suggested systems which goes inbetween the End section and if I Have more time.
 
 ![screenshot](Flowchart.png)
 
@@ -95,13 +105,21 @@ Simple UI that resembles a IDE with the files / entires on a sidebar to the left
 
 ### Suggested Systems
 
-I questioned some of my mates on what features they would like to see in a journaling app, which gave me the bellow ideas.
+After asking some or my peers i reseived the following suggestions:
 
 To-Do List
 
 Events / Reminders
 
 Gym Tracking
+
+I also questioned Kirsty which resulted in the following suggestions:
+
+Change Font
+
+Emoji's or pictures to represent mood
+
+Set the weather that day.
 
 After questioning Kirsty this is the new systems she suggested Change Font : Have empji or something like that so signal your mood that day : a section to put the weather 
 
@@ -123,6 +141,12 @@ Voice to text input: button to dictate the entries.
 
 #### Current UI
 
+Entry View
+
+Calendar View
+
+Side Bar
+
 #### Issues and Solutions
 
 Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ vs /.
@@ -137,6 +161,10 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Current UI
 
+Theme
+
+Text options
+
 #### Issues and Solutions
 
 ### Prototype 3: Pinning, catogoriesing
@@ -148,6 +176,10 @@ Because i use a Linux system at home and a windows system for school along with 
 [![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
 
 #### Current UI
+
+Pinning
+
+Catogories
 
 #### Issues and Solutions
 
@@ -163,7 +195,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 5: Suggested Systems - Todo List and Reminders
+### Prototype 5: Suggested Systems - Todo List
 
 #### Code as of commit 60
 
@@ -172,6 +204,8 @@ Because i use a Linux system at home and a windows system for school along with 
 [![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
 #### Current UI
+
+Todo Page
 
 #### Issues and Solutions
 
@@ -184,6 +218,8 @@ Because i use a Linux system at home and a windows system for school along with 
 [![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
 #### Current UI
+
+Gym Page
 
 #### Issues and Solutions
 

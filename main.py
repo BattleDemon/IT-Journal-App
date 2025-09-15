@@ -874,8 +874,6 @@ class JournalApp(QMainWindow):
         else:
             return
 
-
-
 # /* ----- App entry point ----- */
 if __name__ == "__main__":
     app = QApplication(sys.argv)
