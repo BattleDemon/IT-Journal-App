@@ -21,7 +21,10 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QTabWidget,
     QDateTimeEdit,
-    QDateEdit
+    QDateEdit,
+    QTableWidget,
+    QTableWidgetItem,
+    QHeaderView
 ) # Import PyQt6 widgets i will use
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
@@ -62,6 +65,8 @@ class JournalApp(QMainWindow):
         sidebar_layout.addWidget(self.to_entry_btn)
         self.to_todo_btn = QPushButton("Todo List")
         sidebar_layout.addWidget(self.to_todo_btn)
+        self.to_gym_btn = QPushButton("Gym Tracking")
+        sidebar_layout.addWidget(self.to_gym_btn)
 
         # Entry list
         self.entry_list = QListWidget()
@@ -211,6 +216,67 @@ class JournalApp(QMainWindow):
 
         self.stacked.addWidget(self.todo_page)
 
+        self.gym_page = QWidget()
+        gym_layout = QVBoxLayout(self.gym_page)
+
+        # Workout session selection
+        session_layout = QHBoxLayout()
+        self.session_date = QDateEdit()
+        self.session_date.setDate(QDate.currentDate())
+        self.session_date.setCalendarPopup(True)
+        session_layout.addWidget(QLabel("Workout Date:"))
+        session_layout.addWidget(self.session_date)
+
+        self.load_session_btn = QPushButton("Load Session")
+        self.load_session_btn.clicked.connect(self.load_workout_sessions)
+        session_layout.addWidget(self.load_session_btn)
+
+        self.new_session_btn = QPushButton("New Session")
+        self.new_session_btn.clicked.connect(self.create_new_session)
+        session_layout.addWidget(self.new_session_btn)
+
+        gym_layout.addLayout(session_layout)
+
+        # Exercise input form
+        exercise_form_layout = QHBoxLayout()
+        self.exercise_input = QLineEdit()
+        self.exercise_input.setPlaceholderText("Exercise name...")
+        exercise_form_layout.addWidget(self.exercise_input)
+
+        self.sets_input = QSpinBox()
+        self.sets_input.setRange(1, 10)
+        self.sets_input.setValue(3)
+        exercise_form_layout.addWidget(QLabel("Sets:"))
+        exercise_form_layout.addWidget(self.sets_input)
+
+        self.add_exercise_btn = QPushButton("Add Exercise")
+        self.add_exercise_btn.clicked.connect(self.add_exercise)
+        exercise_form_layout.addWidget(self.add_exercise_btn)
+
+        gym_layout.addLayout(exercise_form_layout)
+
+        # Exercises table
+        self.exercises_table = QTableWidget()
+        self.exercises_table.setColumnCount(5)
+        self.exercises_table.setHorizontalHeaderLabels(["Exercise", "Sets", "Reps", "Weight", "Actions"])
+        self.exercises_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        gym_layout.addWidget(self.exercises_table)
+
+        # Session actions
+        session_actions_layout = QHBoxLayout()
+        self.save_session_btn = QPushButton("Save Session")
+        self.save_session_btn.clicked.connect(self.save_workout_session)
+        session_actions_layout.addWidget(self.save_session_btn)
+
+        self.delete_session_btn = QPushButton("Delete Session")
+        self.delete_session_btn.clicked.connect(self.delete_workout_session)
+        session_actions_layout.addWidget(self.delete_session_btn)
+
+        gym_layout.addLayout(session_actions_layout)
+
+        self.stacked.addWidget(self.gym_page)
+
+
         # Theme selector in sidebar
         self.theme_selector = QComboBox()
         self.theme_selector.addItems(THEMES.keys())
@@ -230,6 +296,9 @@ class JournalApp(QMainWindow):
         self.to_todo_btn.clicked.connect(
             lambda: self.stacked.setCurrentWidget(self.todo_page)
         )
+        self.to_gym_btn.clicked.connect(
+            lambda: self.stacked.setCurrentWidget(self.gym_page)
+        )
 
         # Data and storage setup
         self.entries = []
@@ -239,6 +308,10 @@ class JournalApp(QMainWindow):
         self.todos = []
         self.load_todos()
         self.refresh_todo_lists()
+
+        self.workout_sessions = []
+        self.current_session = None
+        self.load_workout_sessions()
 
         # Load last used settings and entries
         self.load_settings()
@@ -628,6 +701,66 @@ class JournalApp(QMainWindow):
             self.todos = [t for t in self.todos if t["id"] != todo_id]
             self.save_todos()
             self.refresh_todo_lists()
+
+    def load_workout_sessions(self):
+        workouts_path = os.path.join(self.data_dir, "workouts.json")
+        if os.path.exists(workouts_path):
+            with open(workouts_path, "r", encoding="utf-8") as f:
+                self.workout_sessions = json.load(f)
+        else:
+            self.workout_sessions = []
+            self.save_workout_sessions()
+
+    def save_workout_session(self):
+        workouts_path = os.path.join(self.data_dir, "workouts.json")
+        with open(workouts_path, "w", encoding="utf-8") as f:
+            json.dump(self.workout_sessions, f, indent=4)
+
+    def create_new_session(self):
+        date = self.session_date.date().toString("yyyy-MM-dd")
+
+        existing = next((s for s in self.workout_sessions if s["date"] == date), None)
+        if existing:
+            reply = QMessageBox.question(
+                self,
+                "Session Exists",
+                f"A session for {date} already exists. Do you want to load it?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if reply == QMessageBox.StandardButton.Yes:
+                self.current_session = existing
+                self.load_session_data()
+            return
+        
+        self.current_session = {
+            "date": date,
+            "exercises": [],
+            "id": datetime.now().strftime("%Y%m%d%H%M%S")
+        }
+
+        self.clear_excercises_table()
+        QMessageBox.information(self, "New Session", f"Created new session for {date}.")
+           
+
+    def load_session_date(self):
+        date = self.sess
+
+    def clear_excercises_table(self):
+        pass
+
+    def add_exercise(self):
+        pass
+
+    def delete_exercise(self, row):
+        pass
+
+    def save_workout_session(self):
+        pass
+
+    def delete_workout_session(self):
+        pass
+
+
 
 # /* ----- App entry point ----- */
 if __name__ == "__main__":
