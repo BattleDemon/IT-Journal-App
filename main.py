@@ -820,7 +820,12 @@ class JournalApp(QMainWindow):
         self.exercise_input.clear()
 
     def delete_exercise(self, row):
-        pass
+        if not self.current_session:
+            return
+        
+        if 0 <= row < len(self.current_session["exercises"]):
+            self.current_session["exercises"].pop(row)
+            self.exercises_table.removeRow(row)
 
     def save_workout_session(self):
         pass
