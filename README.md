@@ -129,7 +129,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 2](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 2](https://img.youtube.com/vi/wpqoa20dFwM/0.jpg)](https://www.youtube.com/watch?v=wpqoa20dFwM)
 
 #### Issues and Solutions
 
@@ -139,7 +139,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 3](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
 
 #### Issues and Solutions
 
@@ -159,7 +159,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 5](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
 #### Issues and Solutions
 
@@ -169,7 +169,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
 #### Issues and Solutions
 
