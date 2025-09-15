@@ -741,9 +741,38 @@ class JournalApp(QMainWindow):
         self.clear_excercises_table()
         QMessageBox.information(self, "New Session", f"Created new session for {date}.")
            
+    def load_workout_session(self):
+        date = self.session_date.date().toString("yyyy-MM-dd")
+        self.current_session = next((s for s in self.workout_sessions if s["date"] == date), None)
+
+        if self.current_session:
+            self.load_session_data()
+        else:
+            QMessageBox.information(self, "No Session", f"No session found for {date}. You can create a new one.")
+
 
     def load_session_date(self):
-        date = self.sess
+        self.clear_excercises_table()
+        if not self.current_session:
+            return
+        
+        self.exercises_table.setRowCount(len(self.current_session["exercises"]))
+
+        for row, exercise in enumerate(self.current_session["exercises"]):
+            self.exercises_table.setItem(row, 0, QTableWidgetItem(exercise["name"]))
+            sets_item = QTableWidgetItem(str(exercise["sets"]))
+            sets_item.setFlags(sets_item.flags() & ~Qt.ItemFlag.ItemIsEditable )
+            self.exercises_table.setItem(row, 1, sets_item)
+
+            reps_item = QTableWidgetItem(str(exercise.get("reps", "")))
+            self.exercises_table.setItem(row, 2, reps_item)
+
+            weight_item = QTableWidgetItem(str(exercise.get("weight", "")))
+            self.exercises_table.setItem(row, 3, weight_item)
+
+            del_btn = QPushButton("Delete")
+            del_btn.clicked.connect(lambda _, r=row: self.delete_exercise(r))
+            self.exercises_table.setCellWidget(row, 4, del_btn)
 
     def clear_excercises_table(self):
         pass
