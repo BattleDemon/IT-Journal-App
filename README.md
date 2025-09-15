@@ -165,7 +165,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ### Prototype 6: Suggested Systems - Gym Tracking
 
-#### Code as of commit XX
+#### Code as of commit 69
 
 #### Video of Functionality
 
