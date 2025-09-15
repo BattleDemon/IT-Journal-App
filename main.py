@@ -507,13 +507,40 @@ class JournalApp(QMainWindow):
             self.entry_title_label.setText(f"Deleted Entry - {date}")
 
     def load_todos(self):
-        pass
+        todos_path = os.path.join(self.data_dir, "todos.json")
+        if os.path.exists(todos_path):
+            with open(todos_path, "r", encoding="utf-8") as f:
+                self.todos = json.load(f)
+        else:
+            self.todos = []
+            self.save_todos()
 
     def save_todos(self):
-        pass
+        todos_path = os.path.join(self.data_dir, "todos.json")
+        with open(todos_path, "w", encoding="utf-8") as f:
+            json.dump(self.todos, f, indent=4)
 
     def add_todo(self):
-        pass
+        text = self.todo_input.text().strip()
+        if not text:
+            return
+
+        date = self.todo_date.date().toString("yyyy-MM-dd")
+        time = self.todo_time.time().toString("HH:mm")
+        datetime_str = f"{date} {time}"
+
+        todo = {
+            "id": datetime.now().strftime("%Y%m%d%H%M%S"),
+            "text": text,
+            "datetime": datetime_str,
+            "completed": False,
+            "created": datetime.now().strftime("%Y-%m-%d %H:%M")
+        }
+
+        self.todos.append(todo)
+        self.save_todos()
+        self.refresh_todo_lists()
+        self.todo_input.clear()
 
     def refresh_todo_lists(self):
         pass
