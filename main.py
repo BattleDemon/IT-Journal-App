@@ -543,10 +543,47 @@ class JournalApp(QMainWindow):
         self.todo_input.clear()
 
     def refresh_todo_lists(self):
-        pass
+        # Clear existing items
+        self.todo_list.clear()
+        self.today_todo_list.clear()
+        self.overdue_todo_list.clear()
 
+        now = datetime.now()
+        today = QDate.currentDate().toString("yyyy-MM-dd")
+
+        for todo in self.todos:
+            todo_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
+
+            todo_date = todo["datetime"].split(" ")[0]
+
+            status = "✅" if todo["completed"] else "❌"
+            item_text = f"{status} {todo['text']} (Due: {todo['datetime']})"
+
+            item = QListWidgetItem(item_text)
+            item.setData(Qt.ItemDataRole.UserRole, todo["id"])
+
+            self.todo_list.addItem(item)
+
+            if todo_date == today:
+                self.today_todo_list.addItem(QListWidgetItem(item_text))
+
+            if not todo["completed"] and todo_datetime < now:
+                self.overdue_todo_list.addItem(QListWidgetItem(item_text))
+            
     def complete_todo(self):
-        pass    
+        current_item = self.todo_list.currentItem()
+        if not current_item:
+            return
+        
+        todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+        for todo in self.todos:
+            if todo["id"] == todo_id:
+                todo["completed"] = not todo["completed"]
+
+                break
+
+        self.save_todos()
+        self.refresh_todo_lists()
 
     def edit_todo(self):
         pass
