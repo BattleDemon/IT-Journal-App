@@ -775,7 +775,7 @@ class JournalApp(QMainWindow):
             self.exercises_table.setCellWidget(row, 4, del_btn)
 
     def clear_excercises_table(self):
-        pass
+        self.exercises_table.setRowCount(0)
 
     def add_exercise(self):
         pass
