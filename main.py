@@ -586,12 +586,48 @@ class JournalApp(QMainWindow):
         self.refresh_todo_lists()
 
     def edit_todo(self):
-        pass
+        current_item = self.todo_list.currentItem()
+        if not current_item:
+            return
+        
+        todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+        todo = next((t for t in self.todos if t["id"] == todo_id), None)
+        if not todo:
+            return
+        
+        text, ok = QInputDialog.getText(self, "Edit Todo", "Update todo text:", text=todo["text"])
+        if ok and text.strip():
+            todo["text"] = text.strip()
+            
+            current_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
+            new_datetime, ok = QInputDialog.getText(self, "Edit Todo", "Update due date and time (YYYY-MM-DD HH:MM):", text=todo["datetime"])
+            if ok and new_datetime.strip():
+                try:
+                    datetime.strptime(new_datetime.strip(), "%Y-%m-%d %H:%M")
+                    todo["datetime"] = new_datetime.strip()
+                except ValueError:
+                    QMessageBox.warning(self, "Invalid DateTime", "The date and time format is invalid. Keeping the old value.")
+            
+        self.save_todos()
+        self.refresh_todo_lists()
 
     def delete_todo(self):
-        pass
+        current_item = self.todo_list.currentItem()
+        if not current_item:
+            return
+        
+        todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+        reply = QMessageBox.question(
+            self,
+            "Delete Todo",
+            "Are you sure you want to delete this todo?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
 
-
+        if reply == QMessageBox.StandardButton.Yes:
+            self.todos = [t for t in self.todos if t["id"] != todo_id]
+            self.save_todos()
+            self.refresh_todo_lists()
 
 # /* ----- App entry point ----- */
 if __name__ == "__main__":
