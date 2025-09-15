@@ -103,6 +103,8 @@ Events / Reminders
 
 Gym Tracking
 
+After questioning Kirsty this is the new systems she suggested Change Font : Have empji or something like that so signal your mood that day : a section to put the weather 
+
 ### If I Get More Time
 
 A Cloud back up system: cloud back up using git to store enties.
@@ -119,6 +121,8 @@ Voice to text input: button to dictate the entries.
 
 [![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
 
+#### Current UI
+
 #### Issues and Solutions
 
 Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ vs /.
@@ -131,6 +135,8 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 2](https://img.youtube.com/vi/wpqoa20dFwM/0.jpg)](https://www.youtube.com/watch?v=wpqoa20dFwM)
 
+#### Current UI
+
 #### Issues and Solutions
 
 ### Prototype 3: Pinning, catogoriesing
@@ -140,6 +146,8 @@ Because i use a Linux system at home and a windows system for school along with 
 #### Video of Functionality
 
 [![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
+
+#### Current UI
 
 #### Issues and Solutions
 
@@ -151,6 +159,8 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
+#### Current UI
+
 #### Issues and Solutions
 
 ### Prototype 5: Suggested Systems - Todo List and Reminders
@@ -160,6 +170,8 @@ Because i use a Linux system at home and a windows system for school along with 
 #### Video of Functionality
 
 [![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
+
+#### Current UI
 
 #### Issues and Solutions
 
@@ -171,6 +183,8 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
+#### Current UI
+
 #### Issues and Solutions
 
 ### Prototype 7: IF I GET MORE TIME
@@ -180,6 +194,8 @@ Because i use a Linux system at home and a windows system for school along with 
 #### Video of Functionality
 
 [![Prototype 7](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
+#### Current UI
 
 ### Issues and Solutions
 
