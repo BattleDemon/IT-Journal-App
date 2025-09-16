@@ -120,7 +120,7 @@ Events / Reminders: Allow the User to set reminders which it will then alert the
 
 Gym Tracking: Track what excersise you do, how many sets, reps and what weight it was.
 
-Gabe has suggested that i use some data prevention / guide user to save when they try to leave
+Gabe has also suggested that i use some data prevention / guide user to save when they try to leave
 
 I also questioned Kirsty which resulted in the following suggestions:
 
@@ -130,13 +130,13 @@ Emoji's or pictures to represent mood: Select a Emoji or picture to represent yo
 
 Set the weather that day: Allow the user to select one or a few options for a weather button, or allow them to enter it in words.
 
-After questioning Kirsty this is the new systems she suggested Change Font : Have empji or something like that so signal your mood that day : a section to put the weather 
-
 ### If I Get More Time
 
-A Cloud back up system: cloud back up using git to store enties.
+If i stop getting good suggestions from people, i intend to do the following if i get more time.
 
-Voice to text input: button to dictate the entries.
+A Cloud back up system: Maybe use git or something similar to store entries.
+
+Voice to text input: Possible text dictation but would require a mic and the ability to recognise words from the mic. 
 
 ## Development
 
@@ -144,7 +144,9 @@ Voice to text input: button to dictate the entries.
 
 #### Code as of commit 23
 
-``` ```
+```py
+  print("Hello World")
+```
 
 #### Video of Functionality
 
