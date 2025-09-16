@@ -120,6 +120,8 @@ Events / Reminders: Allow the User to set reminders which it will then alert the
 
 Gym Tracking: Track what excersise you do, how many sets, reps and what weight it was.
 
+Gabe has suggested that i use some data prevention / guide user to save when they try to leave
+
 I also questioned Kirsty which resulted in the following suggestions:
 
 Change Font: Change between fonts for the Entries and maybe even the Ui of the App.
@@ -141,6 +143,8 @@ Voice to text input: button to dictate the entries.
 ### Prototype 1: Base Systems finished - Text Edit, Save Load, Calendar Selection
 
 #### Code as of commit 23
+
+``` ```
 
 #### Video of Functionality
 
