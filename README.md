@@ -114,19 +114,19 @@ Simple UI that resembles a IDE with the files / entires on a sidebar to the left
 
 After asking some or my peers i reseived the following suggestions:
 
-To-Do List
+To-Do List: Create 
 
-Events / Reminders
+Events / Reminders: Allow the User to set reminders which it will then alert them of when it is near. Would require keeping the application open or finding a way to do it in a weird way.
 
-Gym Tracking
+Gym Tracking: Track what excersise you do, how many sets, reps and what weight it was.
 
 I also questioned Kirsty which resulted in the following suggestions:
 
-Change Font
+Change Font: Change between fonts for the Entries and maybe even the Ui of the App.
 
-Emoji's or pictures to represent mood
+Emoji's or pictures to represent mood: Select a Emoji or picture to represent your mood that day.
 
-Set the weather that day.
+Set the weather that day: Allow the user to select one or a few options for a weather button, or allow them to enter it in words.
 
 After questioning Kirsty this is the new systems she suggested Change Font : Have empji or something like that so signal your mood that day : a section to put the weather 
 
