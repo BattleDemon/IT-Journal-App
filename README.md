@@ -114,7 +114,7 @@ Simple UI that resembles a IDE with the files / entires on a sidebar to the left
 
 After asking some or my peers i reseived the following suggestions:
 
-To-Do List: Create 
+To-Do List: Create a todo list where you can set a due date, and toggle between complete and incomplete. Also be able to see what is due today and what is overdue.
 
 Events / Reminders: Allow the User to set reminders which it will then alert them of when it is near. Would require keeping the application open or finding a way to do it in a weird way.
 
