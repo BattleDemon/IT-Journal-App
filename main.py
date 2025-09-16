@@ -38,6 +38,7 @@ import sys
 screen_width = 1920
 screen_height = 1080
 
+# Load themes from JSON file
 THEMES = json.load(open("themes.json", "r", encoding="utf-8"))
 
 # /* ----- Main App Class ----- */
@@ -50,7 +51,7 @@ class JournalApp(QMainWindow):
         self.setGeometry(200, 100, 1000, 600)
 
         # Central widget and main horizontal layout
-        self.central_widget = QWidget()
+        self.central_widget = QWidget() 
         self.setCentralWidget(self.central_widget)
         main_layout = QHBoxLayout(self.central_widget)
 
@@ -58,14 +59,16 @@ class JournalApp(QMainWindow):
         self.sidebar = QWidget()
         sidebar_layout = QVBoxLayout(self.sidebar)
 
-        # Navigation toggles for calendar and entry views
+        # Navigation buttons
         self.to_calendar_btn = QPushButton("Calendar View")
         self.to_entry_btn = QPushButton("Entry View")
+        self.to_todo_btn = QPushButton("Todo List")
+        self.to_gym_btn = QPushButton("Gym Tracking")
+
+        # Add buttons to sidebar layout
         sidebar_layout.addWidget(self.to_calendar_btn)
         sidebar_layout.addWidget(self.to_entry_btn)
-        self.to_todo_btn = QPushButton("Todo List")
         sidebar_layout.addWidget(self.to_todo_btn)
-        self.to_gym_btn = QPushButton("Gym Tracking")
         sidebar_layout.addWidget(self.to_gym_btn)
 
         # Entry list
@@ -77,10 +80,10 @@ class JournalApp(QMainWindow):
         self.delete_btn.clicked.connect(self.delete_entry)
         sidebar_layout.addWidget(self.delete_btn)
 
-        # Add sidebar to main layout, give it a smaller stretch
+        # Add sidebar to main layout with smaller stretch
         main_layout.addWidget(self.sidebar, 1)
 
-        # /* ----- Main content stack ----- */
+        # Staked widget for main content area
         self.stacked = QStackedWidget()
         main_layout.addWidget(self.stacked, 3)
 
@@ -101,6 +104,7 @@ class JournalApp(QMainWindow):
         header_layout.addWidget(self.entry_title_label)
         header_layout.addStretch()
 
+        # Pin button
         self.pin_btn = QPushButton("📌")
         self.pin_btn.setCheckable(True)
         self.pin_btn.setFixedSize(24, 24)
@@ -114,16 +118,18 @@ class JournalApp(QMainWindow):
         self.bold_btn.clicked.connect(self.toggle_bold)
         header_layout.addWidget(self.bold_btn)
 
+        # Italic button
         self.italic_btn = QPushButton("I")
         self.italic_btn.setCheckable(True)
         self.italic_btn.setFixedSize(24, 24)
         self.italic_btn.clicked.connect(self.toggle_italic)
         header_layout.addWidget(self.italic_btn)
 
+        # Font size selector
         self.font_size_box = QSpinBox()
-        self.font_size_box.setRange(8, 48)
-        self.font_size_box.setValue(12)
-        self.font_size_box.setMaximumWidth(60)
+        self.font_size_box.setRange(8, 48) # Limit font size range
+        self.font_size_box.setValue(12) # Default font size
+        self.font_size_box.setMaximumWidth(60) 
         self.font_size_box.valueChanged.connect(self.change_font_size)
         header_layout.addWidget(self.font_size_box)
 
@@ -136,16 +142,19 @@ class JournalApp(QMainWindow):
         # Action buttons row (Save + Categories)
         actions_layout = QHBoxLayout()
 
+        # Save button
         self.save_btn = QPushButton("Save Entry")
         actions_layout.addWidget(self.save_btn)
 
+        # Categories button
         self.categories_btn = QPushButton("🏷")
-        self.categories_btn.setFixedSize(24, 24)
+        self.categories_btn.setFixedSize(24, 24) 
         self.categories_btn.clicked.connect(self.edit_categories)
         actions_layout.addWidget(self.categories_btn)
 
         entry_layout.addLayout(actions_layout)
 
+        # Add entry page to stacked widget
         self.stacked.addWidget(self.entry_page)
 
         # Todo List page setup
@@ -177,21 +186,24 @@ class JournalApp(QMainWindow):
         overdue_todos_layout.addWidget(self.overdue_todo_list)
         self.todo_tabs.addTab(self.overdue_todos_tab, "Overdue")
 
-        # Add todo form
+        # Add todo
         todo_form_layout = QHBoxLayout()
         self.todo_input = QLineEdit()
         self.todo_input.setPlaceholderText("Enter new todo...")
         todo_form_layout.addWidget(self.todo_input)
 
+        # Date and time pickers
         self.todo_date = QDateEdit()
         self.todo_date.setDate(QDate.currentDate())
         self.todo_date.setCalendarPopup(True)
         todo_form_layout.addWidget(self.todo_date)
 
+        # Time picker
         self.todo_time = QTimeEdit()
         self.todo_time.setTime(QTime(9, 0))
         todo_form_layout.addWidget(self.todo_time)
 
+        # Add button
         self.add_todo_btn = QPushButton("Add Todo")
         self.add_todo_btn.clicked.connect(self.add_todo)
         todo_form_layout.addWidget(self.add_todo_btn)
@@ -204,18 +216,22 @@ class JournalApp(QMainWindow):
         self.complete_todo_btn.clicked.connect(self.complete_todo)
         todo_actions_layout.addWidget(self.complete_todo_btn)
 
+        # Edit button
         self.edit_todo_btn = QPushButton("Edit")
         self.edit_todo_btn.clicked.connect(self.edit_todo)
         todo_actions_layout.addWidget(self.edit_todo_btn)
 
+        # Delete button
         self.delete_todo_btn = QPushButton("Delete")
         self.delete_todo_btn.clicked.connect(self.delete_todo)
         todo_actions_layout.addWidget(self.delete_todo_btn)
 
         todo_layout.addLayout(todo_actions_layout)
 
+        # Add todo page to stacked widget
         self.stacked.addWidget(self.todo_page)
 
+        # Gym Tracking page setup
         self.gym_page = QWidget()
         gym_layout = QVBoxLayout(self.gym_page)
 
@@ -227,14 +243,17 @@ class JournalApp(QMainWindow):
         session_layout.addWidget(QLabel("Workout Date:"))
         session_layout.addWidget(self.session_date)
 
+        # Load session buttons
         self.load_session_btn = QPushButton("Load Session")
         self.load_session_btn.clicked.connect(self.load_workout_session)
         session_layout.addWidget(self.load_session_btn)
 
+        # New session button
         self.new_session_btn = QPushButton("New Session")
         self.new_session_btn.clicked.connect(self.create_new_session)
         session_layout.addWidget(self.new_session_btn)
 
+        # Add session layout to main gym layout
         gym_layout.addLayout(session_layout)
 
         # Exercise input form
@@ -243,16 +262,19 @@ class JournalApp(QMainWindow):
         self.exercise_input.setPlaceholderText("Exercise name...")
         exercise_form_layout.addWidget(self.exercise_input)
 
+        # Sets input
         self.sets_input = QSpinBox()
         self.sets_input.setRange(1, 10)
         self.sets_input.setValue(3)
         exercise_form_layout.addWidget(QLabel("Sets:"))
         exercise_form_layout.addWidget(self.sets_input)
 
+        # Add exercise button
         self.add_exercise_btn = QPushButton("Add Exercise")
         self.add_exercise_btn.clicked.connect(self.add_exercise)
         exercise_form_layout.addWidget(self.add_exercise_btn)
 
+        # Add exercise layout to gym layout
         gym_layout.addLayout(exercise_form_layout)
 
         # Exercises table
@@ -268,12 +290,14 @@ class JournalApp(QMainWindow):
         self.save_session_btn.clicked.connect(self.save_workout_session)
         session_actions_layout.addWidget(self.save_session_btn)
 
+        # Delete session button
         self.delete_session_btn = QPushButton("Delete Session")
         self.delete_session_btn.clicked.connect(self.delete_workout_session)
         session_actions_layout.addWidget(self.delete_session_btn)
 
         gym_layout.addLayout(session_actions_layout)
 
+        # Add gym page to stacked widget
         self.stacked.addWidget(self.gym_page)
 
 
@@ -283,16 +307,13 @@ class JournalApp(QMainWindow):
         sidebar_layout.addWidget(self.theme_selector)
         self.theme_selector.currentTextChanged.connect(self.apply_theme)
 
-        # Wire up navigation and actions
+        # Connect navigation buttons
         self.to_calendar_btn.clicked.connect(
             lambda: self.stacked.setCurrentWidget(self.calendar_page)
         )
         self.to_entry_btn.clicked.connect(
             lambda: self.stacked.setCurrentWidget(self.entry_page)
         )
-        self.save_btn.clicked.connect(self.save_entry)
-        self.calendar.selectionChanged.connect(self.load_entry_for_date)
-        self.entry_list.itemClicked.connect(self.load_entry_from_list)
         self.to_todo_btn.clicked.connect(
             lambda: self.stacked.setCurrentWidget(self.todo_page)
         )
@@ -300,74 +321,88 @@ class JournalApp(QMainWindow):
             lambda: self.stacked.setCurrentWidget(self.gym_page)
         )
 
+        # Action buttons
+        self.save_btn.clicked.connect(self.save_entry)
+        self.calendar.selectionChanged.connect(self.load_entry_for_date)
+        self.entry_list.itemClicked.connect(self.load_entry_from_list)
+
         # Data and storage setup
         self.entries = []
         self.data_dir = os.path.join(os.path.dirname(__file__), "data")
         os.makedirs(self.data_dir, exist_ok=True)
 
+        # Todo list data
         self.todos = []
         self.load_todos()
         self.refresh_todo_lists()
 
+        # Gym tracking data
         self.workout_sessions = []
         self.current_session = None
         self.load_workout_sessions()
 
         # Load last used settings and entries
         self.load_settings()
+
         # apply_theme will set current_theme and also save the settings
         self.apply_theme(self.current_theme)
+        
+        # Load entries after theme to ensure highlights use correct color
         self.load_entries()
         self.refresh_entry_list()
+
+        # Actually display the window
         self.show()
 
-    # /* ----- Settings IO ----- */
+    # Save current settings to file
     def save_settings(self):
-        settings_path = os.path.join(self.data_dir, "settings.json")
-        settings = {"theme": self.current_theme}
-        with open(settings_path, "w", encoding="utf-8") as f:
-            json.dump(settings, f, indent=4)
+        settings_path = os.path.join(self.data_dir, "settings.json") # Path to settings file
+        settings = {"theme": self.current_theme} 
+        with open(settings_path, "w", encoding="utf-8") as f: 
+            json.dump(settings, f, indent=4) # Save settings as JSON
 
+    # Load settings from file
     def load_settings(self):
-        settings_path = os.path.join(self.data_dir, "settings.json")
-        if os.path.exists(settings_path):
-            with open(settings_path, "r") as f:
-                settings = json.load(f)
-                theme_name = settings.get("theme", "Dark")
-                self.apply_theme(theme_name)
-                # Update combobox to match
+        settings_path = os.path.join(self.data_dir, "settings.json") # Path to settings file
+        if os.path.exists(settings_path): # If settings file exists
+            with open(settings_path, "r") as f: # Open and read settings
+                settings = json.load(f) # Load JSON data
+                theme_name = settings.get("theme", "Dark") # Default to Dark theme
+                self.apply_theme(theme_name) # Apply loaded theme
+                # Set theme selector to match loaded theme
                 index = self.theme_selector.findText(theme_name)
                 if index >= 0:
                     self.theme_selector.setCurrentIndex(index)
         else:
-            self.apply_theme("Dark")
-            self.save_settings()
+            self.apply_theme("Dark") # Default to Dark theme if no settings file
+            self.save_settings() # Save default settings
             # Default select Dark
-            index = self.theme_selector.findText("Dark")
+            index = self.theme_selector.findText("Dark") # Set selector to Dark
             if index >= 0:
                 self.theme_selector.setCurrentIndex(index)
 
-    # /* ----- Entries IO ----- */
+    # Load journal entries from file
     def load_entries(self):
-        entries_path = os.path.join(self.data_dir, "entries.json")
-        if os.path.exists(entries_path):
-            with open(entries_path, "r", encoding="utf-8") as f:
-                self.entries = json.load(f)
-        else:
-            self.entries = []
+        entries_path = os.path.join(self.data_dir, "entries.json") # Path to entries file
+        if os.path.exists(entries_path): # If entries file exists
+            with open(entries_path, "r", encoding="utf-8") as f: 
+                self.entries = json.load(f) # Load entries as JSON
+        else: # If no entries file, start with empty list
+            self.entries = [] 
             self.save_entries()
-        # After loading ensure calendar highlights are up to date
+        # Highlight dates with entries
         self.highlight_entries()
 
+    # Save journal entries to file
     def save_entries(self):
-        entries_path = os.path.join(self.data_dir, "entries.json")
-        with open(entries_path, "w", encoding="utf-8") as f:
-            json.dump(self.entries, f, indent=4)
+        entries_path = os.path.join(self.data_dir, "entries.json") # Path to entries file
+        with open(entries_path, "w", encoding="utf-8") as f: 
+            json.dump(self.entries, f, indent=4) # Save entries as JSON
 
-    # /* ----- Theme application ----- */
+    # Apply selected theme across the app
     def apply_theme(self, theme_name):
-        theme = THEMES.get(theme_name, THEMES["Dark"])
-        self.current_theme = theme_name
+        theme = THEMES.get(theme_name, THEMES["Dark"]) # Default to Dark theme if not found
+        self.current_theme = theme_name # Store current theme
 
         # Set stylesheet across app using theme values
         self.setStyleSheet(
@@ -417,71 +452,79 @@ class JournalApp(QMainWindow):
                 background: {theme['highlight']};
             }}
         """
-        )
+        ) 
 
         # Repaint calendar highlights to use new highlight colour
         self.highlight_entries()
         self.save_settings()
 
-    # /* ----- Entry operations ----- */
+    # Save or update current entry
     def save_entry(self):
-        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
-        content = self.text_edit.toHtml()
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd") # Get selected date
+        content = self.text_edit.toHtml() # Get rich text content
 
         # find existing entry for date
         existing = next((e for e in self.entries if e["date"] == date), None)
 
-        if existing:
+        if existing: # Update existing entry
             existing["content"] = content
         else:
             # Prompt for a title when creating a new entry
             title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
             if not ok or not title.strip():
                 title = "Untitled"
-            self.entries.append({"date": date, "title": title.strip(), "content": content})
+            self.entries.append({"date": date, "title": title.strip(), "content": content}) # Add new entry
 
+        # Save entries and refresh UI
         self.save_entries()
         self.refresh_entry_list()
         self.highlight_entries()
 
+    # Refresh the entry list in the sidebar
     def refresh_entry_list(self):
-        self.entry_list.clear()
+        self.entry_list.clear() # Clear existing items
 
+        # Sort entries: pinned first, then by date
         pinned = [e for e in self.entries if e.get("pinned")]
         others = [e for e in self.entries if not e.get("pinned")]
 
+        # Sort both lists by date
         pinned = sorted(pinned, key=lambda x: x["date"])
         others = sorted(others, key=lambda x: x["date"])
 
+        # Helper to create list item with pin icon and categories
         def make_item(entry, pinned=False):
-            cats = ", ".join(entry.get("categories", []))
-            label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} "
-            if cats:
+            cats = ", ".join(entry.get("categories", [])) # Join categories
+            label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} " 
+            if cats: # Append categories if any
                 label += f" [{cats}]"
-            item = QListWidgetItem(label)
-            item.setData(Qt.ItemDataRole.UserRole, entry["date"])
-            return item
+            item = QListWidgetItem(label) # Create list item
+            item.setData(Qt.ItemDataRole.UserRole, entry["date"]) # Store date for lookup
+            return item 
 
+        # Add pinned entries first
         for entry in pinned:
             self.entry_list.addItem(make_item(entry, pinned=True))
 
+        # Then add other entries
         for entry in others:
             self.entry_list.addItem(make_item(entry))
 
-
+    # Load entry when selected from list
     def load_entry_from_list(self, item):
-        date = item.text().split(" - ")[0]
-        entry = next((e for e in self.entries if e["date"] == date), None)
+        date = item.text().split(" - ")[0] # Extract date from item text
+        entry = next((e for e in self.entries if e["date"] == date), None) # Find entry by date
         if entry:
-            self.text_edit.setHtml(entry["content"])
+            self.text_edit.setHtml(entry["content"]) # Load content
             # keep calendar selection in sync
-            self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd"))
-            self.stacked.setCurrentWidget(self.entry_page)
+            self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd")) # Select date in calendar
+            self.stacked.setCurrentWidget(self.entry_page) # Switch to entry page
 
+    # Load entry for selected date in calendar
     def load_entry_for_date(self):
-        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
-        entry = next((e for e in self.entries if e["date"] == date), None)
-
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd") # Get selected date
+        entry = next((e for e in self.entries if e["date"] == date), None) # Find entry by date
+        
         if entry:
             self.text_edit.setHtml(entry["content"])
             self.entry_title_label.setText(f"{entry['title']} - {date}")
@@ -489,11 +532,13 @@ class JournalApp(QMainWindow):
             self.text_edit.clear()
             self.entry_title_label.setText(f"New Entry - {date}")
 
+    # Highlight dates in calendar with entries
     def highlight_entries(self):
         # Clear only previously highlighted dates
         if not hasattr(self, "_highlighted_dates"):
             self._highlighted_dates = set()
 
+        # Reset previous highlights
         default_format = QTextCharFormat()
         for d in self._highlighted_dates:
             self.calendar.setDateTextFormat(d, default_format)
@@ -519,47 +564,55 @@ class JournalApp(QMainWindow):
 
 
 
-    # /* ----- Simple rich text helpers ----- */
+    # Text formatting functions
     def toggle_bold(self):
+        # Toggle bold formatting
         fmt = self.text_edit.currentCharFormat()
         fmt.setFontWeight(QFont.Weight.Bold if self.bold_btn.isChecked() else QFont.Weight.Normal)
         self.text_edit.setCurrentCharFormat(fmt)
 
     def toggle_italic(self):
+        # Toggle italic formatting
         fmt = self.text_edit.currentCharFormat()
         fmt.setFontItalic(self.italic_btn.isChecked())
         self.text_edit.setCurrentCharFormat(fmt)
 
     def change_font_size(self, size):
+        # Change font size
         fmt = self.text_edit.currentCharFormat()
         fmt.setFontPointSize(size)
         self.text_edit.setCurrentCharFormat(fmt)
 
     def toggle_pin(self, checked):
-        date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+        # Toggle pin status of current entry
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd") #
         entry = next((e for e in self.entries if e["date"] == date), None)
-        if entry:
+        if entry: 
             entry["pinned"] = checked
             self.save_entries()
             self.refresh_entry_list()
             self.highlight_entries()
 
+    # Edit categories for current entry
     def edit_categories(self):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
         entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
-            current = ", ".join(entry.get("categories", []))
+            current = ", ".join(entry.get("categories", [])) # Current categories
             text, ok = QInputDialog.getText(self, "Edit Categories", "Enter categories (seperate with comma):", text=current)
             if ok:
                 cats = [c.strip() for c in text.split(",") if c.strip()]
                 entry["categories"] = cats
+                # Update title in sidebar
                 self.save_entries()
                 self.refresh_entry_list()
 
+    # Delete entry for selected date
     def delete_entry(self):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
         entry = next((e for e in self.entries if e["date"] == date), None) 
 
+        # Confirm deletion
         if not entry:
             QMessageBox.information(self, "No Entry", "There is no entry for this date to delete.")
             return
@@ -571,6 +624,7 @@ class JournalApp(QMainWindow):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         )
 
+        # If confirmed, delete entry
         if reply == QMessageBox.StandardButton.Yes:
             self.entries = [e for e in self.entries if e["date"] != date]
             self.save_entries()

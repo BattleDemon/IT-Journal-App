@@ -141,11 +141,17 @@ Voice to text input: button to dictate the entries.
 
 #### Current UI
 
-Entry View
+##### Entry View
 
-Calendar View
+![screenshot](P1EntryView.png)
 
-Side Bar
+##### Calendar View
+
+![screenshot](CalendarViewP1.png)
+
+##### Side Bar
+
+![screenshot](SideBar.png)
 
 #### Issues and Solutions
 
@@ -161,9 +167,13 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Current UI
 
-Theme
+##### Theme
 
-Text options
+![screenshot](ThemeSelect.png)
+
+##### Text options
+
+![screenshot](FontSettings.png)
 
 #### Issues and Solutions
 
@@ -177,9 +187,9 @@ Text options
 
 #### Current UI
 
-Pinning
+##### Pinning
 
-Catogories
+##### Catogories
 
 #### Issues and Solutions
 
@@ -205,7 +215,9 @@ Catogories
 
 #### Current UI
 
-Todo Page
+##### Todo Page
+
+![screenshot](Todo.png)
 
 #### Issues and Solutions
 
@@ -219,7 +231,9 @@ Todo Page
 
 #### Current UI
 
-Gym Page
+##### Gym Page
+
+![screenshot](GymView.png)
 
 #### Issues and Solutions
 
