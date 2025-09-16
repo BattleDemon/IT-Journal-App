@@ -16,30 +16,37 @@
   - [Prototype 1](#prototype-1-base-systems-finished---text-edit-save-load-calendar-selection)
     - [Code as of commit 23](#code-as-of-commit-23)
     - [Video Of Functionality](#video-of-functionality)
+    - [New UI Elements](#new-ui-elements)
     - [Issues And Solutions](#issues-and-solutions)
   - [Prototype 2](#prototype-2-themes-and-more-advanced-text-options)
     - [Code as of commit 33](#code-as-of-commit-33)
     - [Video Of Functionality](#video-of-functionality-1)
+    - [New UI Elements](#new-ui-elements-1)
     - [Issues And Solutions](#issues-and-solutions-1)
   - [Prototype 3](#prototype-3-pinning-catogoriesing)
     - [Code as of commit 46](#code-as-of-commit-46)
     - [Video Of Functionality](#video-of-functionality-2)
+    - [New UI Elements](#new-ui-elements-2)
     - [Issues And Solutions](#issues-and-solutions-2)
-  - [Prototype 4](#prototype-5-suggested-systems---todo-list-and-reminders)
+  - [Prototype 4](#prototype-4-suggested-systems---todo-list)
     - [Code as of Commit XX](#code-as-of-commit-60)
-    - [Video Of Functionality](#video-of-functionality-4)
-    - [Issues And Solutions](#issues-and-solutions-4)
-  - [Prototype 5](#prototype-6-suggested-systems---gym-tracking)
-    - [Code as of Commit xx](#code-as-of-commit-69)
-    - [Video Of Functionality](#video-of-functionality-5)
-    - [Issues And Solutions](#issues-and-solutions-5)
-  - [Prototype 6](#prototype-4-sorting-and-searching)
-    - [Code as of XX](#code-as-of-commit-xx)
     - [Video Of Functionality](#video-of-functionality-3)
+    - [New UI Elements](#new-ui-elements-3)
     - [Issues And Solutions](#issues-and-solutions-3)
+  - [Prototype 5](#prototype-5-suggested-systems---gym-tracking)
+    - [Code as of Commit xx](#code-as-of-commit-69)
+    - [Video Of Functionality](#video-of-functionality-4)
+    - [New UI Elements](#new-ui-elements-4)
+    - [Issues And Solutions](#issues-and-solutions-4)
+  - [Prototype 6](#prototype-6-sorting-and-searching)
+    - [Code as of XX](#code-as-of-commit-xx)
+    - [Video Of Functionality](#video-of-functionality-5)
+    - [New UI Elements](#new-ui-elements-5)
+    - [Issues And Solutions](#issues-and-solutions-5)
   - [Prototype 7](#prototype-7-if-i-get-more-time)
-    - [Code as of Commit xx](#code-as-of-commit-xx-3)
+    - [Code as of Commit xx](#code-as-of-commit-xx-1)
     - [Video Of Functionality](#video-of-functionality-6)
+    - [New UI Elements](#new-ui-elements-6)
     - [Issues And Solutions](#issues-and-solutions-6)
 - [Reflection](#reflection)
   - [How Is The Overall Design](#how-is-the-overall-design)
@@ -139,7 +146,7 @@ Voice to text input: button to dictate the entries.
 
 [![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
 
-#### Current UI
+#### New UI Elements
 
 ##### Entry View
 
@@ -165,7 +172,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 2](https://img.youtube.com/vi/wpqoa20dFwM/0.jpg)](https://www.youtube.com/watch?v=wpqoa20dFwM)
 
-#### Current UI
+#### New UI Elements
 
 ##### Theme
 
@@ -185,7 +192,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
 
-#### Current UI
+#### New UI Elements
 
 ##### Pinning
 
@@ -193,19 +200,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 4: Sorting and Searching
-
-#### Code as of commit XX
-
-#### Video of Functionality
-
-[![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
-
-#### Current UI
-
-#### Issues and Solutions
-
-### Prototype 5: Suggested Systems - Todo List
+### Prototype 4: Suggested Systems - Todo List
 
 #### Code as of commit 60
 
@@ -213,7 +208,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
-#### Current UI
+#### New UI Elements
 
 ##### Todo Page
 
@@ -221,7 +216,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
-### Prototype 6: Suggested Systems - Gym Tracking
+### Prototype 5: Suggested Systems - Gym Tracking
 
 #### Code as of commit 69
 
@@ -229,11 +224,23 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
-#### Current UI
+#### New UI Elements
 
 ##### Gym Page
 
 ![screenshot](GymView.png)
+
+#### Issues and Solutions
+
+### Prototype 6: Sorting and Searching
+
+#### Code as of commit XX
+
+#### Video of Functionality
+
+[![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
+#### New UI Elements
 
 #### Issues and Solutions
 
@@ -245,7 +252,7 @@ Because i use a Linux system at home and a windows system for school along with 
 
 [![Prototype 7](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
-#### Current UI
+#### New UI Elements
 
 ### Issues and Solutions
 
@@ -262,3 +269,7 @@ Because i use a Linux system at home and a windows system for school along with 
 ### What have I learnt from the project
 
 ## Sources
+
+[Qt for Python](https://doc.qt.io/qtforpython-6/index.html)
+
+[PyQt6 Documentation](https://www.pythonguis.com/pyqt6-tutorial)
