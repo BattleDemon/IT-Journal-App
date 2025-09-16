@@ -633,29 +633,37 @@ class JournalApp(QMainWindow):
             self.text_edit.clear()
             self.entry_title_label.setText(f"Deleted Entry - {date}")
 
+    # ----- Todo List Functions -----
+
+    # Load todos from file
     def load_todos(self):
         todos_path = os.path.join(self.data_dir, "todos.json")
         if os.path.exists(todos_path):
             with open(todos_path, "r", encoding="utf-8") as f:
-                self.todos = json.load(f)
+                self.todos = json.load(f) # Load todos as JSON
         else:
+            # If no todos file, start with empty list
             self.todos = []
             self.save_todos()
 
+    # Save todos to file
     def save_todos(self):
         todos_path = os.path.join(self.data_dir, "todos.json")
         with open(todos_path, "w", encoding="utf-8") as f:
-            json.dump(self.todos, f, indent=4)
+            json.dump(self.todos, f, indent=4) # Save todos as JSON
 
+    # Add new todo
     def add_todo(self):
-        text = self.todo_input.text().strip()
+        text = self.todo_input.text().strip() # Get and trim input text
         if not text:
             return
 
+        # Combine date and time into single datetime string
         date = self.todo_date.date().toString("yyyy-MM-dd")
         time = self.todo_time.time().toString("HH:mm")
         datetime_str = f"{date} {time}"
 
+        # Create new todo item
         todo = {
             "id": datetime.now().strftime("%Y%m%d%H%M%S"),
             "text": text,
@@ -664,68 +672,85 @@ class JournalApp(QMainWindow):
             "created": datetime.now().strftime("%Y-%m-%d %H:%M")
         }
 
+        # Add to list and save
         self.todos.append(todo)
         self.save_todos()
         self.refresh_todo_lists()
         self.todo_input.clear()
 
+    # Refresh all todo list views
     def refresh_todo_lists(self):
         # Clear existing items
         self.todo_list.clear()
         self.today_todo_list.clear()
         self.overdue_todo_list.clear()
 
+        # Current date and time for comparisons
         now = datetime.now()
         today = QDate.currentDate().toString("yyyy-MM-dd")
 
+        # Add todos to appropriate lists
         for todo in self.todos:
             todo_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
 
             todo_date = todo["datetime"].split(" ")[0]
 
+            # Format item text with status
             status = "✅" if todo["completed"] else "❌"
             item_text = f"{status} {todo['text']} (Due: {todo['datetime']})"
 
+            # Create list item and store ID for reference
             item = QListWidgetItem(item_text)
             item.setData(Qt.ItemDataRole.UserRole, todo["id"])
 
+            # Add to all todos list
             self.todo_list.addItem(item)
 
+            # Add to today's todos if due today
             if todo_date == today:
                 self.today_todo_list.addItem(QListWidgetItem(item_text))
 
+            # Add to overdue if past due and not completed
             if not todo["completed"] and todo_datetime < now:
                 self.overdue_todo_list.addItem(QListWidgetItem(item_text))
             
+    # Mark selected todo as complete/incomplete
     def complete_todo(self):
         current_item = self.todo_list.currentItem()
         if not current_item:
             return
-        
+        # Toggle completed status
         todo_id = current_item.data(Qt.ItemDataRole.UserRole)
         for todo in self.todos:
             if todo["id"] == todo_id:
+                # Toggle between completed status
                 todo["completed"] = not todo["completed"]
 
                 break
 
+        # Save changes and refresh lists
         self.save_todos()
         self.refresh_todo_lists()
 
+    # Edit selected todo
     def edit_todo(self):
+        # Get currently selected item
         current_item = self.todo_list.currentItem()
         if not current_item:
             return
         
+        # Find corresponding todo
         todo_id = current_item.data(Qt.ItemDataRole.UserRole)
         todo = next((t for t in self.todos if t["id"] == todo_id), None)
         if not todo:
             return
         
+        # Prompt for new text
         text, ok = QInputDialog.getText(self, "Edit Todo", "Update todo text:", text=todo["text"])
         if ok and text.strip():
             todo["text"] = text.strip()
             
+            # Prompt for new date/time
             current_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
             new_datetime, ok = QInputDialog.getText(self, "Edit Todo", "Update due date and time (YYYY-MM-DD HH:MM):", text=todo["datetime"])
             if ok and new_datetime.strip():
@@ -735,14 +760,17 @@ class JournalApp(QMainWindow):
                 except ValueError:
                     QMessageBox.warning(self, "Invalid DateTime", "The date and time format is invalid. Keeping the old value.")
             
+        # Save changes and refresh lists
         self.save_todos()
         self.refresh_todo_lists()
 
+    # Delete selected todo
     def delete_todo(self):
         current_item = self.todo_list.currentItem()
         if not current_item:
             return
         
+        # Confirm deletion
         todo_id = current_item.data(Qt.ItemDataRole.UserRole)
         reply = QMessageBox.question(
             self,
@@ -751,30 +779,39 @@ class JournalApp(QMainWindow):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         )
 
+        # If confirmed, delete todo
         if reply == QMessageBox.StandardButton.Yes:
             self.todos = [t for t in self.todos if t["id"] != todo_id]
             self.save_todos()
             self.refresh_todo_lists()
 
+    # ----- Gym Tracking Functions -----
+
+    # Load workout sessions from file
     def load_workout_sessions(self):
-        workouts_path = os.path.join(self.data_dir, "workouts.json")
+        workouts_path = os.path.join(self.data_dir, "workouts.json") # Path to workouts file
         if os.path.exists(workouts_path):
             with open(workouts_path, "r", encoding="utf-8") as f:
-                self.workout_sessions = json.load(f)
+                self.workout_sessions = json.load(f) # Load sessions as JSON
         else:
-            self.workout_sessions = []
+            # If no workouts file, start with empty list
+            self.workout_sessions = [] 
             self.save_workout_sessions_to_file()
 
+    # Save workout sessions to file
     def save_workout_session(self):
         workouts_path = os.path.join(self.data_dir, "workouts.json")
         with open(workouts_path, "w", encoding="utf-8") as f:
-            json.dump(self.workout_sessions, f, indent=4)
+            json.dump(self.workout_sessions, f, indent=4) # Save sessions as JSON
 
+    # Delete workout session for selected date
     def create_new_session(self):
-        date = self.session_date.date().toString("yyyy-MM-dd")
+        date = self.session_date.date().toString("yyyy-MM-dd") 
 
+        # Check if session already exists for date
         existing = next((s for s in self.workout_sessions if s["date"] == date), None)
         if existing:
+            # Prompt to load existing session
             reply = QMessageBox.question(
                 self,
                 "Session Exists",
@@ -786,34 +823,41 @@ class JournalApp(QMainWindow):
                 self.load_session_data()
             return
         
+        # Create new session
         self.current_session = {
             "date": date,
             "exercises": [],
             "id": datetime.now().strftime("%Y%m%d%H%M%S")
         }
 
+        # Clear table for new session
         self.clear_exercises_table()
         QMessageBox.information(self, "New Session", f"Created new session for {date}.")
            
+    # Load workout session for selected date
     def load_workout_session(self):
         date = self.session_date.date().toString("yyyy-MM-dd")
         self.current_session = next((s for s in self.workout_sessions if s["date"] == date), None)
 
+        # If found, load data into table
         if self.current_session:
             self.load_session_data()
         else:
             return
 
+    # Load current session data into exercises table
     def load_session_data(self):
         self.clear_exercises_table()
         if not self.current_session:
             return
         
+        # Populate table with exercises
         self.exercises_table.setRowCount(len(self.current_session["exercises"]))
 
+        # Add each exercise to the table
         for row, exercise in enumerate(self.current_session["exercises"]):
             self.exercises_table.setItem(row, 0, QTableWidgetItem(exercise["name"]))
-            sets_item = QTableWidgetItem(str(exercise["sets"]))
+            sets_item = QTableWidgetItem(str(exercise["sets"])) 
             sets_item.setFlags(sets_item.flags() & ~Qt.ItemFlag.ItemIsEditable )
             self.exercises_table.setItem(row, 1, sets_item)
 
@@ -827,14 +871,17 @@ class JournalApp(QMainWindow):
             del_btn.clicked.connect(lambda _, r=row: self.delete_exercise(r))
             self.exercises_table.setCellWidget(row, 4, del_btn)
 
+    # Clear all rows from exercises table
     def clear_exercises_table(self):
         self.exercises_table.setRowCount(0)
 
+    # Add new exercise to current session
     def add_exercise(self):
         if not self.current_session:
             QMessageBox.warning(self, "No Session", "Please create or load a workout session first.")
             return
 
+        # Get exercise details from input fields
         name = self.exercise_input.text().strip()
         if not name:
             QMessageBox.warning(self, "Input Error", "Please enter an exercise name.")
@@ -842,6 +889,7 @@ class JournalApp(QMainWindow):
 
         sets = self.sets_input.value()
 
+        # Create new exercise entry
         exercise = {
             "name": name,
             "sets": sets,
@@ -849,11 +897,14 @@ class JournalApp(QMainWindow):
             "weight": ""
         }
 
+        # Add to current session
         self.current_session["exercises"].append(exercise)
 
+        # Add to table
         row = self.exercises_table.rowCount()
         self.exercises_table.insertRow(row)
 
+        # Populate row with exercise data
         self.exercises_table.setItem(row, 0, QTableWidgetItem(exercise["name"]))
 
         sets_item = QTableWidgetItem(str(exercise["sets"]))
@@ -872,14 +923,17 @@ class JournalApp(QMainWindow):
 
         self.exercise_input.clear()
 
+    # Delete exercise from current session
     def delete_exercise(self, row):
         if not self.current_session:
             return
         
+        # Remove from session data and table
         if 0 <= row < len(self.current_session["exercises"]):
             self.current_session["exercises"].pop(row)
             self.exercises_table.removeRow(row)
 
+    # Save current workout session to file
     def save_workout_session(self):
         if not self.current_session:
             QMessageBox.warning(self, "No Session", "No workout session to save.")
@@ -899,19 +953,21 @@ class JournalApp(QMainWindow):
         else:
             self.workout_sessions.append(self.current_session)
         
-        # Save to file (use a different method name to avoid recursion)
-        self.save_workout_sessions_to_file()  # Changed method name
+        self.save_workout_sessions_to_file()  
         QMessageBox.information(self, "Saved", "Workout session saved successfully.")
 
-    def save_workout_sessions_to_file(self):  # New method to avoid recursion
+    # Save all workout sessions to file
+    def save_workout_sessions_to_file(self):  
         workouts_path = os.path.join(self.data_dir, "workouts.json")
         with open(workouts_path, "w", encoding="utf-8") as f:
-            json.dump(self.workout_sessions, f, indent=4)
+            json.dump(self.workout_sessions, f, indent=4) # Save sessions as JSON
 
+    # Delete current workout session
     def delete_workout_session(self):
         if not self.current_session:
             return
         
+        # Confirm deletion
         reply = QMessageBox.question(
             self,
             "Delete Session",
@@ -919,6 +975,7 @@ class JournalApp(QMainWindow):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No 
         )
 
+        # If confirmed, delete session
         if reply == QMessageBox.StandardButton.Yes:
             self.workout_sessions = [s for s in self.workout_sessions if s["id"] != self.current_session["id"]]
             self.save_workout_sessions_to_file()
