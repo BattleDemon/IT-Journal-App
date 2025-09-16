@@ -58,7 +58,9 @@
 
 ## User Manual
 
-Calendar and Entry Page:
+Calendar Page:
+
+Entry Page:
 
 Side bar:
 
@@ -145,7 +147,9 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 #### Code as of commit 23
 
 ```py
-  print("Hello World")
+
+  
+
 ```
 
 #### Video of Functionality
@@ -153,6 +157,8 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 [![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
 
 #### New UI Elements
+
+Below is the current form of the UI.
 
 ##### Entry View
 
@@ -174,11 +180,17 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Code as of commit 33
 
+```py
+
+  
+
+```
+
 #### Video of Functionality
 
 [![Prototype 2](https://img.youtube.com/vi/wpqoa20dFwM/0.jpg)](https://www.youtube.com/watch?v=wpqoa20dFwM)
 
-#### New UI Elements
+#### New UI Element
 
 ##### Theme
 
@@ -194,6 +206,12 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Code as of commit 46
 
+```py
+
+  
+
+```
+
 #### Video of Functionality
 
 [![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
@@ -202,13 +220,27 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ##### Pinning
 
+![screenshot](Pin.png)
+
 ##### Catogories
+
+![screenshot](CatogoryInput.png)
+
+##### Side Bar With Pin and Catogories
+
+![screenshot](sideBarPinCat.png)
 
 #### Issues and Solutions
 
 ### Prototype 4: Suggested Systems - Todo List
 
 #### Code as of commit 60
+
+```py
+
+  
+
+```
 
 #### Video of Functionality
 
@@ -226,6 +258,12 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Code as of commit 69
 
+```py
+
+  
+
+```
+
 #### Video of Functionality
 
 [![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
@@ -242,6 +280,12 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Code as of commit XX
 
+```py
+
+  
+
+```
+
 #### Video of Functionality
 
 [![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
@@ -253,6 +297,12 @@ Because i use a Linux system at home and a windows system for school along with 
 ### Prototype 7: IF I GET MORE TIME
 
 #### Code as of commit XX
+
+```py
+
+  
+
+```
 
 #### Video of Functionality
 
