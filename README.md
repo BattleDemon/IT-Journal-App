@@ -355,7 +355,99 @@ Text formatting section in the entry view with a bold, italic and font size sele
 
 ```py
 
-  
+# Pin toggle button in entry header
+self.pin_btn = QPushButton("📌")
+self.pin_btn.setCheckable(True)
+self.pin_btn.setFixedSize(24, 24)
+self.pin_btn.toggled.connect(self.toggle_pin)
+header_layout.addWidget(self.pin_btn)
+
+# Categories button in actions row
+self.categories_btn = QPushButton("🏷")
+self.categories_btn.setFixedSize(24, 24)
+self.categories_btn.clicked.connect(self.edit_categories)
+actions_layout.addWidget(self.categories_btn)
+
+# Delete button in sidebar
+self.delete_btn = QPushButton("Delete Entry")
+self.delete_btn.clicked.connect(self.delete_entry)
+sidebar_layout.addWidget(self.delete_btn)
+
+```
+
+```py
+
+# Refresh entry list with pinned items first
+def refresh_entry_list(self):
+    self.entry_list.clear()
+
+    pinned = [e for e in self.entries if e.get("pinned")]
+    others = [e for e in self.entries if not e.get("pinned")]
+
+    pinned = sorted(pinned, key=lambda x: x["date"])
+    others = sorted(others, key=lambda x: x["date"])
+
+    def make_item(entry, pinned=False):
+        cats = ", ".join(entry.get("categories", []))
+        label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} "
+        if cats:
+            label += f" [{cats}]"
+        item = QListWidgetItem(label)
+        item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+        return item
+
+    for entry in pinned:
+        self.entry_list.addItem(make_item(entry, pinned=True))
+
+    for entry in others:
+        self.entry_list.addItem(make_item(entry))
+
+```
+
+```py
+
+# Categories editor
+def edit_categories(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        current = ", ".join(entry.get("categories", []))
+        text, ok = QInputDialog.getText(
+            self, "Edit Categories", "Enter categories (comma-separated):", text=current
+        )
+        if ok:
+            cats = [c.strip() for c in text.split(",") if c.strip()]
+            entry["categories"] = cats
+            self.save_entries()
+            self.refresh_entry_list()
+
+```
+
+```py
+
+# Delete entry with confirmation
+def delete_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+
+    if not entry:
+        QMessageBox.information(self, "No Entry", "There is no entry for this date to delete.")
+        return
+
+    reply = QMessageBox.question(
+        self,
+        "Delete Entry",
+        f"Are you sure you want to delete the entry for {date}?",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+    )
+
+    if reply == QMessageBox.StandardButton.Yes:
+        self.entries = [e for e in self.entries if e["date"] != date]
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
+        self.text_edit.clear()
+        self.entry_title_label.setText(f"Deleted Entry - {date}")
 
 ```
 
@@ -364,6 +456,12 @@ Text formatting section in the entry view with a bold, italic and font size sele
 [![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
 
 #### New UI Elements
+
+Pin Button
+
+Catogory Button
+
+Delete Button
 
 ##### Pinning
 
@@ -403,7 +501,7 @@ Text formatting section in the entry view with a bold, italic and font size sele
 
 ### Prototype 5: Suggested Systems - Gym Tracking
 
-#### Code as of commit 69
+#### Code as of commit 76
 
 ```py
 
