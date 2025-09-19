@@ -275,7 +275,55 @@ This was fixed by using `os.path.join()` so python automatcally uses the correct
 
 ```py
 
-  
+# Theme selector in sidebar
+self.theme_selector = QComboBox()
+self.theme_selector.addItems(THEMES.keys())
+sidebar_layout.addWidget(self.theme_selector)
+self.theme_selector.currentTextChanged.connect(self.apply_theme)
+
+```
+
+```py
+
+def save_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    content = self.text_edit.toHtml()
+
+    # find existing entry for date
+    existing = next((e for e in self.entries if e["date"] == date), None)
+
+    if existing:
+        existing["content"] = content
+    else:
+        # Prompt for a title when creating a new entry
+        title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+        if not ok or not title.strip():
+            title = "Untitled"
+        self.entries.append({"date": date, "title": title.strip(), "content": content})
+
+    self.save_entries()
+    self.refresh_entry_list()
+    self.highlight_entries()
+   
+```
+
+```py
+
+# Advanced text fuctions
+def toggle_bold(self):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontWeight(QFont.Weight.Bold if self.bold_btn.isChecked() else QFont.Weight.Normal)
+    self.text_edit.setCurrentCharFormat(fmt)
+
+def toggle_italic(self):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontItalic(self.italic_btn.isChecked())
+    self.text_edit.setCurrentCharFormat(fmt)
+
+def change_font_size(self, size):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontPointSize(size)
+    self.text_edit.setCurrentCharFormat(fmt)
 
 ```
 
@@ -285,7 +333,11 @@ This was fixed by using `os.path.join()` so python automatcally uses the correct
 
 #### New UI Element
 
-##### Theme
+Theme selector as a dropdown from the sidebar. 
+
+Text formatting section in the entry view with a bold, italic and font size selector. 
+
+##### Theme Selector
 
 ![screenshot](ThemeSelect.png)
 
@@ -294,6 +346,8 @@ This was fixed by using `os.path.join()` so python automatcally uses the correct
 ![screenshot](FontSettings.png)
 
 #### Issues and Solutions
+
+
 
 ### Prototype 3: Pinning, catogoriesing
 
