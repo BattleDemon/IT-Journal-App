@@ -148,7 +148,92 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 ```py
 
-  
+# ----- Sidebar -----
+self.sidebar = QWidget()
+sidebar_layout = QVBoxLayout(self.sidebar)
+
+self.to_calendar_btn = QPushButton("Calendar View")
+self.to_entry_btn = QPushButton("Entry View")
+sidebar_layout.addWidget(self.to_calendar_btn)
+sidebar_layout.addWidget(self.to_entry_btn)
+
+# Entry list
+self.entry_list = QListWidget()
+sidebar_layout.addWidget(self.entry_list)
+
+main_layout.addWidget(self.sidebar, 1)
+
+```
+
+```py
+
+# ----- Calendar Page -----
+self.calendar_page = QWidget()
+cal_layout = QVBoxLayout(self.calendar_page)
+self.calendar = QCalendarWidget()
+cal_layout.addWidget(self.calendar)
+self.stacked.addWidget(self.calendar_page)
+
+# ----- Entry Page -----
+self.entry_page = QWidget()
+entry_layout = QVBoxLayout(self.entry_page)
+
+self.entry_title_label = QLabel("No entry loaded")
+entry_layout.addWidget(self.entry_title_label)
+
+self.text_edit = QTextEdit()
+entry_layout.addWidget(self.text_edit)
+
+self.save_btn = QPushButton("Save Entry")
+entry_layout.addWidget(self.save_btn)
+
+self.stacked.addWidget(self.entry_page)
+
+```
+
+```py
+
+# ----- Save and Load Entries -----
+def save_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    content = self.text_edit.toPlainText()
+
+    existing = next((e for e in self.entries if e["date"] == date), None)
+    if existing:
+        existing["content"] = content
+    else:
+        title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+        if not ok or not title.strip():
+            title = "Untitled"
+        self.entries.append({"date": date, "title": title.strip(), "content": content})
+
+    self.save_entries()
+    self.refresh_entry_list()
+    self.highlight_entries()
+
+def load_entry_for_date(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        self.text_edit.setText(entry["content"])
+        self.entry_title_label.setText(f"{entry['title']} - {date}")
+    else:
+        self.text_edit.clear()
+        self.entry_title_label.setText(f"New Entry - {date}")
+
+```
+
+```py
+
+# ----- Highlight Calendar Dates -----
+def highlight_entries(self):
+    theme = THEMES.get(self.current_theme, THEMES["Dark"])
+    has_entry_format = QTextCharFormat()
+    has_entry_format.setBackground(QBrush(QColor(theme["highlight"])))
+
+    for entry in self.entries:
+        date = QDate.fromString(entry["date"], "yyyy-MM-dd")
+        self.calendar.setDateTextFormat(date, has_entry_format)
 
 ```
 
@@ -158,23 +243,31 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 #### New UI Elements
 
-Below is the current form of the UI.
+The current interface consists of a sidebar and a stacked widget that switches between the calendar and entry views.  
 
 ##### Entry View
+
+Users can write their journal entries, view the date, and save the entries.
 
 ![screenshot](P1EntryView.png)
 
 ##### Calendar View
 
+Users can select dates and view which days have entries already.
+
 ![screenshot](CalendarViewP1.png)
 
 ##### Side Bar
+
+Users can use the sidebar to switch between the views aswell as view all entries. 
 
 ![screenshot](SideBar.png)
 
 #### Issues and Solutions
 
-Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ vs /.
+I use Linux at home and Windows for school, and I also needed to make this project usable for you. This required making the file-loading systems cross-OS compatible, which required handling the different slashes used in file directories. 
+
+This was fixed by using `os.path.join()` so python automatcally uses the correct file depending on the operating system. 
 
 ### Prototype 2: Themes and More advanced text options
 
