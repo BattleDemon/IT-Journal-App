@@ -406,6 +406,20 @@ def refresh_entry_list(self):
 
 ```py
 
+# Pin toggle handler
+def toggle_pin(self, checked):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        entry["pinned"] = checked
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
+
+```
+
+```py
+
 # Categories editor
 def edit_categories(self):
     date = self.calendar.selectedDate().toString("yyyy-MM-dd")
