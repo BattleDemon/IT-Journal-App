@@ -148,7 +148,7 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 ```py
 
-# ----- Sidebar -----
+# Sidebar 
 self.sidebar = QWidget()
 sidebar_layout = QVBoxLayout(self.sidebar)
 
@@ -167,14 +167,14 @@ main_layout.addWidget(self.sidebar, 1)
 
 ```py
 
-# ----- Calendar Page -----
+# Calendar Page 
 self.calendar_page = QWidget()
 cal_layout = QVBoxLayout(self.calendar_page)
 self.calendar = QCalendarWidget()
 cal_layout.addWidget(self.calendar)
 self.stacked.addWidget(self.calendar_page)
 
-# ----- Entry Page -----
+# Entry Page 
 self.entry_page = QWidget()
 entry_layout = QVBoxLayout(self.entry_page)
 
@@ -193,7 +193,7 @@ self.stacked.addWidget(self.entry_page)
 
 ```py
 
-# ----- Save and Load Entries -----
+# Save and Load Entries
 def save_entry(self):
     date = self.calendar.selectedDate().toString("yyyy-MM-dd")
     content = self.text_edit.toPlainText()
@@ -225,7 +225,7 @@ def load_entry_for_date(self):
 
 ```py
 
-# ----- Highlight Calendar Dates -----
+# Highlight Calendar Dates 
 def highlight_entries(self):
     theme = THEMES.get(self.current_theme, THEMES["Dark"])
     has_entry_format = QTextCharFormat()
