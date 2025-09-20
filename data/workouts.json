@@ -79,8 +79,104 @@
                 "sets": 2,
                 "reps": "16,11",
                 "weight": "45,50"
+            },
+            {
+                "name": "Squats",
+                "sets": 2,
+                "reps": "17,8",
+                "weight": "50,60"
+            },
+            {
+                "name": "Bench Press",
+                "sets": 2,
+                "reps": "10,7",
+                "weight": "40,40"
+            },
+            {
+                "name": "Lateral Raises",
+                "sets": 2,
+                "reps": "8,17",
+                "weight": "7.5,5"
+            },
+            {
+                "name": "Twist Curls",
+                "sets": 3,
+                "reps": "4,12,8",
+                "weight": "12.5,10,10"
             }
         ],
         "id": "20250916130809"
+    },
+    {
+        "date": "2025-09-09",
+        "exercises": [
+            {
+                "name": "Bench Press",
+                "sets": 2,
+                "reps": "10,9",
+                "weight": "35,35"
+            },
+            {
+                "name": "Skull Crushers",
+                "sets": 2,
+                "reps": "8,10",
+                "weight": "17.5,17.5"
+            },
+            {
+                "name": "Squats",
+                "sets": 2,
+                "reps": "12,11",
+                "weight": "40,40"
+            },
+            {
+                "name": "Lying Leg Curl",
+                "sets": 2,
+                "reps": "12,15",
+                "weight": "25,25"
+            },
+            {
+                "name": "Bent Over Rows",
+                "sets": 2,
+                "reps": "8,8",
+                "weight": "50,50"
+            },
+            {
+                "name": "Lateral Raises",
+                "sets": 2,
+                "reps": "13,8",
+                "weight": "5,5"
+            },
+            {
+                "name": "Twist Curls",
+                "sets": 2,
+                "reps": "16,10",
+                "weight": "10,12.5"
+            }
+        ],
+        "id": "20250916134622"
+    },
+    {
+        "date": "2025-09-03",
+        "exercises": [
+            {
+                "name": "Deadlifts",
+                "sets": 4,
+                "reps": "5,5,5,5",
+                "weight": "80,80,80,90"
+            },
+            {
+                "name": "Front Squats",
+                "sets": 3,
+                "reps": "5,5,5",
+                "weight": "50,40,40"
+            },
+            {
+                "name": "Twist Curls",
+                "sets": 3,
+                "reps": "2,4,11",
+                "weight": "15,12.5,10"
+            }
+        ],
+        "id": "20250916134900"
     }
 ]
