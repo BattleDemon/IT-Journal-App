@@ -666,31 +666,101 @@ When editing ToDos it originally required typing out the due date and time manua
 
 ```py
 
-  
+# Sidebar button for Gym Tracking
+self.to_gym_btn = QPushButton("Gym Tracking")
+sidebar_layout.addWidget(self.to_gym_btn)
+self.to_gym_btn.clicked.connect(
+    lambda: self.stacked.setCurrentWidget(self.gym_page)
+)
 
 ```
 
 ```py
 
-  
+# Gym Tracking page setup
+self.gym_page = QWidget()
+gym_layout = QVBoxLayout(self.gym_page)
+
+# Session date and load/new buttons
+session_layout = QHBoxLayout()
+self.session_date = QDateEdit()
+self.session_date.setDate(QDate.currentDate())
+self.session_date.setCalendarPopup(True)
+session_layout.addWidget(QLabel("Workout Date:"))
+session_layout.addWidget(self.session_date)
+
+self.load_session_btn = QPushButton("Load Session")
+self.load_session_btn.clicked.connect(self.load_workout_session)
+session_layout.addWidget(self.load_session_btn)
+
+self.new_session_btn = QPushButton("New Session")
+self.new_session_btn.clicked.connect(self.create_new_session)
+session_layout.addWidget(self.new_session_btn)
+
+gym_layout.addLayout(session_layout)
+
+# Add exercise form
+exercise_form_layout = QHBoxLayout()
+self.exercise_input = QLineEdit()
+self.exercise_input.setPlaceholderText("Exercise name...")
+exercise_form_layout.addWidget(self.exercise_input)
+
+self.sets_input = QSpinBox()
+self.sets_input.setRange(1, 10)
+self.sets_input.setValue(3)
+exercise_form_layout.addWidget(QLabel("Sets:"))
+exercise_form_layout.addWidget(self.sets_input)
+
+self.add_exercise_btn = QPushButton("Add Exercise")
+self.add_exercise_btn.clicked.connect(self.add_exercise)
+exercise_form_layout.addWidget(self.add_exercise_btn)
+
+gym_layout.addLayout(exercise_form_layout)
 
 ```
 
 ```py
 
-  
+# Exercises table
+self.exercises_table = QTableWidget()
+self.exercises_table.setColumnCount(5)
+self.exercises_table.setHorizontalHeaderLabels(
+    ["Exercise", "Sets", "Reps", "Weight", "Actions"]
+)
+self.exercises_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+gym_layout.addWidget(self.exercises_table)
 
 ```
 
 ```py
 
-  
+# Adding an exercise to the current session
+def add_exercise(self):
+    if not self.current_session:
+        QMessageBox.warning(self, "No Session", "Please create or load a workout session first.")
+        return
 
-```
+    name = self.exercise_input.text().strip()
+    if not name:
+        QMessageBox.warning(self, "Input Error", "Please enter an exercise name.")
+        return
 
-```py
+    exercise = {"name": name, "sets": self.sets_input.value(), "reps": "", "weight": ""}
+    self.current_session["exercises"].append(exercise)
 
-  
+    # Add to table
+    row = self.exercises_table.rowCount()
+    self.exercises_table.insertRow(row)
+    self.exercises_table.setItem(row, 0, QTableWidgetItem(exercise["name"]))
+    self.exercises_table.setItem(row, 1, QTableWidgetItem(str(exercise["sets"])))
+    self.exercises_table.setItem(row, 2, QTableWidgetItem(""))
+    self.exercises_table.setItem(row, 3, QTableWidgetItem(""))
+
+    del_btn = QPushButton("Delete")
+    del_btn.clicked.connect(lambda _, r=row: self.delete_exercise(r))
+    self.exercises_table.setCellWidget(row, 4, del_btn)
+
+    self.exercise_input.clear()
 
 ```
 
