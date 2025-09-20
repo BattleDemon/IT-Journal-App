@@ -638,7 +638,7 @@ def delete_todo(self):
 
 ```
 
-#### Video of FunctionalityW
+#### Video of Functionality
 
 [![Prototype 4](https://img.youtube.com/vi/VvO13jhg0RQ/0.jpg)](https://www.youtube.com/watch?v=VvO13jhg0RQ)
 
