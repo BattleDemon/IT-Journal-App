@@ -732,9 +732,9 @@ Solution: I improved the edit function to use separate date and time pickers ins
 
 
 
-### Prototype 7: IF I GET MORE TIME
+### Prototype X:
 
-#### Code as of commit XX
+#### Code as of commit X
 
 ```py
 
@@ -744,7 +744,7 @@ Solution: I improved the edit function to use separate date and time pickers ins
 
 #### Video of Functionality
 
-[![Prototype 7](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype X](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 #### New UI Elements
 
