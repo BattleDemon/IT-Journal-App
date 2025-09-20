@@ -636,7 +636,7 @@ def delete_todo(self):
 
 ```
 
-#### Video of Functionality
+#### Video of FunctionalityW
 
 [![Prototype 4](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
@@ -647,8 +647,16 @@ def delete_todo(self):
 ![screenshot](Todo.png)
 
 #### Issues and Solutions
+FIX TO BECOME MY 
+```
+Issue: The user could set a due date that was in the past when creating a new todo, which immediately made it overdue.
 
+Solution: I set the default date for the QDateEdit widget to the current date and the default time to one hour in the future to help guide the user towards setting a sensible due date.
 
+Issue: The edit function was cumbersome because it required typing the date and time in a specific format, which was error-prone.
+
+Solution: I improved the edit function to use separate date and time pickers instead of requiring manual text input, making it much easier to adjust due dates accurately.
+```
 
 ### Prototype 5: Suggested Systems - Gym Tracking
 

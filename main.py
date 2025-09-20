@@ -512,13 +512,12 @@ class JournalApp(QMainWindow):
 
     # Load entry when selected from list
     def load_entry_from_list(self, item):
-        date = item.text().split(" - ")[0] # Extract date from item text
-        entry = next((e for e in self.entries if e["date"] == date), None) # Find entry by date
+        date = item.data(Qt.ItemDataRole.UserRole)
+        entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
-            self.text_edit.setHtml(entry["content"]) # Load content
-            # keep calendar selection in sync
-            self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd")) # Select date in calendar
-            self.stacked.setCurrentWidget(self.entry_page) # Switch to entry page
+            self.text_edit.setHtml(entry["content"])
+            self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd"))
+            self.stacked.setCurrentWidget(self.entry_page)
 
     # Load entry for selected date in calendar
     def load_entry_for_date(self):
