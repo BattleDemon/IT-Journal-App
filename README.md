@@ -347,7 +347,9 @@ Text formatting section in the entry view with a bold, italic and font size sele
 
 #### Issues and Solutions
 
+The chosen theme would be correctly applied on startup, but the theme selection dropdown box would still show the default theme. To fix this when loading it would check if a theme had been saved then it would find the index of that theme and set the selection box to the correct index. 
 
+After changing to use HTML formatting, the sidebar's preview would show the raw HTML text. I ended up fixing this by creating the entry title and using that as the preview instead. 
 
 ### Prototype 3: Pinning, catogoriesing
 
@@ -491,7 +493,9 @@ Delete Button: Finally decided that the user should be able to delete an entry. 
 
 #### Issues and Solutions
 
+When you pin an entry or added a catogory, the sidebar and calendar would not update until you refreshed the app by selecting a new date or saving again. It was a simple fix of just calling the refresh and highlight functions again but i hadn't thaught to do it even though pinning and catogoriesing didn't need saving to actually save.
 
+When entering catogories it would allow you to enter just commas, whitespace or nothing and which would add blank catogories to the list, it was also possible to have multiple of the same catogories. These were fixed by removing any blank entries with .strip() to remove white space and .stip(",") to seperate catogories, and multiple of the same were filtered out. 
 
 ### Prototype 4: Suggested Systems - Todo List
 
@@ -643,6 +647,8 @@ def delete_todo(self):
 ![screenshot](Todo.png)
 
 #### Issues and Solutions
+
+
 
 ### Prototype 5: Suggested Systems - Gym Tracking
 
