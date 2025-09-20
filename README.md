@@ -497,6 +497,8 @@ When you pin an entry or added a catogory, the sidebar and calendar would not up
 
 When entering catogories it would allow you to enter just commas, whitespace or nothing and which would add blank catogories to the list, it was also possible to have multiple of the same catogories. These were fixed by removing any blank entries with .strip() to remove white space and .stip(",") to seperate catogories, and multiple of the same were filtered out. 
 
+Pinned entries in the sidebar would not open when clicked, although could be accessed from the calendar view. this was because when loading from the sidebar, it would find the clicked entry by using its displayed text. With the pinned entries staring with a pin symbol, which broke this function. It was fixed by using the entries saved date to locate the entry instead.
+
 ### Prototype 4: Suggested Systems - Todo List
 
 #### Code as of commit 60
