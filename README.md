@@ -148,7 +148,92 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 ```py
 
-  
+# ----- Sidebar -----
+self.sidebar = QWidget()
+sidebar_layout = QVBoxLayout(self.sidebar)
+
+self.to_calendar_btn = QPushButton("Calendar View")
+self.to_entry_btn = QPushButton("Entry View")
+sidebar_layout.addWidget(self.to_calendar_btn)
+sidebar_layout.addWidget(self.to_entry_btn)
+
+# Entry list
+self.entry_list = QListWidget()
+sidebar_layout.addWidget(self.entry_list)
+
+main_layout.addWidget(self.sidebar, 1)
+
+```
+
+```py
+
+# ----- Calendar Page -----
+self.calendar_page = QWidget()
+cal_layout = QVBoxLayout(self.calendar_page)
+self.calendar = QCalendarWidget()
+cal_layout.addWidget(self.calendar)
+self.stacked.addWidget(self.calendar_page)
+
+# ----- Entry Page -----
+self.entry_page = QWidget()
+entry_layout = QVBoxLayout(self.entry_page)
+
+self.entry_title_label = QLabel("No entry loaded")
+entry_layout.addWidget(self.entry_title_label)
+
+self.text_edit = QTextEdit()
+entry_layout.addWidget(self.text_edit)
+
+self.save_btn = QPushButton("Save Entry")
+entry_layout.addWidget(self.save_btn)
+
+self.stacked.addWidget(self.entry_page)
+
+```
+
+```py
+
+# ----- Save and Load Entries -----
+def save_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    content = self.text_edit.toPlainText()
+
+    existing = next((e for e in self.entries if e["date"] == date), None)
+    if existing:
+        existing["content"] = content
+    else:
+        title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+        if not ok or not title.strip():
+            title = "Untitled"
+        self.entries.append({"date": date, "title": title.strip(), "content": content})
+
+    self.save_entries()
+    self.refresh_entry_list()
+    self.highlight_entries()
+
+def load_entry_for_date(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        self.text_edit.setText(entry["content"])
+        self.entry_title_label.setText(f"{entry['title']} - {date}")
+    else:
+        self.text_edit.clear()
+        self.entry_title_label.setText(f"New Entry - {date}")
+
+```
+
+```py
+
+# ----- Highlight Calendar Dates -----
+def highlight_entries(self):
+    theme = THEMES.get(self.current_theme, THEMES["Dark"])
+    has_entry_format = QTextCharFormat()
+    has_entry_format.setBackground(QBrush(QColor(theme["highlight"])))
+
+    for entry in self.entries:
+        date = QDate.fromString(entry["date"], "yyyy-MM-dd")
+        self.calendar.setDateTextFormat(date, has_entry_format)
 
 ```
 
@@ -158,23 +243,31 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 #### New UI Elements
 
-Below is the current form of the UI.
+The current interface consists of a sidebar and a stacked widget that switches between the calendar and entry views.  
 
 ##### Entry View
+
+Users can write their journal entries, view the date, and save the entries.
 
 ![screenshot](P1EntryView.png)
 
 ##### Calendar View
 
+Users can select dates and view which days have entries already.
+
 ![screenshot](CalendarViewP1.png)
 
 ##### Side Bar
+
+Users can use the sidebar to switch between the views aswell as view all entries. 
 
 ![screenshot](SideBar.png)
 
 #### Issues and Solutions
 
-Because i use a Linux system at home and a windows system for school along with needing this to be usable by you i needed to make some systems within this cross os in this case the problem was with loading files and fiel directories becuase of the use of diffirent slashes eg. \ vs /.
+I use Linux at home and Windows for school, and I also needed to make this project usable for you. This required making the file-loading systems cross-OS compatible, which required handling the different slashes used in file directories. 
+
+This was fixed by using `os.path.join()` so python automatcally uses the correct file depending on the operating system. 
 
 ### Prototype 2: Themes and More advanced text options
 
@@ -182,7 +275,55 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ```py
 
-  
+# Theme selector in sidebar
+self.theme_selector = QComboBox()
+self.theme_selector.addItems(THEMES.keys())
+sidebar_layout.addWidget(self.theme_selector)
+self.theme_selector.currentTextChanged.connect(self.apply_theme)
+
+```
+
+```py
+
+def save_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    content = self.text_edit.toHtml()
+
+    # find existing entry for date
+    existing = next((e for e in self.entries if e["date"] == date), None)
+
+    if existing:
+        existing["content"] = content
+    else:
+        # Prompt for a title when creating a new entry
+        title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+        if not ok or not title.strip():
+            title = "Untitled"
+        self.entries.append({"date": date, "title": title.strip(), "content": content})
+
+    self.save_entries()
+    self.refresh_entry_list()
+    self.highlight_entries()
+   
+```
+
+```py
+
+# Advanced text fuctions
+def toggle_bold(self):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontWeight(QFont.Weight.Bold if self.bold_btn.isChecked() else QFont.Weight.Normal)
+    self.text_edit.setCurrentCharFormat(fmt)
+
+def toggle_italic(self):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontItalic(self.italic_btn.isChecked())
+    self.text_edit.setCurrentCharFormat(fmt)
+
+def change_font_size(self, size):
+    fmt = self.text_edit.currentCharFormat()
+    fmt.setFontPointSize(size)
+    self.text_edit.setCurrentCharFormat(fmt)
 
 ```
 
@@ -192,7 +333,11 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### New UI Element
 
-##### Theme
+Theme selector as a dropdown from the sidebar. 
+
+Text formatting section in the entry view with a bold, italic and font size selector. 
+
+##### Theme Selector
 
 ![screenshot](ThemeSelect.png)
 
@@ -202,13 +347,123 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Issues and Solutions
 
+The chosen theme would be correctly applied on startup, but the theme selection dropdown box would still show the default theme. To fix this when loading it would check if a theme had been saved then it would find the index of that theme and set the selection box to the correct index. 
+
+After changing to use HTML formatting, the sidebar's preview would show the raw HTML text. I ended up fixing this by creating the entry title and using that as the preview instead. 
+
 ### Prototype 3: Pinning, catogoriesing
 
 #### Code as of commit 46
 
 ```py
 
-  
+# Pin toggle button in entry header
+self.pin_btn = QPushButton("📌")
+self.pin_btn.setCheckable(True)
+self.pin_btn.setFixedSize(24, 24)
+self.pin_btn.toggled.connect(self.toggle_pin)
+header_layout.addWidget(self.pin_btn)
+
+# Categories button in actions row
+self.categories_btn = QPushButton("🏷")
+self.categories_btn.setFixedSize(24, 24)
+self.categories_btn.clicked.connect(self.edit_categories)
+actions_layout.addWidget(self.categories_btn)
+
+# Delete button in sidebar
+self.delete_btn = QPushButton("Delete Entry")
+self.delete_btn.clicked.connect(self.delete_entry)
+sidebar_layout.addWidget(self.delete_btn)
+
+```
+
+```py
+
+# Refresh entry list with pinned items first
+def refresh_entry_list(self):
+    self.entry_list.clear()
+
+    pinned = [e for e in self.entries if e.get("pinned")]
+    others = [e for e in self.entries if not e.get("pinned")]
+
+    pinned = sorted(pinned, key=lambda x: x["date"])
+    others = sorted(others, key=lambda x: x["date"])
+
+    def make_item(entry, pinned=False):
+        cats = ", ".join(entry.get("categories", []))
+        label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} "
+        if cats:
+            label += f" [{cats}]"
+        item = QListWidgetItem(label)
+        item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+        return item
+
+    for entry in pinned:
+        self.entry_list.addItem(make_item(entry, pinned=True))
+
+    for entry in others:
+        self.entry_list.addItem(make_item(entry))
+
+```
+
+```py
+
+# Pin toggle handler
+def toggle_pin(self, checked):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        entry["pinned"] = checked
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
+
+```
+
+```py
+
+# Categories editor
+def edit_categories(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+    if entry:
+        current = ", ".join(entry.get("categories", []))
+        text, ok = QInputDialog.getText(
+            self, "Edit Categories", "Enter categories (comma-separated):", text=current
+        )
+        if ok:
+            cats = [c.strip() for c in text.split(",") if c.strip()]
+            entry["categories"] = cats
+            self.save_entries()
+            self.refresh_entry_list()
+
+```
+
+```py
+
+# Delete entry with confirmation
+def delete_entry(self):
+    date = self.calendar.selectedDate().toString("yyyy-MM-dd")
+    entry = next((e for e in self.entries if e["date"] == date), None)
+
+    if not entry:
+        QMessageBox.information(self, "No Entry", "There is no entry for this date to delete.")
+        return
+
+    reply = QMessageBox.question(
+        self,
+        "Delete Entry",
+        f"Are you sure you want to delete the entry for {date}?",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+    )
+
+    if reply == QMessageBox.StandardButton.Yes:
+        self.entries = [e for e in self.entries if e["date"] != date]
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
+        self.text_edit.clear()
+        self.entry_title_label.setText(f"Deleted Entry - {date}")
 
 ```
 
@@ -218,19 +473,29 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### New UI Elements
 
-##### Pinning
+Pin Button: Allows for an entry to be pinned. With pinned entries appearing at the top of the sidebar and highlighted with a diffirent color in the calendar
+
+Catogory Button: Opens a text input where you can specify the catogoires of the entry, which will then be displayed next to the entry in the entry list. 
+
+Delete Button: Finally decided that the user should be able to delete an entry. By adding a button at the bottom of the sidebar, which deletes the selected entry, after waiting for a confirmation.
+
+##### Pinning Button
 
 ![screenshot](Pin.png)
 
-##### Catogories
+##### Catogories Button and Input Dialogue
 
 ![screenshot](CatogoryInput.png)
 
-##### Side Bar With Pin and Catogories
+##### Sidebar With Pinned Entry, Catogories, and Delete Button
 
 ![screenshot](sideBarPinCat.png)
 
 #### Issues and Solutions
+
+When you pin an entry or added a catogory, the sidebar and calendar would not update until you refreshed the app by selecting a new date or saving again. It was a simple fix of just calling the refresh and highlight functions again but i hadn't thaught to do it even though pinning and catogoriesing didn't need saving to actually save.
+
+When entering catogories it would allow you to enter just commas, whitespace or nothing and which would add blank catogories to the list, it was also possible to have multiple of the same catogories. These were fixed by removing any blank entries with .strip() to remove white space and .stip(",") to seperate catogories, and multiple of the same were filtered out. 
 
 ### Prototype 4: Suggested Systems - Todo List
 
@@ -238,13 +503,142 @@ Because i use a Linux system at home and a windows system for school along with 
 
 ```py
 
-  
+self.to_todo_btn = QPushButton("Todo List")
+sidebar_layout.addWidget(self.to_todo_btn)
+self.to_todo_btn.clicked.connect(
+    lambda: self.stacked.setCurrentWidget(self.todo_page)
+)
 
 ```
 
-#### Video of Functionality
+```py
 
-[![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
+# Todo list page with tabs
+self.todo_page = QWidget()
+todo_layout = QVBoxLayout(self.todo_page)
+
+self.todo_tabs = QTabWidget()
+todo_layout.addWidget(self.todo_tabs)
+
+# All Todos tab
+self.all_todos_tab = QWidget()
+all_todos_layout = QVBoxLayout(self.all_todos_tab)
+self.todo_list = QListWidget()
+all_todos_layout.addWidget(self.todo_list)
+self.todo_tabs.addTab(self.all_todos_tab, "All Todos")
+
+# Today’s Todos tab
+self.today_todos_tab = QWidget()
+today_todos_layout = QVBoxLayout(self.today_todos_tab)
+self.today_todo_list = QListWidget()
+today_todos_layout.addWidget(self.today_todo_list)
+self.todo_tabs.addTab(self.today_todos_tab, "Today")
+
+# Overdue Todos tab
+self.overdue_todos_tab = QWidget()
+overdue_todos_layout = QVBoxLayout(self.overdue_todos_tab)
+self.overdue_todo_list = QListWidget()
+overdue_todos_layout.addWidget(self.overdue_todo_list)
+self.todo_tabs.addTab(self.overdue_todos_tab, "Overdue")
+
+```
+
+```py
+
+def add_todo(self):
+    text = self.todo_input.text().strip()
+    if not text:
+        return
+
+    date = self.todo_date.date().toString("yyyy-MM-dd")
+    time = self.todo_time.time().toString("HH:mm")
+    datetime_str = f"{date} {time}"
+
+    todo = {
+        "id": datetime.now().strftime("%Y%m%d%H%M%S"),
+        "text": text,
+        "datetime": datetime_str,
+        "completed": False,
+        "created": datetime.now().strftime("%Y-%m-%d %H:%M")
+    }
+
+    self.todos.append(todo)
+    self.save_todos()
+    self.refresh_todo_lists()
+    self.todo_input.clear()
+
+```
+
+```py
+
+# Todo actions
+def complete_todo(self):
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    for todo in self.todos:
+        if todo["id"] == todo_id:
+            todo["completed"] = not todo["completed"]
+    self.save_todos()
+    self.refresh_todo_lists()
+
+ def edit_todo(self):
+    # Get currently selected item
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    
+    # Find corresponding todo
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    todo = next((t for t in self.todos if t["id"] == todo_id), None)
+    if not todo:
+        return
+    
+    # Prompt for new text
+    text, ok = QInputDialog.getText(self, "Edit Todo", "Update todo text:", text=todo["text"])
+    if ok and text.strip():
+        todo["text"] = text.strip()
+        
+        # Prompt for new date/time
+        current_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
+        new_datetime, ok = QInputDialog.getText(self, "Edit Todo", "Update due date and time (YYYY-MM-DD HH:MM):", text=todo["datetime"])
+        if ok and new_datetime.strip():
+            try:
+                datetime.strptime(new_datetime.strip(), "%Y-%m-%d %H:%M")
+                todo["datetime"] = new_datetime.strip()
+            except ValueError:
+                QMessageBox.warning(self, "Invalid DateTime", "The date and time format is invalid. Keeping the old value.")
+        
+    # Save changes and refresh lists
+    self.save_todos()
+    self.refresh_todo_lists()
+
+def delete_todo(self):
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    
+    # Confirm deletion
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    reply = QMessageBox.question(
+        self,
+        "Delete Todo",
+        "Are you sure you want to delete this todo?",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+    )
+
+    # If confirmed, delete todo
+    if reply == QMessageBox.StandardButton.Yes:
+        self.todos = [t for t in self.todos if t["id"] != todo_id]
+        self.save_todos()
+        self.refresh_todo_lists()
+
+```
+
+#### Video of FunctionalityW
+
+[![Prototype 4](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
 #### New UI Elements
 
@@ -253,10 +647,44 @@ Because i use a Linux system at home and a windows system for school along with 
 ![screenshot](Todo.png)
 
 #### Issues and Solutions
+FIX TO BECOME MY 
+```
+Issue: The user could set a due date that was in the past when creating a new todo, which immediately made it overdue.
+
+Solution: I set the default date for the QDateEdit widget to the current date and the default time to one hour in the future to help guide the user towards setting a sensible due date.
+
+Issue: The edit function was cumbersome because it required typing the date and time in a specific format, which was error-prone.
+
+Solution: I improved the edit function to use separate date and time pickers instead of requiring manual text input, making it much easier to adjust due dates accurately.
+```
 
 ### Prototype 5: Suggested Systems - Gym Tracking
 
-#### Code as of commit 69
+#### Code as of commit 76
+
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
 
 ```py
 
@@ -266,15 +694,19 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
+[![Prototype 5](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
 #### New UI Elements
+
+
 
 ##### Gym Page
 
 ![screenshot](GymView.png)
 
 #### Issues and Solutions
+
+
 
 ### Prototype 6: Sorting and Searching
 
@@ -288,11 +720,15 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### Video of Functionality
 
-[![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 #### New UI Elements
 
+
+
 #### Issues and Solutions
+
+
 
 ### Prototype 7: IF I GET MORE TIME
 
@@ -310,7 +746,11 @@ Because i use a Linux system at home and a windows system for school along with 
 
 #### New UI Elements
 
+
+
 ### Issues and Solutions
+
+
 
 ## Reflection
 
