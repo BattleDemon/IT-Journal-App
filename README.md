@@ -239,7 +239,7 @@ def highlight_entries(self):
 
 #### Video of Functionality
 
-[![Prototype 1](https://img.youtube.com/vi/QhN-gVlsF-o/0.jpg)](https://www.youtube.com/watch?v=QhN-gVlsF-o)
+[![Prototype 1](https://img.youtube.com/vi/RfsdXi8gLjs/0.jpg)](https://www.youtube.com/watch?v=RfsdXi8gLjs)
 
 #### New UI Elements
 
@@ -329,7 +329,7 @@ def change_font_size(self, size):
 
 #### Video of Functionality
 
-[![Prototype 2](https://img.youtube.com/vi/wpqoa20dFwM/0.jpg)](https://www.youtube.com/watch?v=wpqoa20dFwM)
+[![Prototype 2](https://img.youtube.com/vi/5iDJJPJeIvo/0.jpg)](https://www.youtube.com/watch?v=5iDJJPJeIvo)
 
 #### New UI Element
 
@@ -469,7 +469,7 @@ def delete_entry(self):
 
 #### Video of Functionality
 
-[![Prototype 3](https://img.youtube.com/vi/w44o6xQUBmM/0.jpg)](https://www.youtube.com/watch?v=w44o6xQUBmM)
+[![Prototype 3](https://img.youtube.com/vi/UPA5kW2vdBs/0.jpg)](https://www.youtube.com/watch?v=UPA5kW2vdBs)
 
 #### New UI Elements
 
@@ -640,7 +640,7 @@ def delete_todo(self):
 
 #### Video of FunctionalityW
 
-[![Prototype 4](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
+[![Prototype 4](https://img.youtube.com/vi/VvO13jhg0RQ/0.jpg)](https://www.youtube.com/watch?v=VvO13jhg0RQ)
 
 #### New UI Elements
 
@@ -696,7 +696,7 @@ Solution: I improved the edit function to use separate date and time pickers ins
 
 #### Video of Functionality
 
-[![Prototype 5](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
+[![Prototype 5](https://img.youtube.com/vi/WaCVO8xWK-Q/0.jpg)](https://www.youtube.com/watch?v=WaCVO8xWK-Q)
 
 #### New UI Elements
 
