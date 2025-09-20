@@ -654,6 +654,30 @@ def delete_todo(self):
 
 ```
 
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
+
+```py
+
+  
+
+```
+
 #### Video of Functionality
 
 [![Prototype 5](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
