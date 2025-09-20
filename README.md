@@ -491,19 +491,150 @@ Delete Button: Finally decided that the user should be able to delete an entry. 
 
 #### Issues and Solutions
 
+
+
 ### Prototype 4: Suggested Systems - Todo List
 
 #### Code as of commit 60
 
 ```py
 
-  
+self.to_todo_btn = QPushButton("Todo List")
+sidebar_layout.addWidget(self.to_todo_btn)
+self.to_todo_btn.clicked.connect(
+    lambda: self.stacked.setCurrentWidget(self.todo_page)
+)
+
+```
+
+```py
+
+# Todo list page with tabs
+self.todo_page = QWidget()
+todo_layout = QVBoxLayout(self.todo_page)
+
+self.todo_tabs = QTabWidget()
+todo_layout.addWidget(self.todo_tabs)
+
+# All Todos tab
+self.all_todos_tab = QWidget()
+all_todos_layout = QVBoxLayout(self.all_todos_tab)
+self.todo_list = QListWidget()
+all_todos_layout.addWidget(self.todo_list)
+self.todo_tabs.addTab(self.all_todos_tab, "All Todos")
+
+# Today’s Todos tab
+self.today_todos_tab = QWidget()
+today_todos_layout = QVBoxLayout(self.today_todos_tab)
+self.today_todo_list = QListWidget()
+today_todos_layout.addWidget(self.today_todo_list)
+self.todo_tabs.addTab(self.today_todos_tab, "Today")
+
+# Overdue Todos tab
+self.overdue_todos_tab = QWidget()
+overdue_todos_layout = QVBoxLayout(self.overdue_todos_tab)
+self.overdue_todo_list = QListWidget()
+overdue_todos_layout.addWidget(self.overdue_todo_list)
+self.todo_tabs.addTab(self.overdue_todos_tab, "Overdue")
+
+```
+
+```py
+
+def add_todo(self):
+    text = self.todo_input.text().strip()
+    if not text:
+        return
+
+    date = self.todo_date.date().toString("yyyy-MM-dd")
+    time = self.todo_time.time().toString("HH:mm")
+    datetime_str = f"{date} {time}"
+
+    todo = {
+        "id": datetime.now().strftime("%Y%m%d%H%M%S"),
+        "text": text,
+        "datetime": datetime_str,
+        "completed": False,
+        "created": datetime.now().strftime("%Y-%m-%d %H:%M")
+    }
+
+    self.todos.append(todo)
+    self.save_todos()
+    self.refresh_todo_lists()
+    self.todo_input.clear()
+
+```
+
+```py
+
+# Todo actions
+def complete_todo(self):
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    for todo in self.todos:
+        if todo["id"] == todo_id:
+            todo["completed"] = not todo["completed"]
+    self.save_todos()
+    self.refresh_todo_lists()
+
+ def edit_todo(self):
+    # Get currently selected item
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    
+    # Find corresponding todo
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    todo = next((t for t in self.todos if t["id"] == todo_id), None)
+    if not todo:
+        return
+    
+    # Prompt for new text
+    text, ok = QInputDialog.getText(self, "Edit Todo", "Update todo text:", text=todo["text"])
+    if ok and text.strip():
+        todo["text"] = text.strip()
+        
+        # Prompt for new date/time
+        current_datetime = datetime.strptime(todo["datetime"], "%Y-%m-%d %H:%M")
+        new_datetime, ok = QInputDialog.getText(self, "Edit Todo", "Update due date and time (YYYY-MM-DD HH:MM):", text=todo["datetime"])
+        if ok and new_datetime.strip():
+            try:
+                datetime.strptime(new_datetime.strip(), "%Y-%m-%d %H:%M")
+                todo["datetime"] = new_datetime.strip()
+            except ValueError:
+                QMessageBox.warning(self, "Invalid DateTime", "The date and time format is invalid. Keeping the old value.")
+        
+    # Save changes and refresh lists
+    self.save_todos()
+    self.refresh_todo_lists()
+
+def delete_todo(self):
+    current_item = self.todo_list.currentItem()
+    if not current_item:
+        return
+    
+    # Confirm deletion
+    todo_id = current_item.data(Qt.ItemDataRole.UserRole)
+    reply = QMessageBox.question(
+        self,
+        "Delete Todo",
+        "Are you sure you want to delete this todo?",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+    )
+
+    # If confirmed, delete todo
+    if reply == QMessageBox.StandardButton.Yes:
+        self.todos = [t for t in self.todos if t["id"] != todo_id]
+        self.save_todos()
+        self.refresh_todo_lists()
 
 ```
 
 #### Video of Functionality
 
-[![Prototype 5](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
+[![Prototype 4](https://img.youtube.com/vi/JaybF-vf7mw/0.jpg)](https://www.youtube.com/watch?v=JaybF-vf7mw)
 
 #### New UI Elements
 
@@ -525,15 +656,19 @@ Delete Button: Finally decided that the user should be able to delete an entry. 
 
 #### Video of Functionality
 
-[![Prototype 6](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
+[![Prototype 5](https://img.youtube.com/vi/P98RAPgDNbo/0.jpg)](https://www.youtube.com/watch?v=P98RAPgDNbo)
 
 #### New UI Elements
+
+
 
 ##### Gym Page
 
 ![screenshot](GymView.png)
 
 #### Issues and Solutions
+
+
 
 ### Prototype 6: Sorting and Searching
 
@@ -547,11 +682,15 @@ Delete Button: Finally decided that the user should be able to delete an entry. 
 
 #### Video of Functionality
 
-[![Prototype 4](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
 #### New UI Elements
 
+
+
 #### Issues and Solutions
+
+
 
 ### Prototype 7: IF I GET MORE TIME
 
@@ -569,7 +708,11 @@ Delete Button: Finally decided that the user should be able to delete an entry. 
 
 #### New UI Elements
 
+
+
 ### Issues and Solutions
+
+
 
 ## Reflection
 
