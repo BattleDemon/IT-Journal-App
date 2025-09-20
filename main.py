@@ -979,7 +979,7 @@ class JournalApp(QMainWindow):
             self.workout_sessions = [s for s in self.workout_sessions if s["id"] != self.current_session["id"]]
             self.save_workout_sessions_to_file()
             self.current_session = None
-            self.clear_excercises_table()
+            self.clear_exercises_table()
             QMessageBox.information(self, "Deleted", "Workout session deleted.")
         else:
             return
