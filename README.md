@@ -471,21 +471,21 @@ def delete_entry(self):
 
 #### New UI Elements
 
-Pin Button
+Pin Button: Allows for an entry to be pinned. With pinned entries appearing at the top of the sidebar and highlighted with a diffirent color in the calendar
 
-Catogory Button
+Catogory Button: Opens a text input where you can specify the catogoires of the entry, which will then be displayed next to the entry in the entry list. 
 
-Delete Button
+Delete Button: Finally decided that the user should be able to delete an entry. By adding a button at the bottom of the sidebar, which deletes the selected entry, after waiting for a confirmation.
 
-##### Pinning
+##### Pinning Button
 
 ![screenshot](Pin.png)
 
-##### Catogories
+##### Catogories Button and Input Dialogue
 
 ![screenshot](CatogoryInput.png)
 
-##### Side Bar With Pin and Catogories
+##### Sidebar With Pinned Entry, Catogories, and Delete Button
 
 ![screenshot](sideBarPinCat.png)
 
