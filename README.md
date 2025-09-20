@@ -644,6 +644,12 @@ def delete_todo(self):
 
 #### New UI Elements
 
+A new page was added to the stacked widget, with three internal tabs, one for all the todos, todays todos, and overdue tasks.
+
+At the bottom of the page, a text field with a date and time picker was added to allow users to create todos and specify the deadlines. 
+
+Three buttons were also added to complete, edit, and delete the selected todos. 
+
 ##### Todo Page
 
 ![screenshot](Todo.png)
