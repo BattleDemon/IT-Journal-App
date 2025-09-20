@@ -710,28 +710,6 @@ Solution: I improved the edit function to use separate date and time pickers ins
 
 
 
-### Prototype 6: Sorting and Searching
-
-#### Code as of commit XX
-
-```py
-
-  
-
-```
-
-#### Video of Functionality
-
-[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
-
-#### New UI Elements
-
-
-
-#### Issues and Solutions
-
-
-
 ### Prototype X:
 
 #### Code as of commit X
