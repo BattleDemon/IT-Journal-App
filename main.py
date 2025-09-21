@@ -500,32 +500,42 @@ class JournalApp(QMainWindow):
     # Refresh the entry list in the sidebar
     def refresh_entry_list(self):
         self.entry_list.clear() # Clear existing items
+            
+        query = self.search_input.text().strip().lower()
+        filtered_entries = [
+            e for e in self.entries
+            if query in e["title"].lower() or query in e["date"]
+        ]
 
-        # Sort entries: pinned first, then by date
-        pinned = [e for e in self.entries if e.get("pinned")]
-        others = [e for e in self.entries if not e.get("pinned")]
+        sort_mode = self.sort_selector.currentText()
 
-        # Sort both lists by date
-        pinned = sorted(pinned, key=lambda x: x["date"])
-        others = sorted(others, key=lambda x: x["date"])
+        if sort_mode == "Date":
+            filtered_entries.sort(key=lambda x: x["date"])
+        elif sort_mode == "Title":
+            filtered_entries.sort(key=lambda x: x["title"].lower())
+        elif sort_mode == "Last Opened":
+            filtered_entries.sort(key=lambda x: x.get("last_opened", ""))
+        elif sort_mode == "Pinned First":
+            # Pinned entries to top, then sort by date
+            pinned = [e for e in filtered_entries if e.get("pinned")]
+            others = [e for e in filtered_entries if not e.get("pinned")]
+            pinned.sort(key=lambda x: x["date"])
+            others.sort(key=lambda x: x["date"])
+            filtered_entries = pinned + others
 
-        # Helper to create list item with pin icon and categories
-        def make_item(entry, pinned=False):
-            cats = ", ".join(entry.get("categories", [])) # Join categories
-            label = f"{'📌 ' if pinned else ''}{entry['date']} - {entry['title']} " 
-            if cats: # Append categories if any
+        for entry in filtered_entries:
+            cats = ", ".join(entry.get("categories", []))
+            label = f"{'📌 ' if entry.get('pinned') else ''}{entry['date']} - {entry['title']}"
+            if cats:
                 label += f" [{cats}]"
-            item = QListWidgetItem(label) # Create list item
-            item.setData(Qt.ItemDataRole.UserRole, entry["date"]) # Store date for lookup
-            return item 
+            item = QListWidgetItem(label)
+            item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+            self.entry_list.addItem(item)
 
-        # Add pinned entries first
-        for entry in pinned:
-            self.entry_list.addItem(make_item(entry, pinned=True))
-
-        # Then add other entries
-        for entry in others:
-            self.entry_list.addItem(make_item(entry))
+    
+    def update_last_opened(self, entry):
+        entry["last_opened"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.save_entries()
 
     # Load entry when selected from list
     def load_entry_from_list(self, item):
@@ -533,8 +543,11 @@ class JournalApp(QMainWindow):
         entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
             self.text_edit.setHtml(entry["content"])
+            self.entry_title_label.setText(f"{entry['title']} - {date}")
             self.calendar.setSelectedDate(QDate.fromString(date, "yyyy-MM-dd"))
             self.stacked.setCurrentWidget(self.entry_page)
+
+            self.update_last_opened(entry)
 
     # Load entry for selected date in calendar
     def load_entry_for_date(self):
@@ -544,6 +557,7 @@ class JournalApp(QMainWindow):
         if entry:
             self.text_edit.setHtml(entry["content"])
             self.entry_title_label.setText(f"{entry['title']} - {date}")
+            self.update_last_opened(entry)
         else:
             self.text_edit.clear()
             self.entry_title_label.setText(f"New Entry - {date}")
@@ -614,14 +628,25 @@ class JournalApp(QMainWindow):
         date = self.calendar.selectedDate().toString("yyyy-MM-dd")
         entry = next((e for e in self.entries if e["date"] == date), None)
         if entry:
-            current = ", ".join(entry.get("categories", [])) # Current categories
-            text, ok = QInputDialog.getText(self, "Edit Categories", "Enter categories (seperate with comma):", text=current)
+            current = ", ".join(entry.get("categories", []))
+            text, ok = QInputDialog.getText(
+                self, "Edit Categories", "Enter categories (comma-separated):", text=current
+            )
             if ok:
+                # Split, strip whitespace, remove blanks
                 cats = [c.strip() for c in text.split(",") if c.strip()]
-                entry["categories"] = cats
-                # Update title in sidebar
+                # Remove duplicates while keeping order
+                seen = set()
+                unique_cats = []
+                for c in cats:
+                    if c.lower() not in seen:
+                        seen.add(c.lower())
+                        unique_cats.append(c)
+                entry["categories"] = unique_cats
+
                 self.save_entries()
                 self.refresh_entry_list()
+
 
     # Delete entry for selected date
     def delete_entry(self):
@@ -812,7 +837,7 @@ class JournalApp(QMainWindow):
         else:
             # If no workouts file, start with empty list
             self.workout_sessions = [] 
-            self.save_workout_sessions_to_file()
+            self.save_workout_session()
 
     # Save workout sessions to file
     def save_workout_session(self):
@@ -969,14 +994,8 @@ class JournalApp(QMainWindow):
         else:
             self.workout_sessions.append(self.current_session)
         
-        self.save_workout_sessions_to_file()  
+        self.save_workout_session()  
         QMessageBox.information(self, "Saved", "Workout session saved successfully.")
-
-    # Save all workout sessions to file
-    def save_workout_sessions_to_file(self):  
-        workouts_path = os.path.join(self.data_dir, "workouts.json")
-        with open(workouts_path, "w", encoding="utf-8") as f:
-            json.dump(self.workout_sessions, f, indent=4) # Save sessions as JSON
 
     # Delete current workout session
     def delete_workout_session(self):
@@ -994,7 +1013,7 @@ class JournalApp(QMainWindow):
         # If confirmed, delete session
         if reply == QMessageBox.StandardButton.Yes:
             self.workout_sessions = [s for s in self.workout_sessions if s["id"] != self.current_session["id"]]
-            self.save_workout_sessions_to_file()
+            self.save_workout_session()
             self.current_session = None
             self.clear_exercises_table()
             QMessageBox.information(self, "Deleted", "Workout session deleted.")
