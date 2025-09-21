@@ -832,10 +832,10 @@ class JournalApp(QMainWindow):
         else:
             # If no workouts file, start with empty list
             self.workout_sessions = [] 
-            self.save_workout_session()
+            self.save_workout_sessions()
 
     # Save workout sessions to file
-    def save_workout_session(self):
+    def save_workout_sessions(self):
         workouts_path = os.path.join(self.data_dir, "workouts.json")
         with open(workouts_path, "w", encoding="utf-8") as f:
             json.dump(self.workout_sessions, f, indent=4) # Save sessions as JSON
@@ -989,7 +989,7 @@ class JournalApp(QMainWindow):
         else:
             self.workout_sessions.append(self.current_session)
         
-        self.save_workout_session()  
+        self.save_workout_sessions()  
         QMessageBox.information(self, "Saved", "Workout session saved successfully.")
 
     # Delete current workout session
@@ -1019,5 +1019,5 @@ class JournalApp(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = JournalApp()
-    print("Hello, World!")
+    print("Hello World!")
     sys.exit(app.exec())
