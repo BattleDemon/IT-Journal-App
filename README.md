@@ -265,9 +265,7 @@ Users can use the sidebar to switch between the views aswell as view all entries
 
 #### Issues and Solutions
 
-I use Linux at home and Windows for school, and I also needed to make this project usable for you. This required making the file-loading systems cross-OS compatible, which required handling the different slashes used in file directories. 
-
-This was fixed by using `os.path.join()` so python automatcally uses the correct file depending on the operating system. 
+I use Linux at home and Windows for school, and I also needed to make this project usable for you. This required making the file-loading systems cross-OS compatible, which required handling the different slashes used in file directories. This was fixed by using `os.path.join()` so python automaticly uses the correct file depending on the operating system. 
 
 ### Prototype 2: Themes and More advanced text options
 
