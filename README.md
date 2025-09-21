@@ -782,6 +782,28 @@ In the early stages, trying to add an exercise without first creating or loading
 
 When creating a new session on a date that already had one, the app would overwrite it. This was fixed by prompting the user with a confirmation dialogue asking if they wanted to load the existing session instead.
 
+### Prototype 6:
+
+#### Code as of commit X
+
+```py
+
+  
+
+```
+
+#### Video of Functionality
+
+[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+
+#### New UI Elements
+
+
+
+### Issues and Solutions
+
+
+
 ### Prototype X:
 
 #### Code as of commit X
