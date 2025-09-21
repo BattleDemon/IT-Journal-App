@@ -16,11 +16,9 @@ from PyQt6.QtWidgets import (
     QComboBox,
     QListWidgetItem,
     QMessageBox,
-    QCheckBox,
     QTimeEdit,
     QLineEdit,
     QTabWidget,
-    QDateTimeEdit,
     QDateEdit,
     QTableWidget,
     QTableWidgetItem,
@@ -28,15 +26,11 @@ from PyQt6.QtWidgets import (
 ) # Import PyQt6 widgets i will use
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
-from PyQt6.QtCore import QTime, QDateTime
-from datetime import datetime, timedelta 
+from PyQt6.QtCore import QTime
+from datetime import datetime
 import json
 import os
 import sys
-
-# /* ------ Screen and Theme Defaults ------ */
-screen_width = 1920
-screen_height = 1080
 
 # Load themes from JSON file
 THEMES = json.load(open("themes.json", "r", encoding="utf-8"))
@@ -82,7 +76,7 @@ class JournalApp(QMainWindow):
         sidebar_layout.addWidget(self.search_input)
 
         self.sort_selector = QComboBox()
-        self.sort_selector.addItems(["Date", "Title", "Last Opened", "Pinned First"])
+        self.sort_selector.addItems(["Pinned First","Date", "Title", "Last Opened", ])
         self.sort_selector.currentTextChanged.connect(self.refresh_entry_list)
         sidebar_layout.addWidget(self.sort_selector)
 
@@ -504,7 +498,8 @@ class JournalApp(QMainWindow):
         query = self.search_input.text().strip().lower()
         filtered_entries = [
             e for e in self.entries
-            if query in e["title"].lower() or query in e["date"]
+            if query in e["title"].lower() or query in e["date"] 
+            or (isinstance(e.get("categories"), list) and any(query in category.lower() for category in e["categories"]))
         ]
 
         sort_mode = self.sort_selector.currentText()
