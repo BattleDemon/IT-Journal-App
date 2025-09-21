@@ -778,7 +778,9 @@ Gym Page: At the top of the page there is a date selector, alongside buttons to 
 
 #### Issues and Solutions
 
+In the early stages, trying to add an exercise without first creating or loading a session caused the app to crash. This was solved by checking if a session existed and showing a warning if it did not.
 
+When creating a new session on a date that already had one, the app would overwrite it. This was fixed by prompting the user with a confirmation dialogue asking if they wanted to load the existing session instead.
 
 ### Prototype X:
 
