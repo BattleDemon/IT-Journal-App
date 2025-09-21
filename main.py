@@ -55,23 +55,38 @@ class JournalApp(QMainWindow):
         self.setCentralWidget(self.central_widget)
         main_layout = QHBoxLayout(self.central_widget)
 
-        # /* ----- Sidebar ----- */
+        # Sidebar 
         self.sidebar = QWidget()
         sidebar_layout = QVBoxLayout(self.sidebar)
 
-        # Navigation buttons
         self.to_calendar_btn = QPushButton("Calendar View")
+        sidebar_layout.addWidget(self.to_calendar_btn)
+
+        nav_row = QWidget()
+        nav_layout = QHBoxLayout(nav_row)
+        nav_layout.setContentsMargins(0, 0, 0, 0)  
+
         self.to_entry_btn = QPushButton("Entry View")
         self.to_todo_btn = QPushButton("Todo List")
         self.to_gym_btn = QPushButton("Gym Tracking")
 
-        # Add buttons to sidebar layout
-        sidebar_layout.addWidget(self.to_calendar_btn)
-        sidebar_layout.addWidget(self.to_entry_btn)
-        sidebar_layout.addWidget(self.to_todo_btn)
-        sidebar_layout.addWidget(self.to_gym_btn)
+        nav_layout.addWidget(self.to_entry_btn)
+        nav_layout.addWidget(self.to_todo_btn)
+        nav_layout.addWidget(self.to_gym_btn)
 
-        # Entry list
+        sidebar_layout.addWidget(nav_row)
+
+        self.search_input = QLineEdit()
+        self.search_input.setPlaceholderText("Search entries...")
+        self.search_input.textChanged.connect(self.refresh_entry_list)
+        sidebar_layout.addWidget(self.search_input)
+
+        self.sort_selector = QComboBox()
+        self.sort_selector.addItems(["Date", "Title", "Last Opened", "Pinned First"])
+        self.sort_selector.currentTextChanged.connect(self.refresh_entry_list)
+        sidebar_layout.addWidget(self.sort_selector)
+
+        # --- Entry list ---
         self.entry_list = QListWidget()
         sidebar_layout.addWidget(self.entry_list)
 
