@@ -39,14 +39,6 @@
         "highlight": "#dc143c",
         "pinned_highlight": "#9370db"
     },
-    "Crimson": {
-        "window_bg": "#3b0000",
-        "text_color": "#ffe0e0",
-        "button_bg": "#800000",
-        "button_text": "#f5f5dc",
-        "highlight": "#dc143c",
-        "pinned_highlight": "#ffa07a"
-    },
     "Omni Dracula": {
         "window_bg": "#1E1F29",
         "text_color": "#E243E7",
@@ -54,14 +46,6 @@
         "button_text": "#FFFFFF",
         "highlight": "#FFD700",
         "pinned_highlight": "#00ffff"
-    },
-    "Cobalt": {
-        "window_bg": "#002240",
-        "text_color": "#ffffff",
-        "button_bg": "#003366",
-        "button_text": "#ffffff",
-        "highlight": "#ff9d00",
-        "pinned_highlight": "#adff2f"
     },
     "Night Owl": {
         "window_bg": "#011627",
