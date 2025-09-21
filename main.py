@@ -550,7 +550,7 @@ class JournalApp(QMainWindow):
 
         # Different color for pinned entries
         pinned_format = QTextCharFormat()
-        pinned_format.setBackground(QBrush(QColor("#ffcc00")))
+        pinned_format.setBackground(QBrush(QColor(theme["pinned_highlight"])))
 
         # Reapply new highlights
         for entry in self.entries:

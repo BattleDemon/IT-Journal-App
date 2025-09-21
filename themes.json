@@ -4,62 +4,71 @@
         "text_color": "#000000",
         "button_bg": "#f0f0f0",
         "button_text": "#000000",
-        "highlight": "#add8e6"
+        "highlight": "#add8e6",
+        "pinned_highlight": "#ff8c00"
     },
     "Dark": {
         "window_bg": "#2e2e2e",
         "text_color": "#ffffff",
         "button_bg": "#3a3a3a",
         "button_text": "#ffffff",
-        "highlight": "#4a90e2"
+        "highlight": "#4a90e2",
+        "pinned_highlight": "#00ced1"
     },
     "Dracula": {
         "window_bg": "#282a36",
         "text_color": "#f8f8f2",
         "button_bg": "#44475a",
         "button_text": "#f8f8f2",
-        "highlight": "#bd93f9"
+        "highlight": "#bd93f9",
+        "pinned_highlight": "#50fa7b"
     },
     "Nord": {
         "window_bg": "#2e3440",
         "text_color": "#d8dee9",
         "button_bg": "#4c566a",
         "button_text": "#d8dee9",
-        "highlight": "#88c0d0"
+        "highlight": "#88c0d0",
+        "pinned_highlight": "#ebcb8b"
     },
-    "Vampire" : {
-        "window_bg" : "#33001a",
-        "text_color" : "#f0e68c",
-        "button_bg" : "#8b0000",
-        "button_text" : "#f5f5dc",
-        "highlight" : "#dc143c"
+    "Vampire": {
+        "window_bg": "#33001a",
+        "text_color": "#f0e68c",
+        "button_bg": "#8b0000",
+        "button_text": "#f5f5dc",
+        "highlight": "#dc143c",
+        "pinned_highlight": "#9370db"
     },
-    "Crimson" : {
-        "window_bg" : "#3b0000",
-        "text_color" : "#ffe0e0",
-        "button_bg" : "#800000",
-        "button_text" : "#f5f5dc",
-        "highlight" : "#dc143c"
+    "Crimson": {
+        "window_bg": "#3b0000",
+        "text_color": "#ffe0e0",
+        "button_bg": "#800000",
+        "button_text": "#f5f5dc",
+        "highlight": "#dc143c",
+        "pinned_highlight": "#ffa07a"
     },
-    "Omni Dracula" : {
+    "Omni Dracula": {
         "window_bg": "#1E1F29",
         "text_color": "#E243E7",
         "button_bg": "#8A2BE2",
         "button_text": "#FFFFFF",
-        "highlight": "#FFD700"
+        "highlight": "#FFD700",
+        "pinned_highlight": "#00ffff"
     },
     "Cobalt": {
         "window_bg": "#002240",
         "text_color": "#ffffff",
         "button_bg": "#003366",
         "button_text": "#ffffff",
-        "highlight": "#ff9d00"
+        "highlight": "#ff9d00",
+        "pinned_highlight": "#adff2f"
     },
     "Night Owl": {
         "window_bg": "#011627",
         "text_color": "#d6deeb",
         "button_bg": "#1d3b53",
         "button_text": "#c792ea",
-        "highlight": "#82aaff"
+        "highlight": "#82aaff",
+        "pinned_highlight": "#ff6e6e"
     }
 }
