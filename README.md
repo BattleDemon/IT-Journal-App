@@ -239,6 +239,8 @@ def highlight_entries(self):
 
 #### Video of Functionality
 
+Sorry about the low quality videos I couldn't figure out why its doing this, so you will just have to deal with these 360p versions.
+
 [![Prototype 1](https://img.youtube.com/vi/RfsdXi8gLjs/0.jpg)](https://www.youtube.com/watch?v=RfsdXi8gLjs)
 
 #### New UI Elements
