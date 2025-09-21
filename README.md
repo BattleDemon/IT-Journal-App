@@ -770,7 +770,7 @@ def add_exercise(self):
 
 #### New UI Elements
 
-
+Gym Page: At the top of the page there is a date selector, alongside buttons to load an existing session or create a new one for the selected date. Below this is an input section where you can enter the name of an exercise and the number of sets, which are then added to the session list. In the list, the number of reps and the weight are editable, and a delete button is next to each exercise. At the bottom of the page, buttons were added to save the current session or delete it. 
 
 ##### Gym Page
 
