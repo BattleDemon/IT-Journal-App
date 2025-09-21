@@ -144,7 +144,7 @@ Voice to text input: Possible text dictation but would require a mic and the abi
 
 ### Prototype 1: Base Systems finished - Text Edit, Save Load, Calendar Selection
 
-#### Code as of commit 23
+#### Code Snippets
 
 ```py
 
@@ -271,7 +271,7 @@ I use Linux at home and Windows for school, and I also needed to make this proje
 
 ### Prototype 2: Themes and More advanced text options
 
-#### Code as of commit 33
+#### Code Snippets
 
 ```py
 
@@ -353,7 +353,7 @@ After changing to use HTML formatting, the sidebar's preview would show the raw 
 
 ### Prototype 3: Pinning, catogoriesing
 
-#### Code as of commit 46
+#### Code Snippets
 
 ```py
 
@@ -501,7 +501,7 @@ Pinned entries in the sidebar would not open when clicked, although could be acc
 
 ### Prototype 4: Suggested Systems - Todo List
 
-#### Code as of commit 60
+#### Code Snippets
 
 ```py
 
@@ -662,7 +662,7 @@ When editing ToDos it originally required typing out the due date and time manua
 
 ### Prototype 5: Suggested Systems - Gym Tracking
 
-#### Code as of commit 76
+#### Code Snippets
 
 ```py
 
@@ -784,7 +784,7 @@ When creating a new session on a date that already had one, the app would overwr
 
 ### Prototype 6: Search and Sort Entries
 
-#### Code as of commit X
+#### Code Snippets
 
 ```py
 
@@ -806,7 +806,7 @@ When creating a new session on a date that already had one, the app would overwr
 
 ### Prototype X:
 
-#### Code as of commit X
+#### Code Snippets
 
 ```py
 
