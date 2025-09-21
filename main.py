@@ -91,6 +91,8 @@ class JournalApp(QMainWindow):
         self.calendar_page = QWidget()
         cal_layout = QVBoxLayout(self.calendar_page)
         self.calendar = QCalendarWidget()
+        self.calendar.setHorizontalHeaderFormat(QCalendarWidget.HorizontalHeaderFormat.NoHorizontalHeader)
+        self.calendar.setVerticalHeaderFormat(QCalendarWidget.VerticalHeaderFormat.NoVerticalHeader)
         cal_layout.addWidget(self.calendar)
         self.stacked.addWidget(self.calendar_page)
 
