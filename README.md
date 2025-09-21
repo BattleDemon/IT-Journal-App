@@ -812,7 +812,7 @@ When creating a new session on a date that already had one, the app would overwr
 
 ### What issues were Encountered
 
-### What techniques did you use to solve these issues
+### Why did I change the order of development and how did it help
 
 ### What have I learnt from the project
 
