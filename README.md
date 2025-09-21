@@ -794,7 +794,7 @@ When creating a new session on a date that already had one, the app would overwr
 
 #### Video of Functionality
 
-[![Prototype 6](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Prototype 6](https://img.youtube.com/vi/s9td_0WJpkE/0.jpg)](https://www.youtube.com/watch?v=s9td_0WJpkE)
 
 #### New UI Elements
 
