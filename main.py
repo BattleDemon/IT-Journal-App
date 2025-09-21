@@ -509,7 +509,7 @@ class JournalApp(QMainWindow):
         elif sort_mode == "Title":
             filtered_entries.sort(key=lambda x: x["title"].lower())
         elif sort_mode == "Last Opened":
-            filtered_entries.sort(key=lambda x: x.get("last_opened", ""))
+            filtered_entries.sort(key=lambda x: x.get("last_opened", ""),reverse=True)
         elif sort_mode == "Pinned First":
             # Pinned entries to top, then sort by date
             pinned = [e for e in filtered_entries if e.get("pinned")]
