@@ -802,9 +802,9 @@ When creating a new session on a date that already had one, the app would overwr
 
 ### Issues and Solutions
 
-Every thing (Title, First Appearance, last editited) was reversed due to how sort function works. Just had to un reverse it so it was in correct order
+Sorting by title, first appearance, and last edited was initially reversed because of how the sort function was implemented, so I adjusted it to display entries in the correct order. 
 
-The search of "2" never filtered out the entries without "test2" because of the year been also considered "2025" so all entries has this as an option so i decided to exclude the year values from the search and only include the month and day. This could end up been a worse feature when the journal is extended to cross year use and people wish to find an old entry by the year it was made in, but i belive it to be a better of two bad options
+Searching for “2” returned every entry since the year “2025” was included in all dates, which meant the filter never worked properly. To fix this, I added search options that let the user toggle whether the search checks the title, date, or categories, giving more control and avoiding unwanted matches. 
 
 ### Final Version
 
@@ -813,6 +813,8 @@ The search of "2" never filtered out the entries without "test2" because of the 
 [![Final Version](https://img.youtube.com/vi/6XyZaPrGOiE/0.jpg)](https://www.youtube.com/watch?v=6XyZaPrGOiE)
 
 #### Current UI
+
+Below is how the UI ended up looking.
 
 ![screenshot](finalCalendar.png)
 
