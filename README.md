@@ -810,7 +810,7 @@ The search of "2" never filtered out the entries without "test2" because of the 
 
 #### Video of Functionality
 
-[![Final Version](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Final Version](https://img.youtube.com/vi/6XyZaPrGOiE/0.jpg)](https://www.youtube.com/watch?v=6XyZaPrGOiE)
 
 #### Current UI
 
