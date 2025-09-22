@@ -892,15 +892,7 @@ Below is how the UI ended up looking.
 
 ### How is the Overall Design
 
-1. In my opinion the ui makes sence with the calendar been the main view point whihc then connects to the entries tab and although i didn't end up having time to integrate it i feel that the todo and gym tabs are fine as a stand alone instead of been integrated into the calender as i would of liked.
-
-2. i feel the main side bar feels quite clean and intuitive same with the calendar and entry view while the todo and gym fells a little bit more cluttered but that is due to their required features.
-
-3. in my opinion the calendar at the top of the nav bar feels best with the three view tabs below making sence. Also the side bar layout provided another way to view the entries and sort/ search thrrough them.
-
-4. i really like the themes and think they make the app more inviting and personalisable to use 
-
-5. i believe so search through select what your searching by it makes sence tyo me and the sort is just a drop down so yeah
+I think the overall design makes sense. The calendar is the main view which the user starts in, since it connects directly into the entries tab. Although I didn't have time to integrate the todo list and gym tracker into the calendar, like I had planned, I still think those tabs work fine on their own. the sidebar feels clean to me wit hthe calendar button at the top with the three views below it. Along with having the entry list and its ability to be sorted and searched, makes it easy to find entries. The themes also made the app feel more personal and usable.
 
 ### What Changes can I make
 
