@@ -903,7 +903,7 @@ I changed the order of development a few times as I went. At the start I didn't 
 
 ### What have I learnt from the project
 
-Before this, I'd mostly made the apps in class with the Qt Designer, but for this I decided to write the layout manually instead becuase the Designer didn't have all the widgets I needed and felt a bit too rigid. This was also the first time I had really dealt with data storage. Before I had only done small things like saving the highscore on a game. Finally, this was the first real app I've made compared to the games I usually make, and the process felt very different. Having me think about the design, and usability a bit more than i would of. 
+Before this, I'd mostly made the apps in class with the Qt Designer, but for this I decided to write the layout manually instead becuase the Designer didn't have all the widgets I needed and felt a bit too rigid. This was also the first time I had really dealt with data storage. Before I had only done small things like saving the highscore on a game. Finally, this was the first real app I've made compared to the games I usually make, and the process felt very different. Having me think about the design, and usability a bit more than I would of. 
 
 ## Sources
 
