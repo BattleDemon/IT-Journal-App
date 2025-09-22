@@ -64,11 +64,11 @@ Entry Page:
 
 Side bar:
 
-Themes:
-
 Todo List:
 
 Gym Tracker:
+
+Themes:
 
 ## Preplanning
 
@@ -798,31 +798,23 @@ When creating a new session on a date that already had one, the app would overwr
 
 #### New UI Elements
 
+##### Search and Sort Fields
 
+![screenshot](SearchDemo.png)
 
 ### Issues and Solutions
 
+Every thing (Title, First Appearance, last editited) was reversed due to how sort function works. Just had to un reverse it so it was in correct order
 
+The search of "2" never filtered out the entries without "test2" because of the year been also considered "2025" so all entries has this as an option so i decided to exclude the year values from the search and only include the month and day. This could end up been a worse feature when the journal is extended to cross year use and people wish to find an old entry by the year it was made in, but i belive it to be a better of two bad options
 
-### Prototype X:
-
-#### Code Snippets
-
-```py
-
-  
-
-```
+### Final Version
 
 #### Video of Functionality
 
-[![Prototype X](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
+[![Final Version](https://img.youtube.com/vi//0.jpg)](https://www.youtube.com/watch?v=)
 
-#### New UI Elements
-
-
-
-### Issues and Solutions
+#### Current UI
 
 
 

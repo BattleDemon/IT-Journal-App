@@ -69,11 +69,22 @@ class JournalApp(QMainWindow):
         nav_layout.addWidget(self.to_gym_btn)
 
         sidebar_layout.addWidget(nav_row)
+        
+        search_layout = QHBoxLayout()
 
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search entries...")
         self.search_input.textChanged.connect(self.refresh_entry_list)
-        sidebar_layout.addWidget(self.search_input)
+        search_layout.addWidget(self.search_input)
+
+        self.search_type_selector = QPushButton()
+        self.search_type_selector.setText("Title")
+        # cycle between Title, Date, Categories on click
+        self.search_type_selector.clicked.connect(self.cycle_search_type)
+
+        search_layout.addWidget(self.search_type_selector)
+        
+        sidebar_layout.addLayout(search_layout)
 
         self.sort_selector = QComboBox()
         self.sort_selector.addItems(["Pinned First","Date", "Title", "Last Opened", ])
@@ -496,10 +507,12 @@ class JournalApp(QMainWindow):
         self.entry_list.clear() # Clear existing items
             
         query = self.search_input.text().strip().lower()
+        filter_type = self.search_type_selector.text()
         filtered_entries = [
             e for e in self.entries
-            if query in e["title"].lower() or query in e["date"] 
-            or (isinstance(e.get("categories"), list) and any(query in category.lower() for category in e["categories"]))
+            if filter_type == "Title" and query in e["title"].lower()
+            or filter_type == "Date" and query in e["date"]
+            or filter_type == "Categories" and (isinstance(e.get("categories"), list) and any(query in category.lower() for category in e["categories"]))
         ]
 
         sort_mode = self.sort_selector.currentText()
@@ -1014,10 +1027,17 @@ class JournalApp(QMainWindow):
             QMessageBox.information(self, "Deleted", "Workout session deleted.")
         else:
             return
+        
+    def cycle_search_type(self):
+        current_text = self.search_type_selector.text()
+        options = ["Title", "Date", "Categories"]
+        next_index = (options.index(current_text) + 1) % len(options) if current_text in options else 0
+        self.search_type_selector.setText(options[next_index])
+
+        self.refresh_entry_list()
 
 # /* ----- App entry point ----- */
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = JournalApp()
-    print("Hello World!")
     sys.exit(app.exec())
