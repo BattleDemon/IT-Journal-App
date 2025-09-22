@@ -786,7 +786,71 @@ When creating a new session on a date that already had one, the app would overwr
 
 ```py
 
-  
+search_layout = QHBoxLayout()
+
+self.search_input = QLineEdit()
+self.search_input.setPlaceholderText("Search entries...")
+self.search_input.setToolTip("Search entries. Type to filter the entry list.") 
+self.search_input.textChanged.connect(self.refresh_entry_list)
+search_layout.addWidget(self.search_input)
+
+self.search_type_selector = QPushButton()
+self.search_type_selector.setText("Title")
+self.search_type_selector.setToolTip("Click to change search type between Title, Date, Categories")
+# cycle between Title, Date, Categories on click
+self.search_type_selector.clicked.connect(self.cycle_search_type)
+
+search_layout.addWidget(self.search_type_selector)
+
+sidebar_layout.addLayout(search_layout)
+
+self.sort_selector = QComboBox()
+self.sort_selector.addItems(["Pinned First","Date", "Title", "Last Opened", ])
+self.sort_selector.setToolTip("Select sorting mode")
+self.sort_selector.currentTextChanged.connect(self.refresh_entry_list)
+sidebar_layout.addWidget(self.sort_selector)
+
+
+```
+
+```py
+
+  def refresh_entry_list(self):
+    self.entry_list.clear() # Clear existing items
+        
+    query = self.search_input.text().strip().lower()
+    filter_type = self.search_type_selector.text()
+    filtered_entries = [
+        e for e in self.entries
+        if filter_type == "Title" and query in e["title"].lower()
+        or filter_type == "Date" and query in e["date"]
+        or filter_type == "Categories" and (isinstance(e.get("categories"), list) and any(query in category.lower() for category in e["categories"]))
+    ]
+
+    sort_mode = self.sort_selector.currentText()
+
+    if sort_mode == "Date":
+        filtered_entries.sort(key=lambda x: x["date"])
+    elif sort_mode == "Title":
+        filtered_entries.sort(key=lambda x: x["title"].lower())
+    elif sort_mode == "Last Opened":
+        filtered_entries.sort(key=lambda x: x.get("last_opened", ""),reverse=True)
+    elif sort_mode == "Pinned First":
+        # Pinned entries to top, then sort by date
+        pinned = [e for e in filtered_entries if e.get("pinned")]
+        others = [e for e in filtered_entries if not e.get("pinned")]
+        pinned.sort(key=lambda x: x["date"])
+        others.sort(key=lambda x: x["date"])
+        filtered_entries = pinned + others
+
+    for entry in filtered_entries:
+        cats = ", ".join(entry.get("categories", []))
+        label = f"{'📌 ' if entry.get('pinned') else ''}{entry['date']} - {entry['title']}"
+        if cats:
+            label += f" [{cats}]"
+        item = QListWidgetItem(label)
+        item.setData(Qt.ItemDataRole.UserRole, entry["date"])
+        self.entry_list.addItem(item)
 
 ```
 
