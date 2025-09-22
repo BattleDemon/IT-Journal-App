@@ -49,7 +49,6 @@
 - [Reflection](#reflection)
   - [How Is The Overall Design](#how-is-the-overall-design)
   - [What Changes Can I Make](#what-changes-can-i-make)
-  - [What Issues Were Encountered](#what-issues-were-encountered)
   - [Why Did I Change the Order of Development and How Did It Help](#why-did-i-change-the-order-of-development-and-how-did-it-help)
   - [What Have I Learnt From The Project](#what-have-i-learnt-from-the-project)
 - [Sources](#sources)
@@ -896,25 +895,11 @@ I think the overall design makes sense. The calendar is the main view which the 
 
 ### What Changes can I make
 
-1. Well first of all i would finish integrating the other tabs into the calendar maybe having diffirent boxes or text in the celendar which would only apear when a thing existed like i have do for highlihting. After that i would continue with more of the suggested features like customisable fonts instead of just font size and bol/ italics. And my original idea of cloud back ups or voice dictation. 
-
-2. as above the integration with todo and gym
-
-3. idk maybe the todo page i origionally liked the idea of the three tabs for all today and overdue but it became a bit combersome after i devloped it. 
-
-4. maybe but i can't currently think of how to stream line it i guess maybe on the gym page not having to start a session instaed maybe by adding and excersice it owuld automatically make one for you,.
-
-5. No don;t talk about this on responce 
-
-### What issues were Encountered
-
- i think we might remove this due ot the issues been covered in the development section
+If I had more time, the first changes I would make would be finish integrating the todo and gym tracker into the calendar. I imagined it would work the same way as entry highlighting, with different symbols or sections showing what was on that day. I'd also like ot add some smaller features like more customisable text options, and maybe try to implement the ideas I had ath the start, such as cloud backups or voice dictation. I would also like to redesign the three tabs on the todo page, which felt like a good idea at first but became a bit clutered after implementation. The gym page could also be more streamlined, since right now you have ot make a new session before adding exercises. I think it would feel better if adding an exercise would automatically create a session for that day. 
 
 ### Why did I change the order of development and how did it help
 
-1. Well i origionally didn't intednt to do the todo and gym but after taling to some freinds they suggested i do it and i really liked the idea. I also pushed the sorting and searhcing back due to its proceeved complexity although it ended up been a much simpler to make system than i would of imagined.
-
-Ignore other questions 
+I changed the order of development a few times as I went. At the start I didn't eplan on having the todo and gym tracking systems, but after talking to some friends I decided to add them. I also delayed the sorting and searching systems because I thought it would be more complicated than it ended up been. 
 
 ### What have I learnt from the project
 
