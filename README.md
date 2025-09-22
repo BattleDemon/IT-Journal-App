@@ -916,9 +916,25 @@ Below is how the UI ended up looking.
 
 ### What issues were Encountered
 
+ i think we might remove this due ot the issues been covered in the development section
+
 ### Why did I change the order of development and how did it help
 
+1. Well i origionally didn't intednt to do the todo and gym but after taling to some freinds they suggested i do it and i really liked the idea. I also pushed the sorting and searhcing back due to its proceeved complexity although it ended up been a much simpler to make system than i would of imagined.
+
+Ignore other questions 
+
 ### What have I learnt from the project
+
+1. Aposed to the practice / learning classes before this project i decide to use the qt desinger but for this i decided agaisnt that becuase 1 it didn't have all the qwidgets i ended up using and it felt a bit figide and and less intuitive for stuff like layouts 
+
+2. First project i have done where data storage was a major element i had done some small things before such as saving a highscore and highscore holder not not big data in jsons 
+
+3. ignore This question
+
+4. first true app i have made aside from the previous games we usually do. It was a very diffirent process to making a game which was an intresting progress. 
+
+5. ignore question
 
 ## Sources
 
