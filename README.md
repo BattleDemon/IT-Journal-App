@@ -814,7 +814,13 @@ The search of "2" never filtered out the entries without "test2" because of the 
 
 #### Current UI
 
+![screenshot](finalCalendar.png)
 
+![screenshot](finalEntry.png)
+
+![screenshot](finalTodo.png)
+
+![screenshot](finalWorkout.png)
 
 ## Reflection
 
