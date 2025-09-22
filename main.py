@@ -23,7 +23,7 @@ from PyQt6.QtWidgets import (
     QTableWidget,
     QTableWidgetItem,
     QHeaderView
-) # Import PyQt6 widgets i will use
+) 
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QTextCharFormat, QBrush, QColor, QFont
 from PyQt6.QtCore import QTime
