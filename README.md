@@ -904,7 +904,15 @@ Below is how the UI ended up looking.
 
 ### What Changes can I make
 
-1. 
+1. Well first of all i would finish integrating the other tabs into the calendar maybe having diffirent boxes or text in the celendar which would only apear when a thing existed like i have do for highlihting. After that i would continue with more of the suggested features like customisable fonts instead of just font size and bol/ italics. And my original idea of cloud back ups or voice dictation. 
+
+2. as above the integration with todo and gym
+
+3. idk maybe the todo page i origionally liked the idea of the three tabs for all today and overdue but it became a bit combersome after i devloped it. 
+
+4. maybe but i can't currently think of how to stream line it i guess maybe on the gym page not having to start a session instaed maybe by adding and excersice it owuld automatically make one for you,.
+
+5. No don;t talk about this on responce 
 
 ### What issues were Encountered
 
