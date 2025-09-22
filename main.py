@@ -54,6 +54,7 @@ class JournalApp(QMainWindow):
         sidebar_layout = QVBoxLayout(self.sidebar)
 
         self.to_calendar_btn = QPushButton("Calendar View")
+        self.to_calendar_btn.setToolTip("Switch to Calendar View")
         sidebar_layout.addWidget(self.to_calendar_btn)
 
         nav_row = QWidget()
@@ -61,8 +62,11 @@ class JournalApp(QMainWindow):
         nav_layout.setContentsMargins(0, 0, 0, 0)  
 
         self.to_entry_btn = QPushButton("Entry View")
+        self.to_entry_btn.setToolTip("Switch to Entry View, to record an entry")
         self.to_todo_btn = QPushButton("Todo List")
+        self.to_todo_btn.setToolTip("Switch to Todo List View")
         self.to_gym_btn = QPushButton("Gym Tracking")
+        self.to_gym_btn.setToolTip("Switch to Gym Tracking View")
 
         nav_layout.addWidget(self.to_entry_btn)
         nav_layout.addWidget(self.to_todo_btn)
@@ -74,11 +78,13 @@ class JournalApp(QMainWindow):
 
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search entries...")
+        self.search_input.setToolTip("Search entries. Type to filter the entry list.") 
         self.search_input.textChanged.connect(self.refresh_entry_list)
         search_layout.addWidget(self.search_input)
 
         self.search_type_selector = QPushButton()
         self.search_type_selector.setText("Title")
+        self.search_type_selector.setToolTip("Click to change search type between Title, Date, Categories")
         # cycle between Title, Date, Categories on click
         self.search_type_selector.clicked.connect(self.cycle_search_type)
 
@@ -88,6 +94,7 @@ class JournalApp(QMainWindow):
 
         self.sort_selector = QComboBox()
         self.sort_selector.addItems(["Pinned First","Date", "Title", "Last Opened", ])
+        self.sort_selector.setToolTip("Select sorting mode")
         self.sort_selector.currentTextChanged.connect(self.refresh_entry_list)
         sidebar_layout.addWidget(self.sort_selector)
 
@@ -97,6 +104,7 @@ class JournalApp(QMainWindow):
 
         # Delete button under entry list
         self.delete_btn = QPushButton("Delete Entry")
+        self.delete_btn.setToolTip("Delete the entry for the selected date")
         self.delete_btn.clicked.connect(self.delete_entry)
         sidebar_layout.addWidget(self.delete_btn)
 
@@ -130,6 +138,7 @@ class JournalApp(QMainWindow):
         self.pin_btn = QPushButton("📌")
         self.pin_btn.setCheckable(True)
         self.pin_btn.setFixedSize(24, 24)
+        self.pin_btn.setToolTip("Pin/Unpin this entry")
         self.pin_btn.toggled.connect(self.toggle_pin)
         header_layout.addWidget(self.pin_btn)
 
@@ -137,6 +146,7 @@ class JournalApp(QMainWindow):
         self.bold_btn = QPushButton("B")
         self.bold_btn.setCheckable(True)
         self.bold_btn.setFixedSize(24, 24)
+        self.bold_btn.setToolTip("Toggle Bold")
         self.bold_btn.clicked.connect(self.toggle_bold)
         header_layout.addWidget(self.bold_btn)
 
@@ -144,6 +154,7 @@ class JournalApp(QMainWindow):
         self.italic_btn = QPushButton("I")
         self.italic_btn.setCheckable(True)
         self.italic_btn.setFixedSize(24, 24)
+        self.italic_btn.setToolTip("Toggle Italic")
         self.italic_btn.clicked.connect(self.toggle_italic)
         header_layout.addWidget(self.italic_btn)
 
@@ -152,6 +163,7 @@ class JournalApp(QMainWindow):
         self.font_size_box.setRange(8, 48) # Limit font size range
         self.font_size_box.setValue(12) # Default font size
         self.font_size_box.setMaximumWidth(60) 
+        self.font_size_box.setToolTip("Set Font Size")
         self.font_size_box.valueChanged.connect(self.change_font_size)
         header_layout.addWidget(self.font_size_box)
 
@@ -166,11 +178,13 @@ class JournalApp(QMainWindow):
 
         # Save button
         self.save_btn = QPushButton("Save Entry")
+        self.save_btn.setToolTip("Save the current entry")
         actions_layout.addWidget(self.save_btn)
 
         # Categories button
         self.categories_btn = QPushButton("🏷")
         self.categories_btn.setFixedSize(24, 24) 
+        self.categories_btn.setToolTip("Edit categories for this entry")
         self.categories_btn.clicked.connect(self.edit_categories)
         actions_layout.addWidget(self.categories_btn)
 
@@ -228,6 +242,7 @@ class JournalApp(QMainWindow):
         # Add button
         self.add_todo_btn = QPushButton("Add Todo")
         self.add_todo_btn.clicked.connect(self.add_todo)
+        self.add_todo_btn.setToolTip("Add new todo for the specified date and time")
         todo_form_layout.addWidget(self.add_todo_btn)
 
         todo_layout.addLayout(todo_form_layout)
@@ -236,16 +251,19 @@ class JournalApp(QMainWindow):
         todo_actions_layout = QHBoxLayout()
         self.complete_todo_btn = QPushButton("Complete")
         self.complete_todo_btn.clicked.connect(self.complete_todo)
+        self.complete_todo_btn.setToolTip("Mark selected todo as complete/incomplete")
         todo_actions_layout.addWidget(self.complete_todo_btn)
 
         # Edit button
         self.edit_todo_btn = QPushButton("Edit")
         self.edit_todo_btn.clicked.connect(self.edit_todo)
+        self.edit_todo_btn.setToolTip("Edit selected todo")
         todo_actions_layout.addWidget(self.edit_todo_btn)
 
         # Delete button
         self.delete_todo_btn = QPushButton("Delete")
         self.delete_todo_btn.clicked.connect(self.delete_todo)
+        self.delete_todo_btn.setToolTip("Delete selected todo")
         todo_actions_layout.addWidget(self.delete_todo_btn)
 
         todo_layout.addLayout(todo_actions_layout)
@@ -267,11 +285,13 @@ class JournalApp(QMainWindow):
 
         # Load session buttons
         self.load_session_btn = QPushButton("Load Session")
+        self.load_session_btn.setToolTip("Load workout session for the selected date")
         self.load_session_btn.clicked.connect(self.load_workout_session)
         session_layout.addWidget(self.load_session_btn)
 
         # New session button
         self.new_session_btn = QPushButton("New Session")
+        self.new_session_btn.setToolTip("Create a new workout session for the selected date")
         self.new_session_btn.clicked.connect(self.create_new_session)
         session_layout.addWidget(self.new_session_btn)
 
@@ -281,6 +301,7 @@ class JournalApp(QMainWindow):
         # Exercise input form
         exercise_form_layout = QHBoxLayout()
         self.exercise_input = QLineEdit()
+        self.exercise_input.setToolTip("Enter exercise name")
         self.exercise_input.setPlaceholderText("Exercise name...")
         exercise_form_layout.addWidget(self.exercise_input)
 
@@ -288,11 +309,13 @@ class JournalApp(QMainWindow):
         self.sets_input = QSpinBox()
         self.sets_input.setRange(1, 10)
         self.sets_input.setValue(3)
+        self.sets_input.setToolTip("Set number of sets")
         exercise_form_layout.addWidget(QLabel("Sets:"))
         exercise_form_layout.addWidget(self.sets_input)
 
         # Add exercise button
         self.add_exercise_btn = QPushButton("Add Exercise")
+        self.add_exercise_btn.setToolTip("Add exercise to current session")
         self.add_exercise_btn.clicked.connect(self.add_exercise)
         exercise_form_layout.addWidget(self.add_exercise_btn)
 
@@ -309,11 +332,13 @@ class JournalApp(QMainWindow):
         # Session actions
         session_actions_layout = QHBoxLayout()
         self.save_session_btn = QPushButton("Save Session")
+        self.save_session_btn.setToolTip("Save the current session")
         self.save_session_btn.clicked.connect(self.save_workout_session)
         session_actions_layout.addWidget(self.save_session_btn)
 
         # Delete session button
         self.delete_session_btn = QPushButton("Delete Session")
+        self.delete_session_btn.setToolTip("Delete the current session")
         self.delete_session_btn.clicked.connect(self.delete_workout_session)
         session_actions_layout.addWidget(self.delete_session_btn)
 
@@ -322,10 +347,10 @@ class JournalApp(QMainWindow):
         # Add gym page to stacked widget
         self.stacked.addWidget(self.gym_page)
 
-
         # Theme selector in sidebar
         self.theme_selector = QComboBox()
         self.theme_selector.addItems(THEMES.keys())
+        self.theme_selector.setToolTip("Select theme")
         sidebar_layout.addWidget(self.theme_selector)
         self.theme_selector.currentTextChanged.connect(self.apply_theme)
 
