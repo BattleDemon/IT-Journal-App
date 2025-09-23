@@ -2,7 +2,6 @@
 
 ## Table of Contents
 
-- [User Manual](#user-manual)
 - [Preplanning](#preplanning)
   - [Core Features](#core-features)
   - [What Additional Feature I Will Add](#what-additional-features-i-will-add)
@@ -52,20 +51,6 @@
   - [Why Did I Change the Order of Development and How Did It Help](#why-did-i-change-the-order-of-development-and-how-did-it-help)
   - [What Have I Learnt From The Project](#what-have-i-learnt-from-the-project)
 - [Sources](#sources)
-
-## User Manual
-
-Calendar Page:
-
-Entry Page:
-
-Side bar:
-
-Todo List:
-
-Gym Tracker:
-
-Themes:
 
 ## Preplanning
 
@@ -865,9 +850,9 @@ sidebar_layout.addWidget(self.sort_selector)
 
 ### Issues and Solutions
 
-Sorting by title, first appearance, and last edited was initially reversed because of how the sort function was implemented, so I adjusted it to display entries in the correct order. 
+Sorting by title, first appearance, and last edited was initially reversed because of how the sort function was implemented, so I adjusted it to display entries in the correct order.
 
-Searching for “2” returned every entry since the year “2025” was included in all dates, which meant the filter never worked properly. To fix this, I added search options that let the user toggle whether the search checks the title, date, or categories, giving more control and avoiding unwanted matches. 
+Searching for “2” returned every entry since the year “2025” was included in all dates, which meant the filter never worked properly. To fix this, I added search options that let the user toggle whether the search checks the title, date, or categories, giving more control and avoiding unwanted matches.
 
 ### Final Version
 
@@ -899,14 +884,28 @@ If I had more time, the first changes I would make would be finish integrating t
 
 ### Why did I change the order of development and how did it help
 
-I changed the order of development a few times as I went. At the start I didn't eplan on having the todo and gym tracking systems, but after talking to some friends I decided to add them. I also delayed the sorting and searching systems because I thought it would be more complicated than it ended up been. 
+I changed the order of development a few times as I went. At the start I didn't eplan on having the todo and gym tracking systems, but after talking to some friends I decided to add them. I also delayed the sorting and searching systems because I thought it would be more complicated than it ended up been.
 
 ### What have I learnt from the project
 
-Before this, I'd mostly made the apps in class with the Qt Designer, but for this I decided to write the layout manually instead becuase the Designer didn't have all the widgets I needed and felt a bit too rigid. This was also the first time I had really dealt with data storage. Before I had only done small things like saving the highscore on a game. Finally, this was the first real app I've made compared to the games I usually make, and the process felt very different. Having me think about the design, and usability a bit more than I would of. 
+Before this, I'd mostly made the apps in class with the Qt Designer, but for this I decided to write the layout manually instead becuase the Designer didn't have all the widgets I needed and felt a bit too rigid. This was also the first time I had really dealt with data storage. Before I had only done small things like saving the highscore on a game. Finally, this was the first real app I've made compared to the games I usually make, and the process felt very different. Having me think about the design, and usability a bit more than I would of.
 
 ## Sources
 
 [Qt for Python](https://doc.qt.io/qtforpython-6/index.html)
 
 [PyQt6 Documentation](https://www.pythonguis.com/pyqt6-tutorial)
+
+[Guide To PyQt6](https://github.com/HundredVisionsGuy/Guide-to-PyQt6)
+
+Themes are based on VSCode themes.
+
+[Omni Dracula Theme](https://marketplace.visualstudio.com/items?itemName=ThiagoLcioBittencourt.omni-dracula-theme )
+
+[Dracula Theme](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula)
+
+[Nord Theme](https://marketplace.visualstudio.com/items?itemName=arcticicestudio.nord-visual-studio-code)
+
+[Night Owl Theme](https://marketplace.visualstudio.com/items?itemName=sdras.night-owl )
+
+[Crimson Sun Theme](https://marketplace.visualstudio.com/items?itemName=ChrisMartinezDev.crimson-sun )

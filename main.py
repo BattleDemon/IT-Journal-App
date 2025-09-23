@@ -38,10 +38,9 @@ THEMES = json.load(open("themes.json", "r", encoding="utf-8"))
 # /* ----- Main App Class ----- */
 class JournalApp(QMainWindow):
     def __init__(self):
-        # Initialise base QMainWindow
+        # Initialise base Window
         super(JournalApp, self).__init__()
         self.setWindowTitle("Journal App")
-        # Place window, keep size modest for testing
         self.setGeometry(200, 100, 1000, 600)
 
         # Central widget and main horizontal layout
@@ -53,10 +52,13 @@ class JournalApp(QMainWindow):
         self.sidebar = QWidget()
         sidebar_layout = QVBoxLayout(self.sidebar)
 
+        # --- Navigation buttons ---
+        # Calendar button at top
         self.to_calendar_btn = QPushButton("Calendar View")
         self.to_calendar_btn.setToolTip("Switch to Calendar View")
         sidebar_layout.addWidget(self.to_calendar_btn)
 
+        # Navigation row for other views
         nav_row = QWidget()
         nav_layout = QHBoxLayout(nav_row)
         nav_layout.setContentsMargins(0, 0, 0, 0)  
@@ -72,16 +74,21 @@ class JournalApp(QMainWindow):
         nav_layout.addWidget(self.to_todo_btn)
         nav_layout.addWidget(self.to_gym_btn)
 
+        # Add navigation row to sidebar
         sidebar_layout.addWidget(nav_row)
         
+
+        # --- Search and Sort ---
         search_layout = QHBoxLayout()
 
+        # Search input
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search entries...")
         self.search_input.setToolTip("Search entries. Type to filter the entry list.") 
         self.search_input.textChanged.connect(self.refresh_entry_list)
         search_layout.addWidget(self.search_input)
 
+        # Search type selector button
         self.search_type_selector = QPushButton()
         self.search_type_selector.setText("Title")
         self.search_type_selector.setToolTip("Click to change search type between Title, Date, Categories")
@@ -124,11 +131,11 @@ class JournalApp(QMainWindow):
         cal_layout.addWidget(self.calendar)
         self.stacked.addWidget(self.calendar_page)
 
-        # Entry page setup
+       # --- Entry page setup ---
         self.entry_page = QWidget()
         entry_layout = QVBoxLayout(self.entry_page)
 
-        # Header row: title at left, formatting on right
+        # Header row with title and formatting buttons
         header_layout = QHBoxLayout()
         self.entry_title_label = QLabel("No entry loaded")
         header_layout.addWidget(self.entry_title_label)
@@ -193,7 +200,7 @@ class JournalApp(QMainWindow):
         # Add entry page to stacked widget
         self.stacked.addWidget(self.entry_page)
 
-        # Todo List page setup
+        # --- Todo List page setup ---
         self.todo_page = QWidget()
         todo_layout = QVBoxLayout(self.todo_page)
 
@@ -271,7 +278,7 @@ class JournalApp(QMainWindow):
         # Add todo page to stacked widget
         self.stacked.addWidget(self.todo_page)
 
-        # Gym Tracking page setup
+       # --- Gym Tracking page setup ---
         self.gym_page = QWidget()
         gym_layout = QVBoxLayout(self.gym_page)
 
@@ -347,7 +354,7 @@ class JournalApp(QMainWindow):
         # Add gym page to stacked widget
         self.stacked.addWidget(self.gym_page)
 
-        # Theme selector in sidebar
+        # --- Theme selector at bottom of sidebar ---
         self.theme_selector = QComboBox()
         self.theme_selector.addItems(THEMES.keys())
         self.theme_selector.setToolTip("Select theme")
@@ -375,7 +382,7 @@ class JournalApp(QMainWindow):
 
         # Data and storage setup
         self.entries = []
-        self.data_dir = os.path.join(os.path.dirname(__file__), "data")
+        self.data_dir = os.path.join(os.path.dirname(__file__), "data") # Makes path usable cross OS (/  vs \ )
         os.makedirs(self.data_dir, exist_ok=True)
 
         # Todo list data
@@ -401,6 +408,7 @@ class JournalApp(QMainWindow):
         # Actually display the window
         self.show()
 
+    # --- Data Loading and Saving ---
     # Save current settings to file
     def save_settings(self):
         settings_path = os.path.join(self.data_dir, "settings.json") # Path to settings file
@@ -446,6 +454,29 @@ class JournalApp(QMainWindow):
         with open(entries_path, "w", encoding="utf-8") as f: 
             json.dump(self.entries, f, indent=4) # Save entries as JSON
 
+    # Save or update current entry
+    def save_entry(self):
+        date = self.calendar.selectedDate().toString("yyyy-MM-dd") # Get selected date
+        content = self.text_edit.toHtml() # Get rich text content
+
+        # find existing entry for date
+        existing = next((e for e in self.entries if e["date"] == date), None)
+
+        if existing: # Update existing entry
+            existing["content"] = content
+        else:
+            # Prompt for a title when creating a new entry
+            title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
+            if not ok or not title.strip():
+                title = "Untitled"
+            self.entries.append({"date": date, "title": title.strip(), "content": content}) # Add new entry
+
+        # Save entries and refresh UI
+        self.save_entries()
+        self.refresh_entry_list()
+        self.highlight_entries()
+
+    # --- Theme Application ---
     # Apply selected theme across the app
     def apply_theme(self, theme_name):
         theme = THEMES.get(theme_name, THEMES["Dark"]) # Default to Dark theme if not found
@@ -505,28 +536,7 @@ class JournalApp(QMainWindow):
         self.highlight_entries()
         self.save_settings()
 
-    # Save or update current entry
-    def save_entry(self):
-        date = self.calendar.selectedDate().toString("yyyy-MM-dd") # Get selected date
-        content = self.text_edit.toHtml() # Get rich text content
-
-        # find existing entry for date
-        existing = next((e for e in self.entries if e["date"] == date), None)
-
-        if existing: # Update existing entry
-            existing["content"] = content
-        else:
-            # Prompt for a title when creating a new entry
-            title, ok = QInputDialog.getText(self, "Entry Title", "Enter a title for this entry:")
-            if not ok or not title.strip():
-                title = "Untitled"
-            self.entries.append({"date": date, "title": title.strip(), "content": content}) # Add new entry
-
-        # Save entries and refresh UI
-        self.save_entries()
-        self.refresh_entry_list()
-        self.highlight_entries()
-
+    # --- Entry List ---
     # Refresh the entry list in the sidebar
     def refresh_entry_list(self):
         self.entry_list.clear() # Clear existing items
@@ -565,11 +575,21 @@ class JournalApp(QMainWindow):
             item.setData(Qt.ItemDataRole.UserRole, entry["date"])
             self.entry_list.addItem(item)
 
-    
+    # Update last opened timestamp for an entry
     def update_last_opened(self, entry):
         entry["last_opened"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.save_entries()
 
+    # Cycle search type between Title, Date, Categories
+    def cycle_search_type(self):
+        current_text = self.search_type_selector.text()
+        options = ["Title", "Date", "Categories"]
+        next_index = (options.index(current_text) + 1) % len(options) if current_text in options else 0
+        self.search_type_selector.setText(options[next_index])
+
+        self.refresh_entry_list()
+
+    # --- Load Entries ---
     # Load entry when selected from list
     def load_entry_from_list(self, item):
         date = item.data(Qt.ItemDataRole.UserRole)
@@ -595,6 +615,7 @@ class JournalApp(QMainWindow):
             self.text_edit.clear()
             self.entry_title_label.setText(f"New Entry - {date}")
 
+    # --- Calendar Highlights ---
     # Highlight dates in calendar with entries
     def highlight_entries(self):
         # Clear only previously highlighted dates
@@ -626,7 +647,7 @@ class JournalApp(QMainWindow):
             self._highlighted_dates.add(date)
 
 
-
+    # --- Entry Text Formatting ---
     # Text formatting functions
     def toggle_bold(self):
         # Toggle bold formatting
@@ -1052,14 +1073,6 @@ class JournalApp(QMainWindow):
             QMessageBox.information(self, "Deleted", "Workout session deleted.")
         else:
             return
-        
-    def cycle_search_type(self):
-        current_text = self.search_type_selector.text()
-        options = ["Title", "Date", "Categories"]
-        next_index = (options.index(current_text) + 1) % len(options) if current_text in options else 0
-        self.search_type_selector.setText(options[next_index])
-
-        self.refresh_entry_list()
 
 # /* ----- App entry point ----- */
 if __name__ == "__main__":
